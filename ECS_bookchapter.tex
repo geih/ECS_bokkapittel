@@ -1,0 +1,407 @@
+\documentclass[preprint,11pt,authoryear]{elsarticle}
+\pdfoutput=1
+\pdfminorversion=4 %had problems submitting a v1.5 pdf file with J Neurosci Methods
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{amssymb}
+\usepackage{lineno}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[]{algorithm}
+\usepackage[noend]{algpseudocode}
+%% natbib.sty is loaded by default. However, natbib options can be
+%% provided with \biboptions{...} command. Following options are
+%% valid:
+
+%%   round  -  round parentheses are used (default)
+%%   square -  square brackets are used   [option]
+%%   curly  -  curly braces are used      {option}
+%%   angle  -  angle brackets are used    <option>
+%%   semicolon  -  multiple citations separated by semi-colon
+%%   colon  - same as semicolon, an earlier confusion
+%%   comma  -  separated by comma
+%%   numbers-  selects numerical citations
+%%   super  -  numerical citations as superscripts
+%%   sort   -  sorts multiple citations according to order in ref. list
+%%   sort&compress   -  like sort, but also compresses numerical citations
+%%   compress - compresses without sorting
+%%
+%% \biboptions{comma,round}
+
+% \biboptions{}
+
+\bibliographystyle{elsarticle-harv}
+\biboptions{square}
+
+\renewcommand\familydefault{\sfdefault}
+\usepackage[scaled]{helvet}
+
+\usepackage{units}
+\usepackage[usenames, dvipsnames]{xcolor}
+
+\usepackage{soul}
+\usepackage{placeins}
+
+\usepackage{nameref}
+\usepackage[pdftex,breaklinks=true,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,filecolor=blue,pdffitwindow,backref=true,pagebackref=false,bookmarks=true,bookmarksopen=true,bookmarksnumbered=true]{hyperref}
+\usepackage[plain]{fancyref}
+\usepackage{array}
+\usepackage{multirow}
+
+% Text layout
+%\hoffset 2 cm
+\topmargin 0.0cm
+\oddsidemargin 0.5cm
+\evensidemargin 0.5cm
+\textwidth 16cm 
+\textheight 21cm
+
+%custom color for \hlc
+\newcommand{\hlc}[2][yellow]{ {\sethlcolor{#1} \hl{#2}} }
+\newcommand{\hlb}[2][blue]{ {\sethlcolor{#1} \hl{#2}} }
+\newcommand{\hlr}[2][Maroon]{ {\sethlcolor{#1} \hl{#2}} }
+\newcommand{\hlj}[2][OliveGreen]{ {\sethlcolor{#1} \hl{#2}} }
+\newcommand{\hlR}[2][red]{ {\sethlcolor{#1} \hl{#2}} }
+
+%boxes and highlight color for text updates, personified!
+\newcommand{\ghnote}[1]{\color{white}{\hlb{GH: #1 }}\color{black}}
+\newcommand{\ghtxt}[1]{{\color{blue}#1}}
+\newcommand{\gtenote}[1]{\color{white}{\hlR{GTE: #1 }}\color{black}}
+\newcommand{\gen}[1]{\color{white}{\hlR{GTE: #1 }}\color{black}}
+\newcommand{\gtetxt}[1]{{\color{red}#1}}
+\newcommand{\gex}[1]{{\color{red}#1}}
+\newcommand{\genn}[1]{{\color{orange}#1}}
+
+%fancy ref formatting
+\Frefformat{plain}{\fancyreffiglabelprefix}{Fig~#1}
+\newcommand*{\Frefsecshortname}{Section}%
+\Frefformat{plain}{\fancyrefseclabelprefix}{\Frefsecshortname~#1}
+\Frefformat{plain}{\fancyrefeqlabelprefix}{Eq~(#1)}
+
+%tables as in Nordlie et al. (2009)
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{morefloats}
+
+%table formatting
+\newcommand{\modelhdr}[3]{%
+   \multicolumn{#1}{|l|}{%
+     \color{white}\cellcolor[gray]{0.0}%
+     \textbf{\makebox[0pt]{#2}\hspace{0.5\linewidth}\makebox[0pt][c]{#3}}%
+   }%
+}
+\newcommand{\parameterhdr}[3]{%
+   \multicolumn{#1}{|l|}{%
+     \color{black}\cellcolor[gray]{0.8}%
+     \textbf{\makebox[0pt]{#2}\hspace{0.5\linewidth}\makebox[0pt][c]{#3}}%
+   }%
+}
+\def\tabspace{0.5ex}
+
+\usepackage{float}
+\floatstyle{plaintop}
+\restylefloat{table}
+
+\journal{nobody}
+
+
+% redefinition of \author{•} because of bug (reset of \@corref missing), taken from:
+% http://tex.stackexchange.com/questions/116515/elsarticle-frontmatter-corresponding-author
+\makeatletter
+\def\@author#1{\g@addto@macro\elsauthors{\normalsize%
+    \def\baselinestretch{1}%
+    \upshape\authorsep#1\unskip\textsuperscript{%
+      \ifx\@fnmark\@empty\else\unskip\sep\@fnmark\let\sep=,\fi
+      \ifx\@corref\@empty\else\unskip\sep\@corref\let\sep=,\fi
+      }%
+    \def\authorsep{\unskip,\space}%
+    \global\let\@fnmark\@empty
+    \global\let\@corref\@empty  %% Added
+    \global\let\sep\@empty}%
+    \@eadauthor={#1}
+}
+\makeatother
+
+% - mine pakker -
+\usepackage[exponent-product = \cdot]{siunitx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[normalem]{ulem} % strikethroughs \sout{Hello World}
+\usepackage{caption}
+\usepackage{booktabs} % to make nice tables
+\graphicspath{{Figures/}} %Setting the graphicspath
+\usepackage{caption}
+\usepackage{subcaption}
+
+% - mine kommandoer - 
+
+
+\begin{document}
+
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+\title{Computing extracellular electrical potentials from in silico neuronal simulations} 
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for the associated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for the associated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for the associated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%%
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+%% use optional labels to link authors explicitly to addresses:
+%% \author[label1,label2]{<author name>}
+%% \address[label1]{<address>}
+%% \address[label2]{<address>}
+
+\author{Geir Halnes\fnref{label1,label2}}
+\author{Torbj\o{}rn Vefferstad Ness \fnref{label1,label2}}
+\author{Solveig N\ae{}ss\fnref{label2}}
+\author{Klas Pettersen \fnref{label3}}
+\author{Gaute T. Einevoll\corref{cor1}\fnref{label1,label2,label4}}
+
+\address[label1]{Department of Mathematical Science and Technology, Norwegian University of Life Sciences, {{\AA}}s, Norway}
+\address[label2]{Center for Integrative Neuroplasticity, University of Oslo, Oslo, Norway}
+\address[label3]{Norwegian Artificial Intelligence Research Consortium, Oslo, Norway}
+\address[label4]{Department of Physics, University of Oslo, Oslo, Norway}
+
+\cortext[cor1]{correspondence: \href{geir.halnes@nmbu.no}{gaute.einevoll@nmbu.no}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{abstract}
+%% Text of abstract
+\ghnote{Vet ikke hva forfatterordningen skal vaere, men vi faar se det an etter hvert, og bestemme utifra hvem som har jobbet mest med manus. For oeyeblikket leder jeg, men jeg tror jeg satser paa at kanskje Torbjoern fosser forbi etter hvert.}
+\end{abstract}
+
+\begin{keyword}
+extracellular fields \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
+%% keywords here, in the form: keyword \sep keyword
+
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+\end{keyword}
+
+\end{frontmatter}
+
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Start line numbering here if you want
+\linenumbers
+
+\section{Introduction}
+\label{sec:introduction}
+
+\ghnote{First something about why we are interested in electrical fields and some historical perspectives. Perhaps Gaute should write this.}
+
+\ghnote{End intro with bridge to theory-section. Probably we should add some older references to VC-theory?}
+
+Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions move due to migration in electrical fields, (2) a diffusion component (ions move due to diffusion), (3) an advective component (ions move because the extracellular fluid is flowing and dragging them along), and (4) a displacement component (ions pile up locally and give rise to a temporal change in the charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and can be neglected \cite{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \cite{Savtchenko2017, Pods2017}. At the level of tissue, however, it is commonly believed that the diffusive current is much smaller than the migratory current, and diffusion is therefore neglected when volume conductor (VC) theory is used tp compute extracellular potentials \cite{Holt1999, Pettersen2008a}. This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, once concentration gradients are present, diffusive currents will induce shifts in the extracellular potential also on the tissue level \cite{Halnes2016, Halnes2017, Solbra2018}, and in scenarios involving dramatic shifts in extracellular concentrations, such as spreading depression and related pathologies, diffusive effects on the extracellular potential are likely to be important \cite{Almeida2004, OConnell2016}.
+
+We start this book chapter by giving an overview of the theory used for forward modellng of extracellular potentials, and introduce the mathematical frameworks and software tools that can be used for such modelling. We start the theory-part at the rather fundamental level of electrodiffusive ion concentration dynamics, and derive an electrodiffusive framework for predicting the dynamics of the extracellular ion concentrations and potential. We next show how this theory can be reduced to the simpler, and more common VC-theory if we assume that the diffusive component is negligible. 
+
+
+
+\section{Theory: From electrodiffusion to volume conductor theory}
+\label{sec:theory}
+
+\subsection{Ion concentration dynamics}
+\label{sec:eldiff}
+If we consider ion movements due to both electrical migration and diffusion, the flux density of an ion species $k$ is given by:
+
+\begin{equation}
+J_{k} = -D_{k}\nabla c_{k} -D_{k}\nabla c_{k},
+\label{eq:JNP}
+\end{equation}
+where the first term on the right is the diffusive flux density $J_{k}^\text{diff}$, and the second term is the flux density due to electrical migration $J_{k}^\text{field}$, hereby called the \emph{field} flux density.  Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation: 
+\begin{equation}
+\frac{\partial c_k}{\partial t} = - \nabla J_k + f_k = \nabla \left[ D_k \nabla c_k + \frac{D_k x_k c_k}{\psi} \nabla \phi \right] + f_k
+\label{eq:NP}
+\end{equation}
+where $f_k$ represents any source term in the system, such as e.g., an ionic transmembrane current source. 
+
+In order to solve a set (i.e., one for each ion species present) of equations like \ref{eq:NP}, one needs an expression for the electrical potential $\phi$. There are two main approaches to this. The physically most detailed approach is to use the Poisson-Nernst-Planck (PNP) formalism \cite{Leonetti1998, Leonetti2004, Lu2007, Lopreore2008, Nanninga2008, Pods2013, Gardner2015}. Then $\phi$ is determined from Poisson's equation from electrostatics, 
+\begin{equation}
+\nabla^2 \phi = -\rho/\epsilon, 
+\label{eq:poisson}
+\end{equation}
+where $\epsilon$ is the permittivity of the system, and $\rho$ is the charge density associated with the ionic concentrations, as given by:
+\begin{equation}
+\rho = F \sum_k z_k c_k.
+\label{eq:poisson}
+\end{equation}
+An alternative, and more computationally efficient, approach is to replace the Poisson equation with a simplifying approximation that the bulk solution is electroneutral \cite{Mori2008, Mori2009, Mori2009a, Mori2011, Halnes2015, Halnes2013, Halnes2015arxiv, Pods2017, Niederer2013, OConnell2016, Solbra2018}, which is a good approximation on spatiotemporal scales larger than micrometers and microseconds \cite{Grodzinsky2011, Pods2017, Solbra2018}. 
+
+Both the PNP formalism and the electroneutral formalism allow us to compute the dynamics of ion concentrations and the electrical potential in the extracellular space of neural tissue containing an arbitrary set of neuronal and glial current sources. For example, in a recent work, a version of the electroneutral formalism was developed into a framework for computing the extracellular dynamics (of $c_k$ and $\phi$) in a 3D space surrounding morphologically complex neurons simulated with the NEURON simulation tool \cite{Solbra2018}. 
+
+Both the PNP formalism and the electroneutral formalism keep track of the spatial distribution of ion concentrations, and as such they require a suitable meshing of the 3D space, and numerical solutions based on finite difference- or finite element methods. In both cases, simulations can become very heavy, and for systems at a tissue level, the computational demand may become incommensurable. There is therefore much to gain from deriving simpler frameworks where effects of ion concentration dynamics are neglected, since, for many scenarios, this may be a good approximation. Below, we will derive these simpler frameworks using the Nernst-Planck fluxes (eq. \ref{eq:JNP}) as a starting point, as this approach will make the involved approximations transparent.
+
+\subsection{Electrodynamics}
+If we multiply eq. \ref{eq:JNP} by $F\cdot z_k$ and take the sum over all ion species, we get an expression for the net electrical current density due to all particle fluxes:
+
+\begin{equation}
+I = - \sum_k{F z_k D_{k}\nabla c_{k}} - \sigma \nabla{\phi}
+\label{eq:INP}
+\end{equation}
+where the first term is the diffusive current density $I^\text{diff}$ and the second term is the field current density$I^\text{field}$. We have here identified the conductivity $\sigma$ of the medium as \cite{Koch1999}:
+\begin{equation}
+\sigma = F\sum_{k} \frac{\tilde{D}_{k} z_{k}^2}{\psi}c_{k},
+\label{eq:sigma}
+\end{equation}
+
+Current conservation in the extracellular space implies that:
+\begin{equation}
+\nabla I = - \sum_k{F z_k D_{k}\nabla^2 c_{k}} - \nabla \sigma \nabla \phi = - CSD,
+\label{eq:CSD}
+\end{equation}
+where $CSD$ denotes the current source density, reflecting e.g., local neuronal or glial transmembrane currents. We note that this is essentially equivalent to eq. \ref{eq:NP} at the level of ion species, with the exception eq. \ref{eq:NP} contained a term $\partial c_k/ \partial t$ for accumulation of ion species $k$, while eq. \ref{eq:CSD} does \emph{not} contain a corresponding term ($\partial \rho/ \partial t$) for charge accumulation. Hence, in eq. \ref{eq:CSD} it is implicitly assumed that the extracellular bulk solution is electroneutral \cite{Solbra2018}. We note that in general, the $CSD$ term includes both ionic transmembrane currents and the capacitive current, and that the latter means that the local charge accumulation building up the transmembrane potential still occurs in the membrane Debye-layer.
+
+We note that if we assume all concentrations to be constant in space, the diffusive term vanishes, and eq. \ref{eq:CSD} reduces to:
+\begin{equation}
+\nabla \sigma \nabla \phi = - CSD,
+\label{eq:CSDstandard}
+\end{equation}
+This the standard expression used in current source density (CSD) theory \cite{Mitzdorf1985, Nicholson1975, Pettersen2006}, where spatially distributed recordings of $\phi$ are used to make theoretical predictions of underlying current sources. Using this equation, it is implicitly assumed that the Laplacian of $\phi$ is the signature of a cellular current source. As eq. eq. \ref{eq:CSD} indicated, this is not a priori true, since the diffusive term could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources: 
+\begin{equation}
+\nabla \sigma \nabla \phi  = - \sum_k{F z_k D_{k}\nabla^2 c_{k}}.
+\label{eq:ljpot}
+\end{equation}
+
+The contributions from diffusion on extracellular fields is not necessarily small, but it tends to be very slow, and will only affect the very low-frequency components of $\phi$ \cite{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time course (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1Hz \cite{Einevoll2013}, which means that most of the diffusive contribution will be filtered out from experimental recordings. Except in the case of pathologically dramatic concentration variations, it may therefore be a good approximation to neglect the diffusive term. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq. \ref{eq:CSDstandard}.
+
+
+\subsection{Volume conductor theory}
+\ghnote{Valgte aa utlede det enkleste tilfellet her, med puntkilde og konstant konduktivitet. Blir dette for banalt, eller skal vi ha det slik?}
+
+In simulations of morphologically complex neurons, e.g., based on the NEURON simulator \cite{Hines2009}, we typically
+compute a set of transmembrane current sources for each neuronal segment. When the distribution of membrane point current sources is known, it is possible to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s) based on volume conductor (VC) theory \cite{Holt1999, Pettersen2008a}.
+
+The standard expression used in VC theory can be derived from the standard CSD-equation (eq. \ref{eq:CSDstandard}). We start by writing eq. \ref{eq:CSDstandard} as: 
+\begin{equation}
+\nabla E = - CSD/\sigma,
+\label{eq:trygve}
+\end{equation}
+where we have introduced the electrical field ${\bf E}=\nabla \phi$, and for now assumed that $\sigma$ is homogeneous in space. If we integrate this over a 3D volume, we get:
+\begin{equation}
+\iiint_V E({\bf r}) \,d^3V =  - \frac{1}{\sigma} \iiint_V \ CSD({\bf r}) \, d^3V.
+\label{eq:trygve2}
+\end{equation}
+If we consider the simplest possible case of a single point current source $I_1$ in ${\bf r}=0$, the right hand side becomes $I_1/\sigma$. By Gauss' theorem, we can convert the left hand side to a surface integral, and eq. \label{eq:trygve2} becomes:
+\begin{equation}
+\iiint_V E(r) \,d^3V =  \oiint_{S} E(r) \,d^2S = 4\pi r^2 E(r) = 4\pi r^2 \frac{d\phi}{dr} = \frac{I_1}{\sigma}
+\label{eq:trygve3}
+\end{equation}
+where we have utilized the spherical symmetry of the problem. Finally, integration with respect to $r$ gives us
+\begin{equation}
+\phi = \frac{I_m}{4\pi r \sigma}
+\label{eq:trygve3}
+\end{equation}
+
+With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations $\bf r_1, r_2, r_3 ... $, we can apply the superposition principle, and the potential in a point $\bf r$ is given by:
+
+\begin{equation}
+\phi ({\bf r}) = \frac{I_1}{4\pi {\bf |r-r_1|} \sigma} + \frac{I_2}{4\pi {\bf |r-r_2|} \sigma} + \frac{I_3}{4\pi {\bf |r-r_3|} \sigma} + ... = \sum_k \frac{I_k}{4\pi {\bf |r-r_k|} \sigma}
+\label{eq:VCtheory}
+\end{equation}
+
+\ghnote{The list below was essentially copy-pasted from Gautes lecture notes in FYS388 + I added the line source approximation. Don't know if we should the list here, or introduce the more advanced versions whenever they become relevant. For example, I guess that anisotropy and inhomogeneity must be used when we talk about ECoG og EEG}.
+
+The formula in eq. \ref{eq:VCtheory} represents the VC theory in its simplest form, and was based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
+
+\begin{enumerate}
+
+\item We assumed that there are no diffusive currents in the system. To account for diffusion, we would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
+
+\item We used the quasistatic approximation of Maxwell's equations, i.e., neglected terms with time derivative of the electrical and magnetic fields in the full set of Maxwell equations. This approximation is justified by the relatively low frequencies relevant for brain signals (up to  10 kHz).
+
+\item We assumed a frequency independent $\sigma$. If the tissue has a capacitive component, $\sigma$ becomes frequency dependent (i.e. the conductance depends on the frequency of the current.) However, but for most relevant purposes, the frequency effects on the conductivity are small and are normally neglected \cite{Miceli2016}.
+
+\item We assumed that $\sigma$ is isotropic (i.e., direction dependent). With an anisotropic $\sigma$ we would lose the spherical symmetry, and get the modified expression (for each source term): 
+\begin{equation}
+\phi(x,y,z) = \frac{i_e}{4\pi(\sigma_y\sigma_x x^2 + \sigma_z\sigma_x y^2 + \sigma_x\sigma_z s^2)}
+\end{equation}
+
+\item We assumed that $\sigma$ was constant in space. With a spatially varying $\sigma$, we would have to derive the theory from (eq. \ref{eq:CSD} with no diffusive term):
+\begin{equation}
+CSD = \nabla{\bf I} = \nabla{\sigma {\bf E}} = - \nabla{\sigma \nabla \phi} \\
+= -\nabla \sigma \nabla \phi - \sigma \nabla^2 \phi^2.
+\end{equation}
+
+\item We represented the neuronal membrane currents as a single point source per neuronal segment. If we instead assumed that the currents from each segment $k$ were evenly distributed over the segment length ($\Delta s_k$), eq. \ref{eq:VCtheory} should be replaced with:
+\begin{equation}
+\phi ({\bf r}) = \sum_k \frac{I_k}{4\pi \sigma \Delta s_k} \log \left( \frac{\sqrt{h_k*2+\rho_k^2} - h_k}{{\sqrt{l_k*2+\rho_k^2} - l_k}} \right),
+\label{eq:LSA}
+\end{equation}
+where $\rho_k$ is the distance perpendicular to the segment, and where $h_k$ and $l_k = h_k + \Delta s_k$ are the longitudinal distances from the end and start of the segment, respectively \cite{Holt1999, Pettersen2008a}.
+
+\end{enumerate}
+
+VC theory is the fundament for forward modeling of extracellular potentials both at the level of LFP (and MUA), ECoG or EEG. In the following sections we shall review previous modeling works and existing simulation tools for simulating electrical potentials at these different scales.
+
+
+\section{Local field potentials and multiunit activity}
+
+\ghnote{Suggest that we start these sections by explaining what $\phi$ tells us at this level. Also, we should refer to the VC-theory and explain which of the assumptions (1-6) that were relaxed in the specific case.}
+
+\subsection{LFP}
+
+\subsection{MUA}
+
+\subsection{LFPy}
+
+
+\section{Electrocortigography}
+
+\subsection{The Solveig-works}
+
+
+\section{EEG}
+
+\subsection{The Solveig-works}
+ 
+\section{Discussion}
+\label{sec:discussion}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Acknowledgements}
+\label{sec:acknowledgements}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Bibliography}
+\label{sec:bibliography}
+\bibliography{ECS_bookchapter.bib}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}  
