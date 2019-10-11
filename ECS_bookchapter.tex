@@ -74,6 +74,9 @@
 \newcommand{\gex}[1]{{\color{red}#1}}
 \newcommand{\genn}[1]{{\color{orange}#1}}
 
+\newcommand{\tvnnote}[1]{\color{white}{\hlj{TVN: #1 }}\color{black}}
+\newcommand{\tvntxt}[1]{{\color{OliveGreen}#1}}
+
 %fancy ref formatting
 \Frefformat{plain}{\fancyreffiglabelprefix}{Fig~#1}
 \newcommand*{\Frefsecshortname}{Section}%
@@ -143,7 +146,7 @@
 
 %% Title, authors and addresses
 
-\title{Computing extracellular electrical potentials from in silico neuronal simulations} 
+\title{Computing extracellular electrical potentials from in silico neuronal simulations\tvnnote{How about the more general ``Computing brain signals from neural simulations''}} 
 
 %% use the tnoteref command within \title for footnotes;
 %% use the tnotetext command for the associated footnote;
@@ -170,12 +173,12 @@
 %% \address[label2]{<address>}
 
 \author{Geir Halnes\fnref{label1,label2}}
-\author{Torbj\o{}rn Vefferstad Ness \fnref{label1,label2}}
+\author{Torbj\o{}rn V. Ness \fnref{label1,label2}}
 \author{Solveig N\ae{}ss\fnref{label2}}
 \author{Klas Pettersen \fnref{label3}}
 \author{Gaute T. Einevoll\corref{cor1}\fnref{label1,label2,label4}}
 
-\address[label1]{Department of Mathematical Science and Technology, Norwegian University of Life Sciences, {{\AA}}s, Norway}
+\address[label1]{Faculty of Science and Technology, Norwegian University of Life Sciences, {{\AA}}s, Norway}
 \address[label2]{Center for Integrative Neuroplasticity, University of Oslo, Oslo, Norway}
 \address[label3]{Norwegian Artificial Intelligence Research Consortium, Oslo, Norway}
 \address[label4]{Department of Physics, University of Oslo, Oslo, Norway}
@@ -192,7 +195,7 @@
 \end{abstract}
 
 \begin{keyword}
-extracellular fields \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
+extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 %% keywords here, in the form: keyword \sep keyword
 
 %% MSC codes here, in the form: \MSC code \sep code
@@ -215,31 +218,36 @@ extracellular fields \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 
 \ghnote{End intro with bridge to theory-section. Probably we should add some older references to VC-theory?}
 
-Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions move due to migration in electrical fields, (2) a diffusion component (ions move due to diffusion), (3) an advective component (ions move because the extracellular fluid is flowing and dragging them along), and (4) a displacement component (ions pile up locally and give rise to a temporal change in the charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and can be neglected \cite{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \cite{Savtchenko2017, Pods2017}. At the level of tissue, however, it is commonly believed that the diffusive current is much smaller than the migratory current, and diffusion is therefore neglected when volume conductor (VC) theory is used tp compute extracellular potentials \cite{Holt1999, Pettersen2008a}. This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, once concentration gradients are present, diffusive currents will induce shifts in the extracellular potential also on the tissue level \cite{Halnes2016, Halnes2017, Solbra2018}, and in scenarios involving dramatic shifts in extracellular concentrations, such as spreading depression and related pathologies, diffusive effects on the extracellular potential are likely to be important \cite{Almeida2004, OConnell2016}.
+Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions move due to migration in electrical fields, (2) a diffusion component (ions move due to diffusion), (3) an advective component (ions move because the extracellular fluid is flowing and dragging them along), and (4) a displacement component (ions pile up locally and give rise to a temporal change in the charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and can be neglected \citep{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \citep{Savtchenko2017, Pods2017}. At the level of tissue however, it is commonly believed that the diffusive current is much smaller than the migratory current\tvnnote{migratory current is a new term to me. use 'drift' as under (1)? Wikipedia: ``Electromigration is the transport of material caused by the gradual movement of the ions in a conductor due to the momentum transfer between conducting electrons and diffusing metal atoms''. Are we sure about this term?}, and diffusion is therefore \tvntxt{typically} neglected %when volume conductor (VC) theory is used to compute extracellular potentials 
+\citep{Holt1999, Pettersen2008a}. 
+This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, \tvntxt{if} %when
+concentration gradients are present, diffusive currents \tvntxt{can be expected to} %will 
+induce shifts in the \tvntxt{measurable} extracellular potential %also on the tissue level 
+\citep{Halnes2016, Halnes2017, Solbra2018}, and in scenarios involving dramatic shifts in extracellular concentrations, such as spreading depression and related pathologies, diffusive effects are likely to be \tvntxt{of key importantance for shaping} the extracellular potential \citep{Almeida2004, OConnell2016}.
 
 We start this book chapter by giving an overview of the theory used for forward modellng of extracellular potentials, and introduce the mathematical frameworks and software tools that can be used for such modelling. We start the theory-part at the rather fundamental level of electrodiffusive ion concentration dynamics, and derive an electrodiffusive framework for predicting the dynamics of the extracellular ion concentrations and potential. We next show how this theory can be reduced to the simpler, and more common VC-theory if we assume that the diffusive component is negligible. 
 
-
-
-\section{Theory: From electrodiffusion to volume conductor theory}
+\section{%Theory: 
+From electrodiffusion to volume conductor theory}
 \label{sec:theory}
-
+\tvntxt{We start at the very smallest of scales considered in neuroscience, by describing the fundamentals of how charged atoms, that is, {\it ions}, are moving through the brain under the influence of electric fields and concentration gradients. Building on this, we describe how these ionic currents affect the electric extracellular potentials inside neural tissue, like the local field potential (LFP), and furthermore, how they cause electric potentials and magnetic fields that are measurable even outside the of the head.
+}
 \subsection{Ion concentration dynamics}
 \label{sec:eldiff}
-If we consider ion movements due to both electrical migration and diffusion, the flux density of an ion species $k$ is given by:
+If we consider ion movements due to both electrical migration and diffusion, the flux density of an ion species $k$ is given by \tvnnote{cite?}:
 
 \begin{equation}
 J_{k} = -D_{k}\nabla c_{k} - \frac{D_k z_k c_k}{\psi} \nabla \phi,
 \label{eq:JNP}
 \end{equation}
-where the first term on the right is the diffusive flux density $J_{k}^\text{diff}$, and the second term is the flux density due to electrical migration $J_{k}^\text{field}$, hereby referred to as the \emph{field} flux density.  Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation: 
+where the first term on the right is the diffusive flux density $J_{k}^\text{diff}$, and the second term is the flux density due to electrical migration $J_{k}^\text{field}$, hereby referred to as the \emph{field} flux density.  Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation  \tvnnote{cite?}: 
 \begin{equation}
 \frac{\partial c_k}{\partial t} = - \nabla J_k + f_k = \nabla \left[ D_k \nabla c_k + \frac{D_k z_k c_k}{\psi} \nabla \phi \right] + f_k
 \label{eq:NP}
 \end{equation}
 where $f_k$ represents any source term in the system, such as e.g., an ionic transmembrane current source. 
 
-In order to solve a set (i.e., one for each ion species present) of equations like \ref{eq:NP}, one needs an expression for the electrical potential $\phi$. There are two main approaches to this. The physically most detailed approach is to use the Poisson-Nernst-Planck (PNP) formalism \cite{Leonetti1998, Leonetti2004, Lu2007, Lopreore2008, Nanninga2008, Pods2013, Gardner2015}. Then $\phi$ is determined from Poisson's equation from electrostatics, 
+In order to solve a set (i.e., one for each ion species present) of equations like (\ref{eq:NP}), one needs an expression for the electrical potential $\phi$. There are two main approaches to this. The physically most detailed approach is to use the Poisson-Nernst-Planck (PNP) formalism \citep{Leonetti1998, Leonetti2004, Lu2007, Lopreore2008, Nanninga2008, Pods2013, Gardner2015}. Then $\phi$ is determined from Poisson's equation from electrostatics, 
 \begin{equation}
 \nabla^2 \phi = -\rho/\epsilon, 
 \label{eq:poisson}
@@ -249,9 +257,9 @@ where $\epsilon$ is the permittivity of the system, and $\rho$ is the charge den
 \rho = F \sum_k z_k c_k.
 \label{eq:poisson}
 \end{equation}
-An alternative, and more computationally efficient, approach is to replace the Poisson equation with a simplifying approximation that the bulk solution is electroneutral \cite{Mori2008, Mori2009, Mori2009a, Mori2011, Halnes2015, Halnes2013, Halnes2015arxiv, Pods2017, Niederer2013, OConnell2016, Solbra2018}, which is a good approximation on spatiotemporal scales larger than micrometers and microseconds \cite{Grodzinsky2011, Pods2017, Solbra2018}. 
+An alternative, more computationally efficient approach is to replace the Poisson equation with the simplifying approximation that the bulk solution is electroneutral \citep{Mori2008, Mori2009, Mori2009a, Mori2011, Halnes2015, Halnes2013, Halnes2015arxiv, Pods2017, Niederer2013, OConnell2016, Solbra2018}, which is a good approximation on spatiotemporal scales larger than micrometers and microseconds \citep{Grodzinsky2011, Pods2017, Solbra2018}. 
 
-Both the PNP formalism and the electroneutral formalism allow us to compute the dynamics of ion concentrations and the electrical potential in the extracellular space of neural tissue containing an arbitrary set of neuronal and glial current sources. For example, in a recent work, a version of the electroneutral formalism was developed into a framework for computing the extracellular dynamics (of $c_k$ and $\phi$) in a 3D space surrounding morphologically complex neurons simulated with the NEURON simulation tool \cite{Solbra2018}. 
+Both the PNP formalism and the electroneutral formalism allow us to compute the dynamics of ion concentrations and the electrical potential in the extracellular space of neural tissue containing an arbitrary set of neuronal and glial current sources. For example, in a recent work, a version of the electroneutral formalism was developed into a framework for computing the extracellular dynamics (of $c_k$ and $\phi$) in a 3D space surrounding morphologically complex neurons simulated with the NEURON simulation tool \citep{Solbra2018}. 
 
 Both the PNP formalism and the electroneutral formalism keep track of the spatial distribution of ion concentrations, and as such they require a suitable meshing of the 3D space, and numerical solutions based on finite difference- or finite element methods. In both cases, simulations can become very heavy, and for systems at a tissue level, the computational demand may become incommensurable. There is therefore much to gain from deriving simpler frameworks where effects of ion concentration dynamics are neglected, since, for many scenarios, this may be a good approximation. Below, we will derive these simpler frameworks using the Nernst-Planck fluxes (eq. \ref{eq:JNP}) as a starting point, as this approach will make the involved approximations transparent.
 
@@ -262,64 +270,66 @@ If we multiply eq. \ref{eq:JNP} by $F\cdot z_k$ and take the sum over all ion sp
 I = - \sum_k{F z_k D_{k}\nabla c_{k}} - \sigma \nabla{\phi}
 \label{eq:INP}
 \end{equation}
-where the first term is the diffusive current density $I^\text{diff}$ and the second term is the field current density$I^\text{field}$. We have here identified the conductivity $\sigma$ of the medium as \cite{Koch1999}:
+where the first term is the diffusive current density $I^\text{diff}$ and the second term is the field current density$I^\text{field}$. We have here identified the conductivity $\sigma$ of the medium as \citep{Koch1999}:
 \begin{equation}
-\sigma = F\sum_{k} \frac{\tilde{D}_{k} z_{k}^2}{\psi}c_{k},
+\sigma = F\sum_{k} \frac{\tilde{D}_{k} z_{k}^2}{\psi}c_{k}.
 \label{eq:sigma}
 \end{equation}
-
 Current conservation in the extracellular space implies that:
 \begin{equation}
 \nabla I = - \sum_k{F z_k D_{k}\nabla^2 c_{k}} - \nabla \sigma \nabla \phi = - CSD,
 \label{eq:CSD}
 \end{equation}
-where $CSD$ denotes the current source density, reflecting e.g., local neuronal or glial transmembrane currents. We note that this is essentially equivalent to eq. \ref{eq:NP} at the level of ion species, with the exception eq. \ref{eq:NP} contained a term $\partial c_k/ \partial t$ for accumulation of ion species $k$, while eq. \ref{eq:CSD} does \emph{not} contain a corresponding term ($\partial \rho/ \partial t$) for charge accumulation. Hence, in eq. \ref{eq:CSD} it is implicitly assumed that the extracellular bulk solution is electroneutral \cite{Solbra2018}. We note that in general, the $CSD$ term includes both ionic transmembrane currents and the capacitive current, and that the latter means that the local charge accumulation building up the transmembrane potential still occurs in the membrane Debye-layer.
+where $CSD$ denotes the current source density, reflecting e.g., local neuronal or glial transmembrane currents. We note that this is essentially equivalent to eq. \ref{eq:NP} at the level of ion species, with the exception eq. \ref{eq:NP} contained a term $\partial c_k/ \partial t$ for accumulation of ion species $k$, while eq. \ref{eq:CSD} does \emph{not} contain a corresponding term ($\partial \rho/ \partial t$) for charge accumulation. Hence, in eq. (\ref{eq:CSD}) it is implicitly assumed that the extracellular bulk solution is electroneutral \citep{Solbra2018}. We note that in general, the $CSD$ term includes both ionic transmembrane currents and the capacitive current, and that the latter means that the local charge accumulation building up the transmembrane potential still occurs in the membrane Debye-layer.
 
-We note that if we assume all concentrations to be constant in space, the diffusive term vanishes, and eq. \ref{eq:CSD} reduces to:
+Note that if we assume all concentrations to be constant in space, the diffusive term vanishes, and eq. (\ref{eq:CSD}) reduces to:
 \begin{equation}
 \nabla \sigma \nabla \phi = - CSD,
 \label{eq:CSDstandard}
 \end{equation}
-This the standard expression used in current source density (CSD) theory \cite{Mitzdorf1985, Nicholson1975, Pettersen2006}, where spatially distributed recordings of $\phi$ are used to make theoretical predictions of underlying current sources. Using this equation, it is implicitly assumed that the Laplacian of $\phi$ is the signature of a cellular current source. As eq. eq. \ref{eq:CSD} indicated, this is not a priori true, since the diffusive term could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources: 
+This the standard expression used in current source density (CSD) theory \citep{Mitzdorf1985, Nicholson1975, Pettersen2006}, where spatially distributed recordings of $\phi$ are used to make theoretical predictions of underlying current sources. Using this equation, it is implicitly assumed that the Laplacian of $\phi$ is the signature of a cellular current source \tvnnote{Is this just sayig that phi is not neccesarily transmembrae currents? Statement could be clearer}. As eq. (\ref{eq:CSD}) indicated, this is not a priori true, since the diffusive term could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources: 
 \begin{equation}
 \nabla \sigma \nabla \phi  = - \sum_k{F z_k D_{k}\nabla^2 c_{k}}.
 \label{eq:ljpot}
 \end{equation}
 
-The contributions from diffusion on extracellular fields is not necessarily small, but it tends to be very slow, and will only affect the very low-frequency components of $\phi$ \cite{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time course (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1Hz \cite{Einevoll2013}, which means that most of the diffusive contribution will be filtered out from experimental recordings. Except in the case of pathologically dramatic concentration variations, it may therefore be a good approximation to neglect the diffusive term. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq. \ref{eq:CSDstandard}.
+The contributions from diffusion on extracellular fields is not necessarily small, but it tends to be very slow, and will only affect the very low-frequency components of $\phi$ \citep{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time course (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1Hz \citep{Einevoll2013}, which means that most of the \tvntxt{tentative} diffusive contribution will be filtered out from experimental recordings. It may therefore be a good approximation to neglect the diffusive term, except in the case of pathologically dramatic concentration variations. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq.~(\ref{eq:CSDstandard}).
 
 
 \subsection{Volume conductor theory}
 \ghnote{Valgte aa utlede det enkleste tilfellet her, med puntkilde og konstant konduktivitet. Blir dette for banalt, eller skal vi ha det slik?}
 
-In simulations of morphologically complex neurons, e.g., based on the NEURON simulator \cite{Hines2009}, we typically
-compute a set of transmembrane current sources for each neuronal segment. When the distribution of membrane point current sources is known, it is possible to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s) based on volume conductor (VC) theory \cite{Holt1999, Pettersen2008a}.
-
-The standard expression used in VC theory can be derived from the standard CSD-equation (eq. \ref{eq:CSDstandard}). We start by writing eq. \ref{eq:CSDstandard} as: 
+In simulations of morphologically complex neurons, 
+%e.g., based on the NEURON simulator \citep{Hines2009},
+%\tvnnote{Seemed unneccessary to give spesific software}
+we typically
+compute a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. When the distribution of membrane point current sources is known, it is possible to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s) based on volume conductor (VC) theory \citep{Holt1999, Linden2014}.
+The standard expression used in VC theory can be derived from the standard CSD-equation (eq. \ref{eq:CSDstandard}), by reformulating it as: 
 \begin{equation}
 \nabla E = - CSD/\sigma,
 \label{eq:trygve}
 \end{equation}
-where we have introduced the electrical field ${\bf E}=\nabla \phi$, and for now assumed that $\sigma$ is homogeneous in space. If we integrate this over a 3D volume, we get:
+where we have introduced the electrical field 
+${\bf E}=\nabla \phi$ \tvnnote{Comment on this? Maxwell -> quasistatic -> cross-product = 0 implies E is gradient of scalar function. Is anything gained by introducing  {\bf E} at all, when we already have $\phi$?}, and for now assumed that the conductivity, $\sigma$, is a scalar constant. We integrate each side of this equation over a 3D volume,
 \begin{equation}
 \iiint_V E({\bf r}) \,d^3V =  - \frac{1}{\sigma} \iiint_V \ CSD({\bf r}) \, d^3V.
 \label{eq:trygve2}
 \end{equation}
-If we consider the simplest possible case of a single point current source $I_1$ in ${\bf r}=0$, the right hand side becomes $I_1/\sigma$. By Gauss' theorem, we can convert the left hand side to a surface integral, and eq. \label{eq:trygve2} becomes:
+If we consider the simplest possible case of a single point current source $I_1$ in ${\bf r}=0$, the right hand side becomes $-I_1/\sigma$. By Gauss' theorem, we can convert the left hand side to a surface integral, and get:
 \begin{equation}
-\iiint_V E(r) \,d^3V =  \oiint_{S} E(r) \,d^2S = 4\pi r^2 E(r) = 4\pi r^2 \frac{d\phi}{dr} = \frac{I_1}{\sigma}
+\iiint_V E(r) \,d^3V =  \oiint_{S} E(r) \,d^2S = 4\pi r^2 E(r) = 4\pi r^2 \frac{d\phi}{dr} = -\frac{I_1}{\sigma},
 \label{eq:trygve3}
 \end{equation}
-where we have utilized the spherical symmetry of the problem. Finally, integration with respect to $r$ gives us
+where we have exploited the spherical symmetry of the problem. Finally, integration with respect to $r$ gives us
 \begin{equation}
-\phi = \frac{I_m}{4\pi r \sigma}
+\phi = \frac{I_1}{4\pi r \sigma}.
 \label{eq:trygve3}
 \end{equation}
 
 With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations $\bf r_1, r_2, r_3 ... $, we can apply the superposition principle, and the potential in a point $\bf r$ is given by:
 
 \begin{equation}
-\phi ({\bf r}) = \frac{I_1}{4\pi {\bf |r-r_1|} \sigma} + \frac{I_2}{4\pi {\bf |r-r_2|} \sigma} + \frac{I_3}{4\pi {\bf |r-r_3|} \sigma} + ... = \sum_k \frac{I_k}{4\pi {\bf |r-r_k|} \sigma}
+\phi ({\bf r}) = \frac{I_1}{4\pi {\bf |r-r_1|} \sigma} + \frac{I_2}{4\pi {\bf |r-r_2|} \sigma} + \frac{I_3}{4\pi {\bf |r-r_3|} \sigma} + ... = \sum_k \frac{I_k}{4\pi {\bf |r-r_k|} \sigma}.
 \label{eq:VCtheory}
 \end{equation}
 
@@ -329,29 +339,31 @@ The formula in eq. \ref{eq:VCtheory} represents the VC theory in its simplest fo
 
 \begin{enumerate}
 
-\item We assumed that there are no diffusive currents in the system. To account for diffusion, we would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
+\item {\bf No diffusion:} We assumed that there are no diffusive currents in the system. To account for diffusion, we would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
 
-\item We used the quasistatic approximation of Maxwell's equations, i.e., neglected terms with time derivative of the electrical and magnetic fields in the full set of Maxwell equations. This approximation is justified by the relatively low frequencies relevant for brain signals (up to  10 kHz).
+\item {\bf Quasi-static:} We used the quasistatic approximation of Maxwell's equations when assuming ${\bf E}=\nabla \phi$,  that is, we neglected terms with time derivative of the electrical and magnetic fields in the full set of Maxwell equations. This approximation appears to be well-justified for the relatively low frequencies relevant for brain signals, below about 10 kHz \citep{Nunez2006}.
 
-\item We assumed a frequency independent $\sigma$. If the tissue has a capacitive component, $\sigma$ becomes frequency dependent (i.e. the conductance depends on the frequency of the current.) However, but for most relevant purposes, the frequency effects on the conductivity are small and are normally neglected \cite{Miceli2016}.
+\item {\bf Frequency independent:} We assumed a frequency independent conductivity, $\sigma$. If the tissue has a capacitive component, $\sigma$ becomes frequency dependent (i.e. the conductance depends on the frequency of the current). However, for most relevant purposes, the frequency effects on the conductivity are small and are normally neglected, see \cite{Miceli2016}.
 
-\item We assumed that $\sigma$ is isotropic (i.e., direction dependent). With an anisotropic $\sigma$ we would lose the spherical symmetry, and get the modified expression (for each source term): 
+\item {\bf Isotropic:} We assumed that $\sigma$ is isotropic (i.e., direction dependent). With an anisotropic $\sigma$ we would lose the spherical symmetry, and get the modified expression (for each source term) \citep{Ness2015}: 
 \begin{equation}
-\phi(x,y,z) = \frac{i_e}{4\pi(\sigma_y\sigma_x x^2 + \sigma_z\sigma_x y^2 + \sigma_x\sigma_z s^2)}
+\phi(x,y,z) = \frac{i_e}{4\pi(\sigma_y\sigma_x x^2 + \sigma_z\sigma_x y^2 + \sigma_x\sigma_z s^2)}.
 \end{equation}
+In cortex, it has been found that the conductivity is in fact about 50 \% higher along the depth axis, that is, parallell to the axis of the pyramidal dendrites \citep{Goto2010}, however, the overall effect of this on extracellular potentials appears quite weak \citep{Ness2015}.
 
-\item We assumed that $\sigma$ was constant in space. With a spatially varying $\sigma$, we would have to derive the theory from (eq. \ref{eq:CSD} with no diffusive term):
+\item {\bf Homogeneous:} We assumed that $\sigma$ was constant in space. With a spatially varying $\sigma$, we would have to derive the theory from (eq. \ref{eq:CSD} with no diffusive term):
 \begin{equation}
 CSD = \nabla{\bf I} = \nabla{\sigma {\bf E}} = - \nabla{\sigma \nabla \phi} \\
 = -\nabla \sigma \nabla \phi - \sigma \nabla^2 \phi^2.
 \end{equation}
-
-\item We represented the neuronal membrane currents as a single point source per neuronal segment. If we instead assumed that the currents from each segment $k$ were evenly distributed over the segment length ($\Delta s_k$), eq. \ref{eq:VCtheory} should be replaced with:
+\tvnnote{Last term with the squares is not supposted to be there, right?}
+This assumption is expected to be reasonable within the cortex, however, slices, EEG, ECoG. Method of Images. FEM.
+\item {\bf Point sources:} We represented the neuronal membrane currents as a single point source per neuronal segment. If we instead assumed that the currents from each segment $k$ were evenly distributed over the segment length ($\Delta s_k$), eq. \ref{eq:VCtheory} should be replaced with:
 \begin{equation}
 \phi ({\bf r}) = \sum_k \frac{I_k}{4\pi \sigma \Delta s_k} \log \left( \frac{\sqrt{h_k^2+\rho_k^2} - h_k}{{\sqrt{l_k^2+\rho_k^2} - l_k}} \right),
 \label{eq:LSA}
 \end{equation}
-where $\rho_k$ is the distance perpendicular to the segment, and where $h_k$ and $l_k = h_k + \Delta s_k$ are the longitudinal distances from the end and start of the segment, respectively \cite{Holt1999, Pettersen2008a}.
+where $\rho_k$ is the distance perpendicular to the segment, and where $h_k$ and $l_k = h_k + \Delta s_k$ are the longitudinal distances from the end and start of the segment, respectively \citep{Holt1999, Linden2014}.
 
 \end{enumerate}
 
