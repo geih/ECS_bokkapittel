@@ -192,6 +192,7 @@
 \begin{abstract}
 %% Text of abstract
 \ghnote{Vet ikke hva forfatterordningen skal vaere, men vi faar se det an etter hvert, og bestemme utifra hvem som har jobbet mest med manus. For oeyeblikket leder jeg, men jeg tror jeg satser paa at kanskje Torbjoern fosser forbi etter hvert.}
+\tvnnote{Just to be sure: If we make figures for this chapter, we have the right to re-use those wherever we like?}
 \end{abstract}
 
 \begin{keyword}
@@ -379,7 +380,10 @@ Neural simulations with detailed multi-compartment cell models is based on solvi
  \sum_k I_k = 0.
  \label{eq:current_conservation}
 \end{equation}
-\tvnnote{Explain the role in capacitive currents in ensuring this.}
+Note that the capacitive currents have a vital role in ensuring this current conservation: the membrane potential is caused by a slight charge imbalance between the inside and the outside of the cell, and all this surplus charge is expected to be distributed on the cellular membrane, where all the surplus charge on the inside of the cellular membrane (negative during the resting state) is exactly balanced by an equal  amount of charge of the opposite polarity on the outside of the cellular membrane [cite]. 
+As current pass through the membrane, or from one part of the cell to another, the amount of surplus charge on the inside of the cellular membrane changes, which immediately results in a corresponding change in the amount of charge on the outside of the cellular membrane. Such changes in the amount of surplus charge distributed along the outside of the cellular membrane are capacitive currents, and they ensure that eq. (\ref{eq:current_conservation}) is always fulfilled.
+
+\tvnnote{If we keep this part about current conservation, we should maybe make illustration figure? Could it be a Box etc?}
 
 The assumption of current conservation has far-reaching consequences for extracellular potentials, and to illustrate this we start by applying the presented framework to a simple two-compartment cell model. 
 
