@@ -337,8 +337,8 @@ With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations $\bf r_
 
 The formula in eq. \ref{eq:VCtheory} represents the VC theory in its simplest form, and was based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
 
+\tvnnote{How about having each of these assumptions as subsections named "Assumption 4: Isotropy``? For some of them, it makes sense to write quite a bit, and I suspect it will get messy with items.}
 \begin{enumerate}
-
 \item {\bf No diffusion:} We assumed that there are no diffusive currents in the system. To account for diffusion, we would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
 
 \item {\bf Quasi-static:} We used the quasistatic approximation of Maxwell's equations when assuming ${\bf E}=\nabla \phi$,  that is, we neglected terms with time derivative of the electrical and magnetic fields in the full set of Maxwell equations. This approximation appears to be well-justified for the relatively low frequencies relevant for brain signals, below about 10 kHz \citep{Nunez2006}.
@@ -358,7 +358,9 @@ CSD = \nabla{\bf I} = \nabla{\sigma {\bf E}} = - \nabla{\sigma \nabla \phi} \\
 \end{equation}
 \tvnnote{Last term with the squares is not supposted to be there, right?}
 This assumption is expected to be reasonable within the cortex, however, slices, EEG, ECoG. Method of Images. FEM.
-\item {\bf Point sources:} We represented the neuronal membrane currents as a single point source per neuronal segment. If we instead assumed that the currents from each segment $k$ were evenly distributed over the segment length ($\Delta s_k$), eq. \ref{eq:VCtheory} should be replaced with:
+Mention difference between microscale (highly non-homogeneous) and macroscale (relatively homogeneous). Like a lawn for an ant?
+
+\item {\bf Point sources:} We represented the neuronal membrane currents as a single point source per neuronal segment. If we instead assume that the currents from each segment $k$ are evenly distributed over the segment length ($\Delta s_k$), then eq. \ref{eq:VCtheory} should be integrated along the neural segment, giving:
 \begin{equation}
 \phi ({\bf r}) = \sum_k \frac{I_k}{4\pi \sigma \Delta s_k} \log \left( \frac{\sqrt{h_k^2+\rho_k^2} - h_k}{{\sqrt{l_k^2+\rho_k^2} - l_k}} \right),
 \label{eq:LSA}
@@ -367,12 +369,29 @@ where $\rho_k$ is the distance perpendicular to the segment, and where $h_k$ and
 
 \end{enumerate}
 
-VC theory is the fundament for forward modeling of extracellular potentials both at the level of LFP (and MUA), ECoG or EEG. In the following sections we shall review previous modeling works and existing simulation tools for simulating electrical potentials at these different scales.
+Volume conductor theory is the fundament for forward modeling of extracellular potentials both at the level of LFP (and MUA), ECoG or EEG. In the following sections we shall review previous modeling works and existing simulation tools for simulating electrical potentials at these different scales.
+
+\section{\tvntxt{Illustration with two-compartment cell model}}
+\tvnnote{Since the concept of current conservation is key to understand extracellular potentials, perhaps we should start with two-compartment cell model?}
+
+Neural simulations with detailed multi-compartment cell models is based on solving the cable equation (Chapter in this book?), with a built-in assumption of current conservation \citep{Koch1999}. Current conservation implies that the summed current across the cellular membrane will at all times sum to zero,
+\begin{equation}
+ \sum_k I_k = 0.
+ \label{eq:current_conservation}
+\end{equation}
+\tvnnote{Explain the role in capacitive currents in ensuring this.}
+
+The assumption of current conservation has far-reaching consequences for extracellular potentials, and to illustrate this we start by applying the presented framework to a simple two-compartment cell model. 
+
+When applying eq. (\ref{eq:current_conservation}) to eq. (\ref{eq:VCtheory}) for a two-compartment cell model, we get
+
+
 
 
 \section{Local field potentials and multiunit activity}
 
 \ghnote{Suggest that we start these sections by explaining what $\phi$ tells us at this level. Also, we should refer to the VC-theory and explain which of the assumptions (1-6) that were relaxed in the specific case.}
+
 
 \subsection{LFP}
 
