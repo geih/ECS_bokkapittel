@@ -193,6 +193,7 @@
 %% Text of abstract
 \ghnote{Vet ikke hva forfatterordningen skal vaere, men vi faar se det an etter hvert, og bestemme utifra hvem som har jobbet mest med manus. For oeyeblikket leder jeg, men jeg tror jeg satser paa at kanskje Torbjoern fosser forbi etter hvert.}
 \tvnnote{Just to be sure: If we make figures for this chapter, we have the right to re-use those wherever we like?}
+\tvnnote{Giugliano: max 15-20 pages, by February 2020 }
 \end{abstract}
 
 \begin{keyword}
@@ -372,22 +373,27 @@ where $\rho_k$ is the distance perpendicular to the segment, and where $h_k$ and
 
 Volume conductor theory is the fundament for forward modeling of extracellular potentials both at the level of LFP (and MUA), ECoG or EEG. In the following sections we shall review previous modeling works and existing simulation tools for simulating electrical potentials at these different scales.
 
-\section{\tvntxt{Illustration with two-compartment cell model}}
-\tvnnote{Since the concept of current conservation is key to understand extracellular potentials, perhaps we should start with two-compartment cell model?}
-
+\section{The vital role of current conservation}
+\tvnnote{If we keep this part about current conservation, we should maybe make illustration figure? Could maybe be a Box, if that is allowed?}
 Neural simulations with detailed multi-compartment cell models is based on solving the cable equation (Chapter in this book?), with a built-in assumption of current conservation \citep{Koch1999}. Current conservation implies that the summed current across the cellular membrane will at all times sum to zero,
 \begin{equation}
  \sum_k I_k = 0.
  \label{eq:current_conservation}
 \end{equation}
 Note that the capacitive currents have a vital role in ensuring this current conservation: the membrane potential is caused by a slight charge imbalance between the inside and the outside of the cell, and all this surplus charge is expected to be distributed on the cellular membrane, where all the surplus charge on the inside of the cellular membrane (negative during the resting state) is exactly balanced by an equal  amount of charge of the opposite polarity on the outside of the cellular membrane [cite]. 
-As current pass through the membrane, or from one part of the cell to another, the amount of surplus charge on the inside of the cellular membrane changes, which immediately results in a corresponding change in the amount of charge on the outside of the cellular membrane. Such changes in the amount of surplus charge distributed along the outside of the cellular membrane are capacitive currents, and they ensure that eq. (\ref{eq:current_conservation}) is always fulfilled.
+As current pass through the membrane, or from one part of the cell to another, the amount of surplus charge on the inside of the cellular membrane changes, which immediately results in a corresponding change in the amount of charge on the outside of the cellular membrane. Such changes in the amount of surplus charge distributed along the outside of the cellular membrane are what is called capacitive currents, and they ensure that eq.~\ref{eq:current_conservation} is always fulfilled.
 
-\tvnnote{If we keep this part about current conservation, we should maybe make illustration figure? Could it be a Box etc?}
+\subsection{Illustration with point neuron model}
+The assumption of current conservation has far-reaching consequences for extracellular potentials. Consider for example the often-used point-neuron models [cite]. Since they have only one compartment, eq.~\ref{eq:current_conservation} demands that there should be no net membrane current, implying no extracellular potentials (see eq.~\ref{eq:VCtheory}). This means that, while point-neurons might have an important role to play for investigating neural network dynamics, they are in general incapable of producing extracellular potentials.
 
-The assumption of current conservation has far-reaching consequences for extracellular potentials, and to illustrate this we start by applying the presented framework to a simple two-compartment cell model. 
+and to illustrate this we start by applying the presented framework to a simple two-compartment cell model. 
 
-When applying eq. (\ref{eq:current_conservation}) to eq. (\ref{eq:VCtheory}) for a two-compartment cell model, we get
+\subsection{Illustration with two-compartment cell model}
+Consider now a cell model with two cellular compartments. Current conservation, through eq.~\ref{eq:current_conservation} then implies $I_0 + I_1 = 0$, which in combination with eq.~\ref{eq:VCtheory} gives,
+\begin{equation}
+ \phi ({\bf r}) = \frac{I_0}{4\pi {\bf |r-r_1|} \sigma} - \frac{I_0}{4\pi {\bf |r-r_2|} \sigma}.
+\end{equation}
+
 
 
 
