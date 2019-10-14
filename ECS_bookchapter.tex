@@ -237,11 +237,11 @@ From electrodiffusion to volume conductor theory}
 \subsection{Ion concentration dynamics}
 \label{sec:eldiff}
 If we consider ion movements due to both electrical migration and diffusion, the flux density of an ion species $k$ is given by \tvnnote{cite?}:
-
 \begin{equation}
 J_{k} = -D_{k}\nabla c_{k} - \frac{D_k z_k c_k}{\psi} \nabla \phi,
 \label{eq:JNP}
 \end{equation}
+\tvnnote{Can it be easily explained where this equation comes from?} 
 where the first term on the right is the diffusive flux density $J_{k}^\text{diff}$, and the second term is the flux density due to electrical migration $J_{k}^\text{field}$, hereby referred to as the \emph{field} flux density.  Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation  \tvnnote{cite?}: 
 \begin{equation}
 \frac{\partial c_k}{\partial t} = - \nabla J_k + f_k = \nabla \left[ D_k \nabla c_k + \frac{D_k z_k c_k}{\psi} \nabla \phi \right] + f_k
@@ -383,19 +383,19 @@ Neural simulations with detailed multi-compartment cell models is based on solvi
 Note that the capacitive currents have a vital role in ensuring this current conservation: the membrane potential is caused by a slight charge imbalance between the inside and the outside of the cell, and all this surplus charge is expected to be distributed on the cellular membrane, where all the surplus charge on the inside of the cellular membrane (negative during the resting state) is exactly balanced by an equal  amount of charge of the opposite polarity on the outside of the cellular membrane [cite]. 
 As current pass through the membrane, or from one part of the cell to another, the amount of surplus charge on the inside of the cellular membrane changes, which immediately results in a corresponding change in the amount of charge on the outside of the cellular membrane. Such changes in the amount of surplus charge distributed along the outside of the cellular membrane are what is called capacitive currents, and they ensure that eq.~\ref{eq:current_conservation} is always fulfilled.
 
-\subsection{Illustration with point neuron model}
+\subsection{Illustration with point-neuron model}
 The assumption of current conservation has far-reaching consequences for extracellular potentials. Consider for example the often-used point-neuron models [cite]. Since they have only one compartment, eq.~\ref{eq:current_conservation} demands that there should be no net membrane current, implying no extracellular potentials (see eq.~\ref{eq:VCtheory}). This means that, while point-neurons might have an important role to play for investigating neural network dynamics, they are in general incapable of producing extracellular potentials.
 
 
 \subsection{Illustration with two-compartment cell model}
-Consider now a cell model with two cellular compartments. Current conservation, through eq.~\ref{eq:current_conservation} then implies $I_0 + I_1 = 0$, which in combination with eq.~\ref{eq:VCtheory} gives,
+Consider now a cell model with two cellular compartments. Current conservation, through eq.~\ref{eq:current_conservation}, then implies $I_1 + I_2 = 0$, which in combination with eq.~\ref{eq:VCtheory} gives,
 \begin{equation}
- \phi ({\bf r}) = \frac{I_0}{4\pi {\bf |r-r_1|} \sigma} - \frac{I_0}{4\pi {\bf |r-r_2|} \sigma}.
+ \phi ({\bf r}) = \frac{I_1}{4\pi {\bf |r-r_1|} \sigma} + \frac{-I_1}{4\pi {\bf |r-r_2|} \sigma} = \frac{I_1}{4\pi \sigma}\left ( \frac{1}{{\bf |r-r_1|}} - \frac{1}{{\bf |r-r_2|}}\right ).
 \end{equation}
+In words, the exact same amount of current that goes into one compartment, goes out of the other, resulting in a dipole (Fig).
 
-
-
-
+\subsection{Illustration with multi-compartment cell model}
+For multi-compartment cell models, the situation becomes more complex, but current conservation is still key in shaping extracellular potentials.
 
 \section{Local field potentials and multiunit activity}
 
