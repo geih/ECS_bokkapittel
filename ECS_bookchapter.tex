@@ -220,6 +220,8 @@ extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 
 \ghnote{End intro with bridge to theory-section. Probably we should add some older references to VC-theory?}
 
+Very important to model what you measure, and measure what you model \citep{Einevoll2019, Maki-marttunen2019}
+
 Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions move due to migration in electrical fields, (2) a diffusion component (ions move due to diffusion), (3) an advective component (ions move because the extracellular fluid is flowing and dragging them along), and (4) a displacement component (ions pile up locally and give rise to a temporal change in the charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and can be neglected \citep{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \citep{Savtchenko2017, Pods2017}. At the level of tissue however, it is commonly believed that the diffusive current is much smaller than the migratory current\tvnnote{migratory current is a new term to me. use 'drift' as under (1)? Wikipedia: ``Electromigration is the transport of material caused by the gradual movement of the ions in a conductor due to the momentum transfer between conducting electrons and diffusing metal atoms''. Are we sure about this term?}, and diffusion is therefore \tvntxt{typically} neglected %when volume conductor (VC) theory is used to compute extracellular potentials 
 \citep{Holt1999, Pettersen2008a}. 
 This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, \tvntxt{if} %when
@@ -228,6 +230,16 @@ induce shifts in the \tvntxt{measurable} extracellular potential %also on the ti
 \citep{Halnes2016, Halnes2017, Solbra2018}, and in scenarios involving dramatic shifts in extracellular concentrations, such as spreading depression and related pathologies, diffusive effects are likely to be \tvntxt{of key importantance for shaping} the extracellular potential \citep{Almeida2004, OConnell2016}.
 
 We start this book chapter by giving an overview of the theory used for forward modellng of extracellular potentials, and introduce the mathematical frameworks and software tools that can be used for such modelling. We start the theory-part at the rather fundamental level of electrodiffusive ion concentration dynamics, and derive an electrodiffusive framework for predicting the dynamics of the extracellular ion concentrations and potential. We next show how this theory can be reduced to the simpler, and more common VC-theory if we assume that the diffusive component is negligible. 
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{cortex_multipop_arial_font}
+\end{center}
+\caption{\textbf{LFP, ECoG, EEG and MEG.} The same basic building blocks, that is, currents caused by large numbers of synaptic input are contributing to several different measurable signals.
+\tvnnote{Not sure if we want to include this figure?}}
+\label{fig:multimodal}
+\end{figure}
+
 
 \section{%Theory: 
 From electrodiffusion to volume conductor theory}
@@ -241,7 +253,7 @@ If we consider ion movements due to both electrical migration and diffusion, the
 J_{k} = -D_{k}\nabla c_{k} - \frac{D_k z_k c_k}{\psi} \nabla \phi,
 \label{eq:JNP}
 \end{equation}
-\tvnnote{Can it be easily explained where this equation comes from?} 
+\tvnnote{Can it be easily explained where this equation comes from? First term is Fick's law, second is maybe Ohm's law for volume conductor?} 
 where the first term on the right is the diffusive flux density $J_{k}^\text{diff}$, and the second term is the flux density due to electrical migration $J_{k}^\text{field}$, hereby referred to as the \emph{field} flux density.  Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation  \tvnnote{cite?}: 
 \begin{equation}
 \frac{\partial c_k}{\partial t} = - \nabla J_k + f_k = \nabla \left[ D_k \nabla c_k + \frac{D_k z_k c_k}{\psi} \nabla \phi \right] + f_k
@@ -336,10 +348,12 @@ With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations $\bf r_
 \end{equation}
 
 \ghnote{The list below was essentially copy-pasted from Gautes lecture notes in FYS388 + I added the line source approximation. Don't know if we should add the list here, or introduce the more advanced versions whenever they become relevant. For example, I guess that anisotropy and inhomogeneity must be used when we talk about ECoG og EEG}.
+\tvnnote{How about having each of these assumptions as subsections named "Assumption 4: Isotropy``? For some of them, it makes sense to write quite a bit, and I suspect it will get messy with items.}
+\tvnnote{Not sure if point-source should be on this list, since line-source is just an integration of the point-source formula, so this point is more of a further development than an assumption.}
 
 The formula in eq. \ref{eq:VCtheory} represents the VC theory in its simplest form, and was based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
 
-\tvnnote{How about having each of these assumptions as subsections named "Assumption 4: Isotropy``? For some of them, it makes sense to write quite a bit, and I suspect it will get messy with items.}
+
 \begin{enumerate}
 \item {\bf No diffusion:} We assumed that there are no diffusive currents in the system. To account for diffusion, we would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
 
@@ -374,7 +388,6 @@ where $\rho_k$ is the distance perpendicular to the segment, and where $h_k$ and
 Volume conductor theory is the fundament for forward modeling of extracellular potentials both at the level of LFP (and MUA), ECoG or EEG. In the following sections we shall review previous modeling works and existing simulation tools for simulating electrical potentials at these different scales.
 
 \section{The vital role of current conservation}
-\tvnnote{If we keep this part about current conservation, we should maybe make illustration figure? Could maybe be a Box, if that is allowed?}
 Neural simulations with detailed multi-compartment cell models is based on solving the cable equation (Chapter in this book?), with a built-in assumption of current conservation \citep{Koch1999}. Current conservation implies that the summed current across the cellular membrane will at all times sum to zero,
 \begin{equation}
  \sum_k I_k = 0.
@@ -384,42 +397,126 @@ Note that the capacitive currents have a vital role in ensuring this current con
 As current pass through the membrane, or from one part of the cell to another, the amount of surplus charge on the inside of the cellular membrane changes, which immediately results in a corresponding change in the amount of charge on the outside of the cellular membrane. Such changes in the amount of surplus charge distributed along the outside of the cellular membrane are what is called capacitive currents, and they ensure that eq.~\ref{eq:current_conservation} is always fulfilled.
 
 \subsection{Illustration with point-neuron model}
-The assumption of current conservation has far-reaching consequences for extracellular potentials. Consider for example the often-used point-neuron models [cite]. Since they have only one compartment, eq.~\ref{eq:current_conservation} demands that there should be no net membrane current, implying no extracellular potentials (see eq.~\ref{eq:VCtheory}). This means that, while point-neurons might have an important role to play for investigating neural network dynamics, they are in general incapable of producing extracellular potentials.
-
+The assumption of current conservation has far-reaching consequences for extracellular potentials. Consider for example the often-used point-neuron models [cite]. Since they have only one compartment, eq.~\ref{eq:current_conservation} demands that there should be no net membrane current, implying no extracellular potentials (see eq.~\ref{eq:VCtheory}). This means that, while point-neurons might have an important role to play for investigating neural network dynamics, they are in general incapable of producing extracellular potentials (Fig.~\ref{fig:current_conservation}A).
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{dipoles}% This is a *.eps file
+%\includegraphics[width=\textwidth]{\string~/Dropbox/ConvNet_LFP_figures/parameter_errors_full}% This is a *.eps file
+\end{center}
+\caption{\textbf{Effect of current conservation on extracellular potentials.} 
+Illustration of synaptic input to three different types of cell models (top row), with the resulting extracellular potentials (bottom row). 
+A: Point neurons have no net currents, and therefore cause no extracellular potentials. B: Two-compartment neuron models have two opposite currents
+of identical magnitude, and cause dipolar extracellular potentials. C: Multi-compartment neuron models \citep{Hay2011} give rise to extracellular potentials with complex (but mostly dipolar-like) shapes.}
+\label{fig:current_conservation}
+\end{figure}
 
 \subsection{Illustration with two-compartment cell model}
 Consider now a cell model with two cellular compartments. Current conservation, through eq.~\ref{eq:current_conservation}, then implies $I_1 + I_2 = 0$, which in combination with eq.~\ref{eq:VCtheory} gives,
 \begin{equation}
  \phi ({\bf r}) = \frac{I_1}{4\pi {\bf |r-r_1|} \sigma} + \frac{-I_1}{4\pi {\bf |r-r_2|} \sigma} = \frac{I_1}{4\pi \sigma}\left ( \frac{1}{{\bf |r-r_1|}} - \frac{1}{{\bf |r-r_2|}}\right ).
 \end{equation}
-In words, the exact same amount of current that goes into one compartment, goes out of the other, resulting in a dipole (Fig).
+In words, the exact same amount of current that goes into one compartment, goes out of the other, resulting in a current dipole (Fig.~\ref{fig:current_conservation}B).
 
 \subsection{Illustration with multi-compartment cell model}
-For multi-compartment cell models, the situation becomes more complex, but current conservation is still key in shaping extracellular potentials.
+For multi-compartment cell models, the situation becomes more complex, but current conservation is still key in shaping extracellular potentials, and ensures that there are no current monopoles. This means that in general neural activity can be expected to cause both negative and positive currents, resulting in both positive and negative extracellular potentials (Fig.~\ref{fig:current_conservation}C).
 
-\section{Local field potentials and multiunit activity}
+
+\section{Local field potentials}
 
 \ghnote{Suggest that we start these sections by explaining what $\phi$ tells us at this level. Also, we should refer to the VC-theory and explain which of the assumptions (1-6) that were relaxed in the specific case.}
 
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1\textwidth]{population_EEG_MEG.png}% This is a *.eps file
+%\includegraphics[width=\textwidth]{\string~/Dropbox/ConvNet_LFP_figures/parameter_errors_full}% This is a *.eps file
+\end{center}
+\caption{\textbf{[placeholder] LFP from different waves of synaptic input}}
+\label{fig:LFP_EEG_MEG}
+\end{figure}
 
-\subsection{LFP}
+\subsection{Effect of spikes and active conductances}
 
-\subsection{MUA}
+Spikes are typically not expected to have an important role in shaping cortical LFP signals \citep{Einevoll2013, Haider2016}, but see also \cite{Reimann2013}.
+However, highly synchronized spikes are expected to be very important for hippocampal sharp wave ripples \cite{Schomburg2012, Luo2018}. 
 
-\subsection{LFPy}
+Subthreshold active conductances can also be expected to effect the LFP, and in particular the hyperpolarization-activated cation channel I$_{\rm h}$ might have a key role in shaping the LFP \citep{Ness2016, Ness2018}.
 
+Calcium \citep{Suzuki2017}
 
-\section{Electrocortigography}
+\section{MUA}
+While LFPs are thought to mainly reflect the synaptic input to large populations, the multi-unit activity (MUA) can be used to probe the spiking activity. MUA can be used in combination with LFP to estimate the population dynamics, as for example in Laminar Population Analysis \citep{Einevoll2007, Blomquist2009}  
 
-\subsection{The Solveig-works}
+\section{ECoG, EEG and MEG}
+LFP signals are measured inside different brain structures, in the immediate vicinity of the current sources that are causing the LFP signals. A disadvantage with this is that it is invasive, in the sense that electrodes must be inserted into the brain tissue which can only be done in humans when there is a clear medical need, like for patients with intractable epilepsy [cite]. However, the current sources that are causing the LFP signals are also causing measurable signals at the brain surface, electrocorticography (ECoG), and at the outside of the head, called electroencephalograpy (EEG) for electric signals measured at the head surface, and magnetoencephalography (MEG) for magnetic signals measured outside the head (Fig.~\ref{fig:multimodal}).
 
+Any combination of current sinks and sources can set up current multipoles \citep{Nunez2006}, and from electrodynamics we know that extracellular potentials at a distance $R$ from the source can be precisely described by a multipole expansion
+\begin{equation}
+\phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ...~.
+\label{eq:dipole_expansion}
+\end{equation}
+Since current monopoles are unphysical due to current conservation, and the quadrupole, octupole and higher order terms are decreasing more strongly with distance $R$ than the dipole term, 
 
-\section{EEG}
+are negligible to the current dipole contribution when $R$ is sufficiently large, the extracellular potential from a neuron simulation can be estimated with the \textit{current dipole approximation} \citep{Pettersen2008, Pettersen2014, Nunez2006}:
 
-\subsection{The Solveig-works}
- 
+\begin{equation}
+\phi(\mathbf{r}) = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}~.
+\label{eq:dipole}
+\end{equation}
+Here, $\mathbf{p}$ is the current dipole moment in a medium with conductivity $\sigma$, $R = |\mathbf{R}|$, where $\mathbf{R}$ is the distance between the current dipole moment and the electrode location and $\theta$ denotes the angle between $\mathbf{p}$ and $\mathbf{R}$. As mentioned above, this approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length $d$, $R > 3d$ or $4d$ \citep{Nunez2006}.
+
+\subsection{Head models}
+Can use analytic four-sphere (Fig. \ref{fig:head_models}A) \citep{Hagen2018, Naess2017}
+Can also used pre-solved complex head models, like the New York head (Fig. \ref{fig:head_models}B) \citep{Huang2016}.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1\textwidth]{head_models.png}% This is a *.eps file
+%\includegraphics[width=\textwidth]{\string~/Dropbox/ConvNet_LFP_figures/parameter_errors_full}% This is a *.eps file
+\end{center}
+\caption{\textbf{[placeholder] Head models} A: Four-sphere. B: New York head model.}
+\label{fig:head_models}
+\end{figure}
+\subsection{MEG}
+Same same, but different. 
+Much of what is said about electric signals also apply to the magnetic signals.
+
+\section{Electrodes}
+\tvnnote{Do we want this part?}
+\subsection{Size}
+Spatial averaging matters, but is relatively easily studied
+\subsection{Frequency filtering}
+Nelson says no (for recording electrodes) \citep{Nelson2010}
+
+\section{Simulated test-data for benchmarking}
+\tvnnote{Should we have this?}
+
+Spike-sorting: \cite{Hagen2016, Buccino2019}
+
+CSD: \cite{Pettersen2006, Potworowski2012, Ness2015}
+
+Location and Cell type: \citep{DelgadoRuz2014, Buccino2018} 
+
+LPA
+
+\section{Other approaches}
+Kernels \citep{Hagen2016}.
+Proxies \cite{Mazzoni2015}
+
+\section{Software tools}
+LFPy etc.
+\tvnnote{Recycle text from LFPy 2.0 paper about other softwares (sec 4.7.}
+
 \section{Discussion}
 \label{sec:discussion}
+\tvnnote{Since it is textbook, should we rename to 'Summary'?}
+\begin{enumerate}
+ \item Summary of chapter
+ \item Ongoing large-scale projects (HBP, Allen)
+ \subitem Using LFP in constraining models?
+ \item Brain-Machine interfaces?
+ \item Where to go?
+ \subitem fMRI, VSD, Ca img.
+\end{enumerate}
 
 
 
@@ -428,7 +525,8 @@ For multi-compartment cell models, the situation becomes more complex, but curre
 
 \section{Acknowledgements}
 \label{sec:acknowledgements}
-
+This research has received funding from the European Union Horizon 2020 Framework Programme for Research
+and Innovation under Specific Grant Agreement No. 785907 (Human Brain Project SGA2), the Research Council of Norway (Notur, nn4661k), and \tvnnote{INCF?}
 
 
 
