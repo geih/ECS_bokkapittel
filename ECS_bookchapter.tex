@@ -311,8 +311,9 @@ The contributions from diffusion on extracellular fields is not necessarily smal
 
 
 \subsection{Volume conductor theory}
+\label{sec:VC_theory}
 \ghnote{Valgte aa utlede det enkleste tilfellet her, med puntkilde og konstant konduktivitet. Blir dette for banalt, eller skal vi ha det slik?}
-
+\tvnnote{Ikke for banalt syntes jeg. Kan utledes enda enklere (syntes jeg) fra Ohms lov for VC, men fint slik det er naa ogsaa.}
 In simulations of morphologically complex neurons, 
 %e.g., based on the NEURON simulator \citep{Hines2009},
 %\tvnnote{Seemed unneccessary to give spesific software}
@@ -353,8 +354,15 @@ With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations $\bf r_
 
 The formula in eq. \ref{eq:VCtheory} represents the VC theory in its simplest form, and was based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
 
-
 \begin{enumerate}
+\item {\bf \tvntxt{Linearity}:} Linear relationship between the current density $I/J$ and the electrical field, ${\bf E}$,
+\begin{equation}
+ J = \sigma {\bf E}.
+\end{equation}
+This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
+
+\item {\bf \tvntxt{No ephaptic coupling}:} We assume that extracellular potential do not effect the neurons. Probably mostly true, since LFPs are on the order og 1~mV, much smaller than the membrane potential of $\sim$-70~mV.
+
 \item {\bf No diffusion:} We assumed that there are no diffusive currents in the system. To account for diffusion, we would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
 
 \item {\bf Quasi-static:} We used the quasistatic approximation of Maxwell's equations when assuming ${\bf E}=\nabla \phi$,  that is, we neglected terms with time derivative of the electrical and magnetic fields in the full set of Maxwell equations. This approximation appears to be well-justified for the relatively low frequencies relevant for brain signals, below about 10 kHz \citep{Nunez2006}.
@@ -399,6 +407,7 @@ where $\rho_k$ is the distance perpendicular to the segment, and where $h_k$ and
 Volume conductor theory is the fundament for forward modeling of extracellular potentials both at the level of LFP (and MUA), ECoG or EEG. In the following sections we shall review previous modeling works and existing simulation tools for simulating electrical potentials at these different scales.
 
 \section{The vital role of current conservation\tvnnote{Is this too much on current conservation?}}
+\label{sec:corrent_conservation}
 Neural simulations with detailed multi-compartment cell models is based on solving the cable equation (Chapter in this book?), with a built-in assumption of current conservation \citep{Koch1999}. Current conservation implies that the summed current across the cellular membrane will, at any given time, sum to zero,
 \begin{equation}
  \sum_k I_k = 0.
@@ -418,7 +427,7 @@ Current conservation has far-reaching consequences for extracellular potentials,
 \label{fig:capacitive_currents}
 \end{figure}
 
-\subsection{Illustration with point-neuron model}
+\subsection*{Illustration with point-neuron model}
 Consider for example the often-used point-neuron models \citep{Sterratt2011}. Since they have only one compartment, eq.~\ref{eq:current_conservation} demands that there should be no net transmembrane current, implying no extracellular potentials (see eq.~\ref{eq:VCtheory}). This means that, while point-neurons have an important role to play in investigating neural network dynamics \citep{Einevoll2019}, they are in general incapable of producing extracellular potentials (Fig.~\ref{fig:current_conservation}A; see however \cite{Mazzoni2015, Hagen2016}). 
 
 \begin{figure}[h!]
@@ -433,14 +442,14 @@ of identical magnitude, and cause dipolar extracellular potentials. C: Multi-com
 \end{figure}
 
 
-\subsection{Illustration with two-compartment model}
+\subsection*{Illustration with two-compartment model}
 Consider now a cell model with two cellular compartments. Current conservation, through eq.~\ref{eq:current_conservation}, then implies $I_1 + I_2 = 0$, which in combination with eq.~\ref{eq:VCtheory} gives,
 \begin{equation}
  \phi ({\bf r}) = \frac{I_1}{4\pi {\bf |r-r_1|} \sigma} + \frac{-I_1}{4\pi {\bf |r-r_2|} \sigma} = \frac{I_1}{4\pi \sigma}\left ( \frac{1}{{\bf |r-r_1|}} - \frac{1}{{\bf |r-r_2|}}\right ).
 \end{equation}
 In words, the exact same amount of current that goes into one compartment, goes out of the other, resulting in a current dipole (Fig.~\ref{fig:current_conservation}B).
 
-\subsection{Illustration with multi-compartment cell model}
+\subsection*{Illustration with multi-compartment cell model}
 For multi-compartment cell models, the situation becomes more complex, but current conservation is still key in shaping extracellular potentials, and ensures that there are no current monopoles. This means that in general neural activity can be expected to cause both negative and positive currents, resulting in both positive and negative extracellular potentials (Fig.~\ref{fig:current_conservation}C).
 
 
@@ -452,27 +461,39 @@ For multi-compartment cell models, the situation becomes more complex, but curre
 The Local Field Potential is the Low-Frequency Part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}.
 The LFP is expected to be dominated by large numbers of synaptic inputs to population of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}, and what determines a single neuron's contribution to the LFP is both the geometrical structure of the neuron, and the location of the synaptic inputs. 
 
-Excitatory synaptic inputs opens small pores (ion-channels) in the cellular membrane of the post-synaptic cell, causing positive ions to flow into the cell \citep{Kandel2012}, which, by convention, is referred to as a current sink (negative current). As we have seen, this will necessarily lead to a current source somewhere else on the cell.  
-Excitatory synaptic input to the apical dendrite of a pyramidal cell, will tend to give an apical current sink and a corresponding basal current source (Fig.~\ref{fig:dipole_basics}A), while excitatory synaptic input to the basal dendrite will give the opposite: a basal sink and an apical source (Fig.~\ref{fig:dipole_basics}B). Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation, and result in a much weaker contribution to the LFP (Fig.~\ref{fig:dipole_basics}C).
+\subsection*{Single-cell LFP contributions}
+Excitatory synaptic inputs opens small pores (ion-channels) in the cellular membrane of the post-synaptic cell, causing positive ions to flow into the cell \citep{Kandel2012}, which, by convention, is referred to as a current sink (negative current). As we have seen, this will necessarily lead to a current source somewhere else on the cell (Sec.~\ref{sec:corrent_conservation}).  
+Excitatory synaptic input to the apical dendrite of a pyramidal cell, will tend to give an apical current sink and a corresponding basal current source (Fig.~\ref{fig:dipole_basics}A), while excitatory synaptic input to the basal dendrite will give the opposite: a basal sink and an apical source (Fig.~\ref{fig:dipole_basics}B). Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation, and result in a much weaker contribution to the LFP (Fig.~\ref{fig:dipole_basics}C) (but see \cite{Ness2018}).
 The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed (Fig.~\ref{fig:dipole_basics}D-F). 
 
-Note that the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input (Fig.~\ref{fig:dipole_basics}, A versus E), and indeed, separating between cases like this poses a real challenge in enterpreting LFP signals [cite]. 
+Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input (Fig.~\ref{fig:dipole_basics}, A versus E), and indeed, separating between cases like this poses a real challenge in interpreting LFP signals [cite]. 
+
+Broadly speaking, neurons can be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons, which make up about 20~\% and 80~\% of the total neuron numbers respectively \citep{Kandel2012}. While a typical pyramidal neuron has a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction, this is much less true for interneurons, which often lack any clear orientational specificity. This has important consequences for their ability to contribute to the LFP: 
+
 
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{dipole_basics}
 \end{center}
-\caption{\textbf{Basic building blocks of the LFP}}
+\caption{\textbf{Basic building blocks of the LFP.} Illustration of the LFP at a snapshot in time in a region around a pyramidal cell in response to different types of synaptic input.  
+The LFP signature depends on the type of synaptic input (excitatory or inhibitory), and the location (apical, basal, uniform), but also, to a lesser degree, to many other parameters of the cells and synapses.
+}
 \label{fig:dipole_basics}
 \end{figure}
 
+\subsection*{Population LFPs}
+Although important insights can be learned from considering single-cell contributions to the LFP, thousands of cells are expected to contribute to measured LFP signals \citep{Linden2011, Pesaran2018}. Because of linearity (Sec.~\ref{sec:VC_theory}), the contribution from each cell can just be summed to obtain the population LFP.
 
+In general, the same principles that apply for single cells also apply for populations of cells (Fig.~\ref{fig:LFP_EEG_MEG}A), for example basal excitatory input to a population of pyramidal cells results in a negative LFP deflection in the basal region (Fig.~\ref{fig:LFP_EEG_MEG}A-C)
+
+same as for singe cell, but correlations
 
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=1\textwidth]{population_EEG_MEG.png}
+\includegraphics[width=1\textwidth]{PC_versus_IN}
 \end{center}
-\caption{\textbf{[placeholder] LFP from different waves of synaptic input.}}
+\caption{\textbf{Two alternative figures. Different brain signals from separate waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.}}
 \label{fig:LFP_EEG_MEG}
 \end{figure}
 
