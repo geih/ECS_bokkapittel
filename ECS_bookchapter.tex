@@ -484,23 +484,64 @@ The LFP signature depends on the type of synaptic input (excitatory or inhibitor
 \subsection*{Population LFPs}
 Although important insights can be learned from considering single-cell contributions to the LFP, thousands of cells are expected to contribute to measured LFP signals \citep{Linden2011, Pesaran2018}. Because of linearity (Sec.~\ref{sec:VC_theory}), the contribution from each cell can just be summed to obtain the population LFP.
 
-In general, the same principles that apply for single cells also apply for populations of cells (Fig.~\ref{fig:LFP_EEG_MEG}A), for example basal excitatory input to a population of pyramidal cells results in a negative LFP deflection in the basal region (Fig.~\ref{fig:LFP_EEG_MEG}A-C)
-
-same as for singe cell, but correlations
+In general, the same principles that apply for single cells also apply for populations of cells (Fig.~\ref{fig:LFP_EEG_MEG}A), for example basal excitatory input to a population of pyramidal cells results in a negative LFP deflection in the basal region (Fig.~\ref{fig:LFP_EEG_MEG}B-C, t=50~ms), while apical excitatory input case a positive LFP deflection (Fig.~\ref{fig:LFP_EEG_MEG}B-C, t=140~ms), and uniform synaptic input causes no deflection (Fig.~\ref{fig:LFP_EEG_MEG}B-C, t=200~ms).
 
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=1\textwidth]{population_EEG_MEG.png}
 \includegraphics[width=1\textwidth]{PC_versus_IN}
 \end{center}
-\caption{\textbf{Two alternative figures. Different brain signals from separate waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.}}
+\caption{\textbf{Two alternative placeholder figures}. Different brain signals from separate waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.}
 \label{fig:LFP_EEG_MEG}
 \end{figure}
 
+\subsection*{Correlations boost LFP signals}
+Correlations have been demonstrated to play a vital role, and can increase the amplitude of the LFP by orders of magnitude \citep{Linden2011, Leski2013}. The effect is in principle easy to understand (Fig.~\ref{fig:correlation_effect}).
+
+\tvnnote{Could have (i) no figure, (ii) remake figure from Linden et al., (iii) make simple illustration figure of underlying reason for boost?} 
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{correlation_jitter}
+\end{center}
+\caption{\textbf{[Placeholder] Effect of correlation}. Simple illustration of correlation effect. A single instance of a toy ''synaptic input`` (A), is used as a building block for creating ''spike trains`` which are summed into compound signals (B). The ''spike trains`` are either completely uncorrelated, that is, 20 random ''spike trains`` are summed (blue), or completely correlated, that is a single ''spike train`` is summed 20 times (red). Although the blue and red lines had exactly the same number of ''spikes`` (the integral over the signals are identical), the power-spectral density (PSD) of the correlated case is an order of magnitude larger than the uncorrelated case (panel D; red versus blue).}
+\label{fig:correlation_effect}
+\end{figure}
+
 \subsection{Intrinsic dendritic filtering}
+As a thought experiment, imagine a synapse that supplies a cell with a sinusoidal synaptic current. From current conservation we know that this input current must be exactly matched by the ensuing return currents, but how much of the current will leave the membrane in the immediate vicinity of the synapse, and how much will spread through the cell and leave through more distant parts of the membrane? 
+%If, for example, the synapse is located on a thin dendritic branch it perhaps seems intuitive that much of the current would move axially within the cell and leave the membrane through the somatic region, where there is much more available membrane area for the current to leave through.
+There are basically three ways that currents can leave a cellular compartment. First, there are two types of membrane currents, namely ionic and capacitive.
+Ionic currents tend to be on the form $I_i(t)=g \cdot (V(t) - E_{rev})$ for so-called passive currents, while for active currents, $g$ would be time dependent.
+The capacitive current at position ${\bf r}$ along the membrane at time $t$, is given by \cite{Koch1999},
+\begin{equation}
+I_c ({\bf r}, t) = c_m\, \tfrac{dV({\bf r}, t)}{dt},
+\end{equation}
+with membrane capacitance $c_m$. Lastly, there are axial currents, essentially given by Ohm's law, $I_a = \Delta V / r_a$, where $\Delta V$ is the difference in potential between two neighbouring compartments, and $r_a$ is the resistance between them.
+
+Note that, in contrast to ionic and axial currents, capacitive currents are proportional to the time derivative of the membrane potential, implying that if the hypothetical sinusoidal synapse had a high frequency (say 100-1000~Hz), the
+membrane would in effect be ''leakier`` than it would be for a low frequency current (say 1-10~Hz), while the axial resistance would be the same in the two cases. Effectively, this shifts the return currents closer to the input site for higher frequencies than for lower frequencies. 
+
+Passive cell models, that is, cell models without voltage-dependent ion channels (see Sec.~\ref{sec:active}) are linear, meaning that each frequency component can be solved separately, and since all signals can be represented as a sum of sinusoids, this means that as a signal propagates through a cell, it will become increasingly low-pass filtered. This effect is called intrinsic dendritic filtering \citep{Linden2010}, and it can have a substantial influence on extracellular potentials (Fig.~\ref{fig:intrinsic},~\ref{fig:intrinsic2}).
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{intrinsic_dendritic_filtering.png}
+\end{center}
+\caption{\textbf{Intrinsic dendritic filtering} From \cite{Linden2010}.}
+\label{fig:intrinsic}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{hay_intrinsic.png}
+\end{center}
+\caption{\textbf{Intrinsic dendritic filtering} From \cite{Ness2016}.}
+\label{fig:intrinsic2}
+\end{figure}
 
 \subsection{Effect of spikes and active conductances}
-
+\label{sec:active}
 Spikes are typically not expected to have an important role in shaping cortical LFP signals \citep{Einevoll2013, Haider2016}, but see also \cite{Reimann2013}.
 However, highly synchronized spikes are expected to be very important for hippocampal sharp wave ripples \citep{Schomburg2012, Luo2018}. 
 
@@ -573,6 +614,8 @@ Proxies \cite{Mazzoni2015}
 \section{Software tools}
 LFPy etc.
 \tvnnote{Recycle text from LFPy 2.0 paper about other softwares (sec 4.7.}
+
+Typically split into two separate tasks: Simulate neural activity, mostly relying on the NEURON simulator \citep{Hines1997}, through the Python interface \citep{Hines2009}. Extracellular potentials are then calculated from these currents, through volume conductor theory. 
 
 \section{Discussion}
 \label{sec:discussion}
