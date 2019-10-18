@@ -387,11 +387,12 @@ When deriving the expression for the extracellular potential, we assumed that th
 
 With a spatially varying $\sigma$, we would have to derive the theory from (eq. \ref{eq:CSD} with no diffusive term):
 \begin{equation}
-CSD = \nabla{\bf I} = \nabla{\sigma {\bf E}} = - \nabla{\sigma \nabla \phi} \\
+CSD = \nabla{\bf I} = \nabla{\left(\sigma {\bf E}\right)} = - \nabla{\left(\sigma \nabla \phi\right)} \\
 = -\nabla \sigma \nabla \phi - \sigma \nabla^2 \phi^2.
 \label{eq:poisson}
 \end{equation}
-\tvnnote{Last term with the squares is not supposed to be there, right?}
+\tvnnote{Last term with the squares is not supposed to be there, right?} 
+\ghnote{Last term was supposed to be there, but some parentheses were missing in the previous terms. Fixed now.}
 For some simple non-homogeneous cases analytical solutions can still be obtained, for example through the Method of Images for {\it in vitro} brain slices \citep{Ness2015}, and the four-sphere head model for EEG signals (Sec.~\ref{sec:EEG}) \citep{Naess2017}.
 
 In general, eq.~\ref{eq:poisson} can always be solved for arbitrarily complex geometries using numerical methods, like the Finite Element Method (FEM) \citep{Logg2012}, for some example neuroscience applications, see \cite{Moffitt2005, Frey2009, Joucla2012, Haufe2015, Ness2015, Buccino2019b, Obien2019}.
