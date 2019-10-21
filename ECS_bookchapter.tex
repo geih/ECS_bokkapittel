@@ -382,7 +382,6 @@ In cortex, it has been found that the conductivity is in fact about 50 \% higher
 \item {\bf Homogeneous:} 
 On the spatial scale of a few micrometers, neural tissue is expected to be highly non-homogeneous, consisting of about 20~\% highly conductive cerebrospinal fluid (CSF) \citep{Nicholson1998, Nunez2006} with an electrical conductivity of about 1.5~S/m \citep{Martinsen2008, Logothetis2007, Miceli2017}, and about 80~\% cells, which from the viewpoint of extracellular currents are essentially non-conducting objects. 
 The effective conductivity of neural tissue on the macroscale reflects this \citep{Nunez2006}: 20~\% of 1.5~S/m is 0.3~S/m, similar to what is typically measured for the neural tissue conductivity \citep{Logothetis2007, Goto2010, Miceli2017}. 
-
 When deriving the expression for the extracellular potential, we assumed that the described microscale inhomogeneities was averaged out, and that the (effective) conductivity of neural tissue, $\sigma$, was constant. This assumption is expected to be reasonable within cortex, however, in several situations is will not be applicable.
 
 With a spatially varying $\sigma$, we would have to derive the theory from (eq. \ref{eq:CSD} with no diffusive term):
@@ -564,12 +563,7 @@ Any combination of current sinks and sources can set up current multipoles \cite
 \phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ...~.
 \label{eq:dipole_expansion}
 \end{equation}
-Since current monopoles are unphysical due to current conservation, and the quadrupole, octupole and higher order terms are decreasing more strongly with distance $R$ than the dipole term, 
-
-are negligible to the current dipole contribution when $R$ is sufficiently large, the extracellular potential from a neuron simulation can be estimated with the \textit{current dipole approximation} \citep{Pettersen2008, Pettersen2014, Nunez2006}:
-
-No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}
-
+Since current monopoles are unphysical due to current conservation, and the quadrupole, octupole and higher order terms are decreasing more strongly with distance $R$ than the dipole term, when $R$ is sufficiently large, the extracellular potential from a neuron simulation can be estimated with the \textit{current dipole approximation} \citep{Pettersen2008, Pettersen2014, Nunez2006}:
 \begin{equation}
 \phi(\mathbf{r}) = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}~.
 \label{eq:dipole}
@@ -579,6 +573,8 @@ Here, $\mathbf{p}$ is the current dipole moment in a medium with conductivity $\
 \subsection{Head models}
 Can use analytic four-sphere (Fig. \ref{fig:head_models}A) \citep{Hagen2018, Naess2017}
 Can also used pre-solved complex head models, like the New York head (Fig. \ref{fig:head_models}B) \citep{Huang2016}.
+
+No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}
 
 \begin{figure}[h!]
 \begin{center}
