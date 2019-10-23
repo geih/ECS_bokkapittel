@@ -147,7 +147,7 @@
 
 %% Title, authors and addresses
 
-\title{Computing extracellular electrical potentials from in silico neuronal simulations\tvnnote{How about the more general ``Computing brain signals from neural simulations''}} 
+\title{Computing extracellular electrical potentials from neuronal simulations} 
 
 %% use the tnoteref command within \title for footnotes;
 %% use the tnotetext command for the associated footnote;
@@ -223,7 +223,7 @@ extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 
 Very important to model what you measure, and measure what you model \citep{Einevoll2019, Maki-marttunen2019}
 
-Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions move due to migration in electrical fields, (2) a diffusion component (ions move due to diffusion), (3) an advective component (ions move because the extracellular fluid is flowing and dragging them along), and (4) a displacement component (ions pile up locally and give rise to a temporal change in the charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and can be neglected \citep{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \citep{Savtchenko2017, Pods2017}. At the level of tissue however, it is commonly believed that the diffusive current is much smaller than the migratory current\tvnnote{migratory current is a new term to me. use 'drift' as under (1)? Wikipedia: ``Electromigration is the transport of material caused by the gradual movement of the ions in a conductor due to the momentum transfer between conducting electrons and diffusing metal atoms''. Are we sure about this term?}, and diffusion is therefore \tvntxt{typically} neglected %when volume conductor (VC) theory is used to compute extracellular potentials 
+Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions move due to migration in electrical fields, (2) a diffusion component (ions move due to diffusion), (3) an advective component (ions move because the extracellular fluid is flowing and dragging them along), and (4) a displacement component (ions pile up locally and give rise to a temporal change in the charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and can be neglected \citep{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \citep{Savtchenko2017, Pods2017}. At the level of tissue however, it is commonly believed that the diffusive current is much smaller than the migratory current\tvnnote{Use 'drift'}, and diffusion is therefore \tvntxt{typically} neglected %when volume conductor (VC) theory is used to compute extracellular potentials 
 \citep{Holt1999, Pettersen2008a}. 
 This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, \tvntxt{if} %when
 concentration gradients are present, diffusive currents \tvntxt{can be expected to} %will 
@@ -236,8 +236,7 @@ We start this book chapter by giving an overview of the theory used for forward 
 \begin{center}
 \includegraphics[width=0.8\textwidth]{cortex_multipop_arial_font}
 \end{center}
-\caption{\textbf{LFP, ECoG, EEG and MEG.} The same basic building blocks, that is, currents caused by large numbers of synaptic input are contributing to several different measurable signals.
-\tvnnote{Not sure if we want to include this figure?}}
+\caption{\textbf{LFP, ECoG, EEG and MEG.} The same basic building blocks, that is, currents caused by large numbers of synaptic input are contributing to several different measurable signals.}
 \label{fig:multimodal}
 \end{figure}
 
@@ -245,16 +244,16 @@ We start this book chapter by giving an overview of the theory used for forward 
 \section{%Theory: 
 From electrodiffusion to volume conductor theory}
 \label{sec:theory}
-\tvntxt{We start at the very smallest of scales considered in neuroscience, by describing the fundamentals of how charged atoms, that is, {\it ions}, are moving through the brain under the influence of electric fields and concentration gradients. Building on this, we describe how these ionic currents affect the electric extracellular potentials inside neural tissue, like the local field potential (LFP), and furthermore, how they cause electric potentials and magnetic fields that are measurable even outside the of the head.
-}
+We start at the very smallest of scales considered in neuroscience, by describing the fundamentals of how charged atoms, that is, {\it ions}, are moving through the brain under the influence of electric fields and concentration gradients. Building on this, we describe how these ionic currents affect the electric extracellular potentials inside neural tissue, like the local field potential (LFP), and furthermore, how they cause electric potentials and magnetic fields that are measurable even outside the of the head.
+
 \subsection{Ion concentration dynamics}
 \label{sec:eldiff}
+\tvnnote{Add short description of physical prinicples behind the two terms. ``There are two processes that make atoms move ...''}
 If we consider ion movements due to both electrical migration and diffusion, the flux density of an ion species $k$ is given by \tvnnote{cite?}:
 \begin{equation}
 J_{k} = -D_{k}\nabla c_{k} - \frac{D_k z_k c_k}{\psi} \nabla \phi,
 \label{eq:JNP}
 \end{equation}
-\tvnnote{Can it be easily explained where this equation comes from? First term is Fick's law, second is maybe Ohm's law for volume conductor?} 
 where the first term on the right is the diffusive flux density $J_{k}^\text{diff}$, and the second term is the flux density due to electrical migration $J_{k}^\text{field}$, hereby referred to as the \emph{field} flux density.  Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation  \tvnnote{cite?}: 
 \begin{equation}
 \frac{\partial c_k}{\partial t} = - \nabla J_k + f_k = \nabla \left[ D_k \nabla c_k + \frac{D_k z_k c_k}{\psi} \nabla \phi \right] + f_k
@@ -313,8 +312,7 @@ The contributions from diffusion on extracellular fields is not necessarily smal
 
 \subsection{Volume conductor theory}
 \label{sec:VC_theory}
-\ghnote{Valgte aa utlede det enkleste tilfellet her, med puntkilde og konstant konduktivitet. Blir dette for banalt, eller skal vi ha det slik?}
-\tvnnote{Ikke for banalt syntes jeg. Kan utledes enda enklere (syntes jeg) fra Ohms lov for VC, men fint slik det er naa ogsaa.}
+\tvnnote{Bytte til enkel utledning av point source formula}
 In simulations of morphologically complex neurons, 
 %e.g., based on the NEURON simulator \citep{Hines2009},
 %\tvnnote{Seemed unneccessary to give spesific software}
@@ -349,12 +347,10 @@ With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations $\bf r_
 \label{eq:VCtheory}
 \end{equation}
 
-\ghnote{The list below was essentially copy-pasted from Gautes lecture notes in FYS388 + I added the line source approximation. Don't know if we should add the list here, or introduce the more advanced versions whenever they become relevant. For example, I guess that anisotropy and inhomogeneity must be used when we talk about ECoG og EEG}.
-\tvnnote{How about having each of these assumptions as subsections named "Assumption 4: Isotropy``? For some of them, it makes sense to write quite a bit, and I suspect it will get messy with items.}
-\tvnnote{Not sure if point-source should be on this list, since line-source is just an integration of the point-source formula, so this point is more of a further development than an assumption.}
+
 
 The formula in eq. \ref{eq:VCtheory} represents the VC theory in its simplest form, and was based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
-
+\tvnnote{Just note in passing below point source fomula that we can also use line source. Move point on ephaptic coupling.}
 \begin{enumerate}
 \item {\bf \tvntxt{Linearity}:} Linear relationship between the current density $I/J$ and the electrical field, ${\bf E}$,
 \begin{equation}
@@ -368,33 +364,21 @@ This is essentially Ohm's law for volume conductors, and the relation is constit
 
 \item {\bf Quasi-static:} We used the quasistatic approximation of Maxwell's equations when assuming ${\bf E}=\nabla \phi$,  that is, we neglected terms with time derivative of the electrical and magnetic fields in the full set of Maxwell equations. This approximation appears to be well-justified for the relatively low frequencies relevant for brain signals, below about 10 kHz \citep{Nunez2006}.
 
-\item {\bf Frequency independent:} We assumed a frequency independent conductivity, $\sigma$. If the tissue has a capacitive component, $\sigma$ becomes frequency dependent (i.e. the conductance depends on the frequency of the current). However, for most relevant purposes, the frequency effects on the conductivity are small and are normally neglected, see \cite{Logothetis2007, Miceli2017, Ranta2017}. A frequency dependent conductivity can be incorporated into the forward modelling scheme, essentially by solving eq.~\ref{eq:VCtheory} for each frequency component separately, that is, the transmembrane currents are transformed into the frequency domain by a Fourier Transform, and eq.~\ref{eq:VCtheory} is used with a separate conductivity for each frequency, before the signal is transformed back to the time domain \citep{Tracey2011, Miceli2017}.
-Beware however that to preserve causality, that is, no signature of an event should be visible in the extracellular potential before the event has happened, one must also find the appropriate phase-shifts, for example through the Kramers–Kronig relations\citep{Martinsen2008, Miceli2017}
-
-\tvnnote{How comprehensive should we get here? Should we bring up controversies?}
+\item {\bf Frequency independent:} We assumed a frequency independent conductivity, $\sigma$. If the tissue has a capacitive component, $\sigma$ becomes frequency dependent (i.e. the conductance depends on the frequency of the current). However, for most relevant purposes, the frequency effects on the conductivity are small and are normally neglected, see \cite{Logothetis2007, Miceli2017, Ranta2017}.
+Note that it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}.
 
 \item {\bf Isotropic:} We assumed that $\sigma$ is isotropic (i.e., direction independent). With an anisotropic $\sigma$ we would lose the spherical symmetry, and get the modified expression (for each source term) \citep{Ness2015}: 
 \begin{equation}
-\phi(x,y,z) = \frac{i_e}{4\pi(\sigma_y\sigma_x x^2 + \sigma_z\sigma_x y^2 + \sigma_x\sigma_z s^2)}.
+\phi(x,y,z) = \frac{i_e}{4\pi(\sigma_y\sigma_z x^2 + \sigma_x\sigma_z y^2 + \sigma_x\sigma_y z^2)}.
 \end{equation}
 In cortex, it has been found that the conductivity is in fact about 50 \% higher along the depth axis, that is, parallel to the axis of the pyramidal dendrites \citep{Goto2010}, however, the overall effect of this on extracellular potentials appears quite weak \citep{Ness2015}.
 
 \item {\bf Homogeneous:} 
-On the spatial scale of a few micrometers, neural tissue is expected to be highly non-homogeneous, consisting of about 20~\% highly conductive cerebrospinal fluid (CSF) \citep{Nicholson1998, Nunez2006} with an electrical conductivity of about 1.5~S/m \citep{Martinsen2008, Logothetis2007, Miceli2017}, and about 80~\% cells, which from the viewpoint of extracellular currents are essentially non-conducting objects. 
-The effective conductivity of neural tissue on the macroscale reflects this \citep{Nunez2006}: 20~\% of 1.5~S/m is 0.3~S/m, similar to what is typically measured for the neural tissue conductivity \citep{Logothetis2007, Goto2010, Miceli2017}. 
-When deriving the expression for the extracellular potential, we assumed that the described microscale inhomogeneities was averaged out, and that the (effective) conductivity of neural tissue, $\sigma$, was constant. This assumption is expected to be reasonable within cortex, however, in several situations is will not be applicable.
+On the spatial scale of a few micrometers, neural tissue is expected to be highly non-homogeneous \citep{Nicholson1998}, but when deriving the expression for the extracellular potential, we assumed that the described microscale inhomogeneities was averaged out, and that the (effective) conductivity of neural tissue, $\sigma$, was constant. This assumption is expected to be reasonable within cortex, however, in several situations is will not be applicable.
+In general, eq.~\ref{eq:CSDstandard} can always be solved for arbitrarily complex geometries using numerical methods, like the Finite Element Method (FEM) \citep{Logg2012}, for some example neuroscience applications, see \cite{Moffitt2005, Frey2009, Joucla2012, Haufe2015, Ness2015, Buccino2019b, Obien2019}.
 
-With a spatially varying $\sigma$, we would have to derive the theory from (eq. \ref{eq:CSD} with no diffusive term):
-\begin{equation}
-CSD = \nabla{\bf I} = \nabla{\left(\sigma {\bf E}\right)} = - \nabla{\left(\sigma \nabla \phi\right)} \\
-= -\nabla \sigma \nabla \phi - \sigma \nabla^2 \phi^2.
-\label{eq:poisson}
-\end{equation}
-\tvnnote{Last term with the squares is not supposed to be there, right?} 
-\ghnote{Last term was supposed to be there, but some parentheses were missing in the previous terms. Fixed now.}
 For some simple non-homogeneous cases analytical solutions can still be obtained, for example through the Method of Images for {\it in vitro} brain slices \citep{Ness2015}, and the four-sphere head model for EEG signals (Sec.~\ref{sec:EEG}) \citep{Naess2017}.
 
-In general, eq.~\ref{eq:poisson} can always be solved for arbitrarily complex geometries using numerical methods, like the Finite Element Method (FEM) \citep{Logg2012}, for some example neuroscience applications, see \cite{Moffitt2005, Frey2009, Joucla2012, Haufe2015, Ness2015, Buccino2019b, Obien2019}.
 
 \item {\bf Point sources:} We represented the neuronal membrane currents as a single point source per neuronal segment. If we instead assume that the currents from each segment $k$ are evenly distributed over the segment length ($\Delta s_k$), then eq. \ref{eq:VCtheory} should be integrated along the neural segment, giving:
 \begin{equation}
@@ -407,30 +391,6 @@ where $\rho_k$ is the distance perpendicular to the segment, and where $h_k$ and
 
 Volume conductor theory is the fundament for forward modeling of extracellular potentials both at the level of LFP (and MUA), ECoG or EEG. In the following sections we shall review previous modeling works and existing simulation tools for simulating electrical potentials at these different scales.
 
-\section{The vital role of current conservation\tvnnote{Is this too much on current conservation?}}
-\label{sec:corrent_conservation}
-Neural simulations with detailed multi-compartment cell models is based on solving the cable equation (Chapter in this book?), with a built-in assumption of current conservation \citep{Koch1999}. Current conservation implies that the summed current across the cellular membrane will, at any given time, sum to zero,
-\begin{equation}
- \sum_k I_k = 0.
- \label{eq:current_conservation}
-\end{equation}
-Note that the capacitive currents have a vital role in ensuring this current conservation: the membrane potential is caused by a slight charge imbalance between the inside and the outside of the cell, and all this surplus charge is expected to be distributed on the cellular membrane, where all the surplus charge on the inside of the cellular membrane (negative during the resting state) is exactly balanced by an equal amount of charge of the opposite polarity on the outside of the cellular membrane (Fig.~\ref{fig:capacitive_currents}A) [cite]. 
-As current pass through the membrane, or from one part of the cell to another, the amount of surplus charge on the inside of the cellular membrane changes (Fig.~\ref{fig:capacitive_currents}B), which immediately results in a corresponding change in the amount of charge on the outside of the cellular membrane (Fig.~\ref{fig:capacitive_currents}C). Such changes in the amount of surplus charge distributed along the outside of the cellular membrane are what is called capacitive currents, and they ensure that eq.~\ref{eq:current_conservation} is always fulfilled.
-Current conservation has far-reaching consequences for extracellular potentials, that we will illustrate with three examples.
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=1\textwidth]{capacitive_currents}
-\end{center}
-\caption{\textbf{Capacitive currents ensures current conservation.
-\tvnnote{Mention time scale of this?}
-\tvnnote{Not sure if this makes sense to include?}
-}}
-\label{fig:capacitive_currents}
-\end{figure}
-
-\subsection*{Illustration with point-neuron model}
-Consider for example the often-used point-neuron models \citep{Sterratt2011}. Since they have only one compartment, eq.~\ref{eq:current_conservation} demands that there should be no net transmembrane current, implying no extracellular potentials (see eq.~\ref{eq:VCtheory}). This means that, while point-neurons have an important role to play in investigating neural network dynamics \citep{Einevoll2019}, they are in general incapable of producing extracellular potentials (Fig.~\ref{fig:current_conservation}A; see however \cite{Mazzoni2015, Hagen2016}). 
-
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.6\textwidth]{dipoles}
@@ -442,19 +402,12 @@ of identical magnitude, and cause dipolar extracellular potentials. C: Multi-com
 \label{fig:current_conservation}
 \end{figure}
 
-
-\subsection*{Illustration with two-compartment model}
-Consider now a cell model with two cellular compartments. Current conservation, through eq.~\ref{eq:current_conservation}, then implies $I_1 + I_2 = 0$, which in combination with eq.~\ref{eq:VCtheory} gives,
-\begin{equation}
- \phi ({\bf r}) = \frac{I_1}{4\pi {\bf |r-r_1|} \sigma} + \frac{-I_1}{4\pi {\bf |r-r_2|} \sigma} = \frac{I_1}{4\pi \sigma}\left ( \frac{1}{{\bf |r-r_1|}} - \frac{1}{{\bf |r-r_2|}}\right ).
-\end{equation}
-In words, the exact same amount of current that goes into one compartment, goes out of the other, resulting in a current dipole (Fig.~\ref{fig:current_conservation}B).
-
-\subsection*{Illustration with multi-compartment cell model}
-For multi-compartment cell models, the situation becomes more complex, but current conservation is still key in shaping extracellular potentials, and ensures that there are no current monopoles. This means that in general neural activity can be expected to cause both negative and positive currents, resulting in both positive and negative extracellular potentials (Fig.~\ref{fig:current_conservation}C).
-
+\section{Single-cell contributions to extracellular potentials}
+\tvnnote{Make figure with single synaptic input to Hay model. First subthreshold, then suprathreshold, to illustrate that the same modelling scheme works for both LFP and spikes.}
 
 \section{Local field potentials}
+
+
 
 \ghnote{Suggest that we start these sections by explaining what $\phi$ tells us at this level. Also, we should refer to the VC-theory and explain which of the assumptions (1-6) that were relaxed in the specific case.}
 \tvnnote{How much of an intro should we have here? If the Chapter intro has a broader focus and only refer to modelling of brain signals, we should have full LFP intro here.}
@@ -462,25 +415,6 @@ For multi-compartment cell models, the situation becomes more complex, but curre
 The Local Field Potential is the Low-Frequency Part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}.
 The LFP is expected to be dominated by large numbers of synaptic inputs to population of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}, and what determines a single neuron's contribution to the LFP is both the geometrical structure of the neuron, and the location of the synaptic inputs. 
 
-\subsection*{Single-cell LFP contributions}
-Excitatory synaptic inputs opens small pores (ion-channels) in the cellular membrane of the post-synaptic cell, causing positive ions to flow into the cell \citep{Kandel2012}, which, by convention, is referred to as a current sink (negative current). As we have seen, this will necessarily lead to a current source somewhere else on the cell (Sec.~\ref{sec:corrent_conservation}).  
-Excitatory synaptic input to the apical dendrite of a pyramidal cell, will tend to give an apical current sink and a corresponding basal current source (Fig.~\ref{fig:dipole_basics}A), while excitatory synaptic input to the basal dendrite will give the opposite: a basal sink and an apical source (Fig.~\ref{fig:dipole_basics}B). Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation, and result in a much weaker contribution to the LFP (Fig.~\ref{fig:dipole_basics}C) (but see \cite{Ness2018}).
-The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed (Fig.~\ref{fig:dipole_basics}D-F). 
-
-Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input (Fig.~\ref{fig:dipole_basics}, A versus E), and indeed, separating between cases like this poses a real challenge in interpreting LFP signals [cite]. 
-
-Broadly speaking, neurons can be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons, which make up about 20~\% and 80~\% of the total neuron numbers respectively \citep{Kandel2012}. While a typical pyramidal neuron has a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction, this is much less true for interneurons, which often lack any clear orientational specificity. This has important consequences for their ability to contribute to the LFP: 
-
-
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{dipole_basics}
-\end{center}
-\caption{\textbf{Basic building blocks of the LFP.} Illustration of the LFP at a snapshot in time in a region around a pyramidal cell in response to different types of synaptic input.  
-The LFP signature depends on the type of synaptic input (excitatory or inhibitory), and the location (apical, basal, uniform), but also, to a lesser degree, to many other parameters of the cells and synapses.
-}
-\label{fig:dipole_basics}
-\end{figure}
 
 \subsection*{Population LFPs}
 Although important insights can be learned from considering single-cell contributions to the LFP, thousands of cells are expected to contribute to measured LFP signals \citep{Linden2011, Pesaran2018}. Because of linearity (Sec.~\ref{sec:VC_theory}), the contribution from each cell can just be summed to obtain the population LFP.
@@ -490,56 +424,15 @@ In general, the same principles that apply for single cells also apply for popul
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=1\textwidth]{population_EEG_MEG.png}
-\includegraphics[width=1\textwidth]{PC_versus_IN}
+%\includegraphics[width=1\textwidth]{PC_versus_IN}
 \end{center}
-\caption{\textbf{Two alternative placeholder figures}. Different brain signals from separate waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.}
+\caption{\textbf{Extracellular potentials from different waves of synaptic input}. Different brain signals from separate waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.
+\tvnnote{Remove MEG?}}
 \label{fig:LFP_EEG_MEG}
 \end{figure}
 
-\subsection*{Correlations boost LFP signals}
-Correlations have been demonstrated to play a vital role, and can increase the amplitude of the LFP by orders of magnitude \citep{Linden2011, Leski2013}. The effect is in principle easy to understand (Fig.~\ref{fig:correlation_effect}).
 
-\tvnnote{Could have (i) no figure, (ii) remake figure from Linden et al., (iii) make simple illustration figure of underlying reason for boost?} 
 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.5\textwidth]{correlation_jitter}
-\end{center}
-\caption{\textbf{[Placeholder] Effect of correlation}. Simple illustration of correlation effect. A single instance of a toy ''synaptic input`` (A), is used as a building block for creating ''spike trains`` which are summed into compound signals (B). The ''spike trains`` are either completely uncorrelated, that is, 20 random ''spike trains`` are summed (blue), or completely correlated, that is a single ''spike train`` is summed 20 times (red). Although the blue and red lines had exactly the same number of ''spikes`` (the integral over the signals are identical), the power-spectral density (PSD) of the correlated case is an order of magnitude larger than the uncorrelated case (panel D; red versus blue).}
-\label{fig:correlation_effect}
-\end{figure}
-
-\subsection{Intrinsic dendritic filtering}
-As a thought experiment, imagine a synapse that supplies a cell with a sinusoidal synaptic current. From current conservation we know that this input current must be exactly matched by the ensuing return currents, but how much of the current will leave the membrane in the immediate vicinity of the synapse, and how much will spread through the cell and leave through more distant parts of the membrane? 
-%If, for example, the synapse is located on a thin dendritic branch it perhaps seems intuitive that much of the current would move axially within the cell and leave the membrane through the somatic region, where there is much more available membrane area for the current to leave through.
-There are basically three ways that currents can leave a cellular compartment. First, there are two types of membrane currents, namely ionic and capacitive.
-Ionic currents tend to be on the form $I_i(t)=g \cdot (V(t) - E_{rev})$ for so-called passive currents, while for active currents, $g$ would be time dependent.
-The capacitive current at position ${\bf r}$ along the membrane at time $t$, is given by \cite{Koch1999},
-\begin{equation}
-I_c ({\bf r}, t) = c_m\, \tfrac{dV({\bf r}, t)}{dt},
-\end{equation}
-with membrane capacitance $c_m$. Lastly, there are axial currents, essentially given by Ohm's law, $I_a = \Delta V / r_a$, where $\Delta V$ is the difference in potential between two neigbouring compartments, and $r_a$ is the resistance between them.
-
-Note that, in contrast to ionic and axial currents, capacitive currents are proportional to the time derivative of the membrane potential, implying that if the hypothetical sinusoidal synapse had a high frequency (say 100-1000~Hz), the
-membrane would in effect be ''leakier`` than it would be for a low frequency current (say 1-10~Hz), while the axial resistance would be the same in the two cases. Effectively, this shifts the return currents closer to the input site for higher frequencies than for lower frequencies. 
-
-Passive cell models, that is, cell models without voltage-dependent ion channels (see Sec.~\ref{sec:active}) are linear, meaning that each frequency component can be solved separately, and since all signals can be represented as a sum of sinusoids, this means that as a signal propagates through a cell, it will become increasingly low-pass filtered. This effect is called intrinsic dendritic filtering \citep{Linden2010}, and it can have a substantial influence on extracellular potentials (Fig.~\ref{fig:intrinsic},~\ref{fig:intrinsic2}).
-
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.5\textwidth]{intrinsic_dendritic_filtering.png}
-\end{center}
-\caption{\textbf{Intrinsic dendritic filtering} From \cite{Linden2010}.}
-\label{fig:intrinsic}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{hay_intrinsic.png}
-\end{center}
-\caption{\textbf{Intrinsic dendritic filtering} From \cite{Ness2016}.}
-\label{fig:intrinsic2}
-\end{figure}
 
 \subsection{Effect of spikes and active conductances}
 \label{sec:active}
@@ -574,7 +467,9 @@ Here, $\mathbf{p}$ is the current dipole moment in a medium with conductivity $\
 Can use analytic four-sphere (Fig. \ref{fig:head_models}A) \citep{Hagen2018, Naess2017}
 Can also used pre-solved complex head models, like the New York head (Fig. \ref{fig:head_models}B) \citep{Huang2016}.
 
-No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}
+No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}.
+
+\tvnnote{Show extracellular potenial through four-sphere head model for single synaptic input to Hay model (same as earlier LFP figure.}
 
 \begin{figure}[h!]
 \begin{center}
@@ -583,9 +478,18 @@ No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}
 \caption{\textbf{[placeholder] Head models} A: Four-sphere. B: New York head model.}
 \label{fig:head_models}
 \end{figure}
-\subsection{MEG}
+
+
+\section{Other brain signals}
+\subsection*{MEG}
 Same same, but different. 
 Much of what is said about electric signals also apply to the magnetic signals.
+\subsection*{Voltage-sensitive dye imaging}
+In princible easy, just area-weighted membrane potential
+\subsection*{Calcium imaging}
+Depends on cell models with good calcium dynamics, which is a weakness of many present models.
+\subsection*{fMRI}
+Underlying mechanism for other signals seems clear, but this is not so for fMRI. fMRI is thought to be a measure of ''metabolic cost``, but appears cell-type dependent, with an important role of NPY interneurons.
 
 \section{Electrodes}
 \tvnnote{Do we want this part?}
@@ -649,6 +553,137 @@ and Innovation under Specific Grant Agreement No. 785907 (Human Brain Project SG
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Removed}
+{\bf Homogeneous:} 
+On the spatial scale of a few micrometers, neural tissue is expected to be highly non-homogeneous, consisting of about 20~\% highly conductive cerebrospinal fluid (CSF) \citep{Nicholson1998, Nunez2006} with an electrical conductivity of about 1.5~S/m \citep{Martinsen2008, Logothetis2007, Miceli2017}, and about 80~\% cells, which from the viewpoint of extracellular currents are essentially non-conducting objects. 
+The effective conductivity of neural tissue on the macroscale reflects this \citep{Nunez2006}: 20~\% of 1.5~S/m is 0.3~S/m, similar to what is typically measured for the neural tissue conductivity \citep{Logothetis2007, Goto2010, Miceli2017}. 
+When deriving the expression for the extracellular potential, we assumed that the described microscale inhomogeneities was averaged out, and that the (effective) conductivity of neural tissue, $\sigma$, was constant. This assumption is expected to be reasonable within cortex, however, in several situations is will not be applicable.
+
+With a spatially varying $\sigma$, we would have to derive the theory from (eq. \ref{eq:CSD} with no diffusive term):
+\begin{equation}
+CSD = \nabla{\bf I} = \nabla{\left(\sigma {\bf E}\right)} = - \nabla{\left(\sigma \nabla \phi\right)} \\
+= -\nabla \sigma \nabla \phi - \sigma \nabla^2 \phi.
+\label{eq:poisson}
+\end{equation}
+
+ A frequency dependent conductivity can be incorporated into the forward modelling scheme, essentially by solving eq.~\ref{eq:VCtheory} for each frequency component separately, that is, the transmembrane currents are transformed into the frequency domain by a Fourier Transform, and eq.~\ref{eq:VCtheory} is used with a separate conductivity for each frequency, before the signal is transformed back to the time domain \citep{Tracey2011, Miceli2017}.
+Beware however that to preserve causality, that is, no signature of an event should be visible in the extracellular potential before the event has happened, one must also find the appropriate phase-shifts, for example through the Kramers–Kronig relations\citep{Martinsen2008, Miceli2017}.
+
+\subsection*{Single-cell LFP contributions}
+Excitatory synaptic inputs opens small pores (ion-channels) in the cellular membrane of the post-synaptic cell, causing positive ions to flow into the cell \citep{Kandel2012}, which, by convention, is referred to as a current sink (negative current). As we have seen, this will necessarily lead to a current source somewhere else on the cell (Sec.~\ref{sec:corrent_conservation}).  
+Excitatory synaptic input to the apical dendrite of a pyramidal cell, will tend to give an apical current sink and a corresponding basal current source (Fig.~\ref{fig:dipole_basics}A), while excitatory synaptic input to the basal dendrite will give the opposite: a basal sink and an apical source (Fig.~\ref{fig:dipole_basics}B). Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation, and result in a much weaker contribution to the LFP (Fig.~\ref{fig:dipole_basics}C) (but see \cite{Ness2018}).
+The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed (Fig.~\ref{fig:dipole_basics}D-F). 
+
+Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input (Fig.~\ref{fig:dipole_basics}, A versus E), and indeed, separating between cases like this poses a real challenge in interpreting LFP signals [cite]. 
+
+Broadly speaking, neurons can be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons, which make up about 20~\% and 80~\% of the total neuron numbers respectively \citep{Kandel2012}. While a typical pyramidal neuron has a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction, this is much less true for interneurons, which often lack any clear orientational specificity. This has important consequences for their ability to contribute to the LFP: 
+
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{dipole_basics}
+\end{center}
+\caption{\textbf{Basic building blocks of the LFP.} Illustration of the LFP at a snapshot in time in a region around a pyramidal cell in response to different types of synaptic input.  
+The LFP signature depends on the type of synaptic input (excitatory or inhibitory), and the location (apical, basal, uniform), but also, to a lesser degree, to many other parameters of the cells and synapses.
+}
+\label{fig:dipole_basics}
+\end{figure}
+
+\section{The vital role of current conservation}
+\label{sec:corrent_conservation}
+Neural simulations with detailed multi-compartment cell models is based on solving the cable equation (Chapter in this book?), with a built-in assumption of current conservation \citep{Koch1999}. Current conservation implies that the summed current across the cellular membrane will, at any given time, sum to zero,
+\begin{equation}
+ \sum_k I_k = 0.
+ \label{eq:current_conservation}
+\end{equation}
+Note that the capacitive currents have a vital role in ensuring this current conservation: the membrane potential is caused by a slight charge imbalance between the inside and the outside of the cell, and all this surplus charge is expected to be distributed on the cellular membrane, where all the surplus charge on the inside of the cellular membrane (negative during the resting state) is exactly balanced by an equal amount of charge of the opposite polarity on the outside of the cellular membrane (Fig.~\ref{fig:capacitive_currents}A) [cite]. 
+As current pass through the membrane, or from one part of the cell to another, the amount of surplus charge on the inside of the cellular membrane changes (Fig.~\ref{fig:capacitive_currents}B), which immediately results in a corresponding change in the amount of charge on the outside of the cellular membrane (Fig.~\ref{fig:capacitive_currents}C). Such changes in the amount of surplus charge distributed along the outside of the cellular membrane are what is called capacitive currents, and they ensure that eq.~\ref{eq:current_conservation} is always fulfilled.
+Current conservation has far-reaching consequences for extracellular potentials, that we will illustrate with three examples.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1\textwidth]{capacitive_currents}
+\end{center}
+\caption{\textbf{Capacitive currents ensures current conservation.
+\tvnnote{Mention time scale of this?}
+\tvnnote{Not sure if this makes sense to include?}
+}}
+\label{fig:capacitive_currents}
+\end{figure}
+
+\subsection*{Illustration with point-neuron model}
+Consider for example the often-used point-neuron models \citep{Sterratt2011}. Since they have only one compartment, eq.~\ref{eq:current_conservation} demands that there should be no net transmembrane current, implying no extracellular potentials (see eq.~\ref{eq:VCtheory}). This means that, while point-neurons have an important role to play in investigating neural network dynamics \citep{Einevoll2019}, they are in general incapable of producing extracellular potentials (Fig.~\ref{fig:current_conservation}A; see however \cite{Mazzoni2015, Hagen2016}). 
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{dipoles}
+\end{center}
+\caption{\textbf{Effect of current conservation on extracellular potentials.} 
+Illustration of synaptic input to three different types of cell models (top row), with the resulting extracellular potentials (bottom row). 
+A: Point neurons have no net currents, and therefore cause no extracellular potentials. B: Two-compartment neuron models have two opposite currents
+of identical magnitude, and cause dipolar extracellular potentials. C: Multi-compartment neuron models \citep{Hay2011} give rise to extracellular potentials with complex (but mostly dipolar-like) shapes.}
+\label{fig:current_conservation}
+\end{figure}
+
+
+\subsection*{Illustration with two-compartment model}
+Consider now a cell model with two cellular compartments. Current conservation, through eq.~\ref{eq:current_conservation}, then implies $I_1 + I_2 = 0$, which in combination with eq.~\ref{eq:VCtheory} gives,
+\begin{equation}
+ \phi ({\bf r}) = \frac{I_1}{4\pi {\bf |r-r_1|} \sigma} + \frac{-I_1}{4\pi {\bf |r-r_2|} \sigma} = \frac{I_1}{4\pi \sigma}\left ( \frac{1}{{\bf |r-r_1|}} - \frac{1}{{\bf |r-r_2|}}\right ).
+\end{equation}
+In words, the exact same amount of current that goes into one compartment, goes out of the other, resulting in a current dipole (Fig.~\ref{fig:current_conservation}B).
+
+\subsection*{Illustration with multi-compartment cell model}
+For multi-compartment cell models, the situation becomes more complex, but current conservation is still key in shaping extracellular potentials, and ensures that there are no current monopoles. This means that in general neural activity can be expected to cause both negative and positive currents, resulting in both positive and negative extracellular potentials (Fig.~\ref{fig:current_conservation}C).
+
+
+
+\subsection*{Correlations boost LFP signals}
+Correlations have been demonstrated to play a vital role, and can increase the amplitude of the LFP by orders of magnitude \citep{Linden2011, Leski2013}. The effect is in principle easy to understand (Fig.~\ref{fig:correlation_effect}).
+
+\tvnnote{Could have (i) no figure, (ii) remake figure from Linden et al., (iii) make simple illustration figure of underlying reason for boost?} 
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{correlation_jitter}
+\end{center}
+\caption{\textbf{[Placeholder] Effect of correlation}. Simple illustration of correlation effect. A single instance of a toy ''synaptic input`` (A), is used as a building block for creating ''spike trains`` which are summed into compound signals (B). The ''spike trains`` are either completely uncorrelated, that is, 20 random ''spike trains`` are summed (blue), or completely correlated, that is a single ''spike train`` is summed 20 times (red). Although the blue and red lines had exactly the same number of ''spikes`` (the integral over the signals are identical), the power-spectral density (PSD) of the correlated case is an order of magnitude larger than the uncorrelated case (panel D; red versus blue).}
+\label{fig:correlation_effect}
+\end{figure}
+
+
+
+\subsection{Intrinsic dendritic filtering}
+As a thought experiment, imagine a synapse that supplies a cell with a sinusoidal synaptic current. From current conservation we know that this input current must be exactly matched by the ensuing return currents, but how much of the current will leave the membrane in the immediate vicinity of the synapse, and how much will spread through the cell and leave through more distant parts of the membrane? 
+%If, for example, the synapse is located on a thin dendritic branch it perhaps seems intuitive that much of the current would move axially within the cell and leave the membrane through the somatic region, where there is much more available membrane area for the current to leave through.
+There are basically three ways that currents can leave a cellular compartment. First, there are two types of membrane currents, namely ionic and capacitive.
+Ionic currents tend to be on the form $I_i(t)=g \cdot (V(t) - E_{rev})$ for so-called passive currents, while for active currents, $g$ would be time dependent.
+The capacitive current at position ${\bf r}$ along the membrane at time $t$, is given by \cite{Koch1999},
+\begin{equation}
+I_c ({\bf r}, t) = c_m\, \tfrac{dV({\bf r}, t)}{dt},
+\end{equation}
+with membrane capacitance $c_m$. Lastly, there are axial currents, essentially given by Ohm's law, $I_a = \Delta V / r_a$, where $\Delta V$ is the difference in potential between two neigbouring compartments, and $r_a$ is the resistance between them.
+
+Note that, in contrast to ionic and axial currents, capacitive currents are proportional to the time derivative of the membrane potential, implying that if the hypothetical sinusoidal synapse had a high frequency (say 100-1000~Hz), the
+membrane would in effect be ''leakier`` than it would be for a low frequency current (say 1-10~Hz), while the axial resistance would be the same in the two cases. Effectively, this shifts the return currents closer to the input site for higher frequencies than for lower frequencies. 
+
+Passive cell models, that is, cell models without voltage-dependent ion channels (see Sec.~\ref{sec:active}) are linear, meaning that each frequency component can be solved separately, and since all signals can be represented as a sum of sinusoids, this means that as a signal propagates through a cell, it will become increasingly low-pass filtered. This effect is called intrinsic dendritic filtering \citep{Linden2010}, and it can have a substantial influence on extracellular potentials (Fig.~\ref{fig:intrinsic},~\ref{fig:intrinsic2}).
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{intrinsic_dendritic_filtering.png}
+\end{center}
+\caption{\textbf{Intrinsic dendritic filtering} From \cite{Linden2010}.}
+\label{fig:intrinsic}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{hay_intrinsic.png}
+\end{center}
+\caption{\textbf{Intrinsic dendritic filtering} From \cite{Ness2016}.}
+\label{fig:intrinsic2}
+\end{figure}
+
 
 
 \end{document}  
