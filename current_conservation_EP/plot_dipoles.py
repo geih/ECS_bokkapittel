@@ -6,12 +6,13 @@ import sys
 from os.path import join
 import numpy as np
 import matplotlib
-# matplotlib.use("AGG")
+matplotlib.use("AGG")
 import LFPy
 import neuron
 h = neuron.h
 import matplotlib.pyplot as plt
-from matplotlib.collections import PolyCollection
+from plotting_convention import mark_subplots, simplify_axes
+#from matplotlib.collections import PolyCollection
 
 # from npy_invisible import neuron_models
 # from npy_invisible import plot_lfp
@@ -88,18 +89,18 @@ def return_cell(cell_name):
             'templateargs'  : join('L5bPCmodelsEH/morphologies/cell1.asc'),
             'passive' : False,
             'nsegs_method' : None,
-            'dt' : 2**-4,
+            'dt' : 2**-6,
             'tstart' : -500,
-            'tstop' : 10,
+            'tstop' : 50,
             'v_init' : -70,
             'celsius': 34,
             'pt3d' : True,
         }
 
         cell = LFPy.TemplateCell(**cell_parameters)
-        remove_active_mechanisms()
+        #remove_active_mechanisms()
         cell.set_rotation(x=4.729, y=-3.166)
-        make_cell_uniform(Vrest=-70)
+        # make_cell_uniform(Vrest=-70)
 
 
     elif cell_name == "two_comp":
@@ -169,7 +170,7 @@ def return_cell(cell_name):
     return cell
 
 
-def plot_one_timestep(cell, grid_LFP, laminar_LFP, time_idx, grid_x, grid_z,
+def plot_one_LFP_timestep(cell, grid_LFP, laminar_LFP, time_idx, grid_x, grid_z,
                       laminar_elec_params, synapse, synapse_params, sim_name, savefolder):
 
     lam_elec_clr = lambda idx: plt.cm.Blues(0.1 + idx / (laminar_LFP.shape[0] + 1))
@@ -323,8 +324,96 @@ def plot_one_timestep(cell, grid_LFP, laminar_LFP, time_idx, grid_x, grid_z,
     plt.savefig(join(savefolder, 'lfp_{}_{:04d}.png'.format(sim_name, time_idx)), dpi=300)
 
 
-synapse_type = ["single_tuft", "single_soma"][0]
-cell_name = ["two_comp", "hay"][0]
+def plot_EAP(cell, grid_LFP, laminar_LFP, time_idx, grid_x, grid_z,
+                          laminar_elec_params, sim_name, savefolder):
+
+
+    lam_elec_clr =  ['pink', 'cyan']
+
+    soma_clr = 'orange'
+    apic_clr = "olive"
+    apic_idx = cell.get_closest_idx(x=0, y=0, z=600)
+    time_idx = np.argmax(np.abs(cell.vmem[0, :] - cell.vmem[0, 0])) if time_idx is None else time_idx
+
+    grid_LFP = grid_LFP[:, time_idx].reshape(grid_x.shape)
+
+    plt.close("all")
+    fig = plt.figure(figsize=[3, 4])
+
+    ax = fig.add_axes([.01, .12, .6, .98], xticks=[], yticks=[],
+                      aspect=1, frameon=False, )
+    # title="LFP at t = {:2.02f} ms".format(cell.tvec[time_idx]))
+    cax = fig.add_axes([0.15, 0.11, 0.3, 0.01], frameon=False)
+
+    ax_vm = fig.add_axes([.67, .13, .25, .27], title=r'membrane\npotential',
+                         xlabel="Time (ms)")
+    ax_lam = fig.add_axes([0.67, 0.57, 0.25, 0.27], title="extracellular\npotentials")
+
+    ax_vm.set_ylabel('mV', labelpad=-6)
+    ax_lam.set_ylabel('$\mu$V', labelpad=-6)
+
+
+    for elec_idx in range(laminar_LFP.shape[0]):
+        c = lam_elec_clr[elec_idx]
+        y_sig = laminar_LFP[elec_idx]
+        ax_lam.plot(cell.tvec, y_sig, c=c)
+
+        ax.plot(laminar_elec_params['x'][elec_idx],
+                laminar_elec_params['z'][elec_idx], 'o', c=c, zorder=100)
+
+    for idx in range(cell.totnsegs):
+        ax.plot([cell.xstart[idx], cell.xend[idx]],
+                [cell.zstart[idx], cell.zend[idx]], lw=1, c='gray')
+
+    ax.plot([250, 350], [-300, -300], 'k', lw=2, clip_on=False)
+    ax.text(300, -350, r'100 $\mu$m', va='center', ha='center')
+
+    ax.plot(cell.xmid[cell.somaidx[0]], cell.zmid[cell.somaidx[0]], 'D', ms=5,
+           mec='k', mfc=soma_clr)
+    ax.plot(cell.xmid[apic_idx], cell.zmid[apic_idx], 'D', ms=5,
+           mec='k', mfc=apic_clr)
+
+    ax_vm.plot(cell.tvec, cell.vmem[cell.somaidx[0], :], c=soma_clr)
+    ax_vm.plot(cell.tvec, cell.vmem[apic_idx, :], c=apic_clr)
+
+    ax_vm.axvline(cell.tvec[time_idx], ls='--', c='gray')
+    ax_lam.axvline(cell.tvec[time_idx], ls='--', c='gray')
+
+    num = 15
+    levels = np.logspace(-2, 0, num=num)
+    scale_max = 100.  # 10**np.ceil(np.log10(np.max(np.abs(LFP)))) / 10
+
+    levels_norm = scale_max * np.concatenate((-levels[::-1], levels))
+    # rainbow_cmap = plt.cm.get_cmap('PRGn') # rainbow, spectral, RdYlBu
+    rainbow_cmap = plt.cm.get_cmap('bwr_r')  # rainbow, spectral, RdYlBu
+
+    colors_from_map = [rainbow_cmap(i * np.int(255 / (len(levels_norm) - 2))) for i in range(len(levels_norm) - 1)]
+    colors_from_map[num - 1] = (1.0, 1.0, 1.0, 1.0)
+
+    # ticks = [levels_norm[2*i] for i in range(int(num/2) + 1)] + [levels_norm[num + 2*i] for i in range(int(num/2) + 1)]
+
+    ep_intervals = ax.contourf(grid_x, grid_z, grid_LFP,
+                               zorder=-2, colors=colors_from_map,
+                               levels=levels_norm, extend='both')
+
+    ax.contour(grid_x, grid_z, grid_LFP, colors='k', linewidths=(1), zorder=-2,
+               levels=levels_norm)
+
+    cbar = fig.colorbar(ep_intervals, cax=cax, orientation='horizontal',
+                        format='%.0E', extend='max')
+
+    cbar.set_ticks([-100, -10,  0, 10, 100])
+    cax.set_xticklabels([-100, -10, 0, 10, 100],
+                        fontsize=8, rotation=45)
+    cbar.set_label('$\phi$ ($\mu$V)', labelpad=-5)
+
+    simplify_axes([ax_vm, ax_lam])
+
+    plt.savefig(join(savefolder, 'eap_{}_{:04d}.png'.format(sim_name, time_idx)), dpi=150)
+
+
+synapse_type = ["single_tuft", "single_soma"][1]
+cell_name = ["two_comp", "hay"][1]
 
 sim_name = '{}_{}'.format(cell_name, synapse_type)
 savefolder = join(cell_name, sim_name)
@@ -334,7 +423,7 @@ if not os.path.isdir(savefolder):
 
 # depth = 40
 # depth = 165
-depth = 600
+# depth = 600
 
 
 cell = return_cell(cell_name)
@@ -345,38 +434,36 @@ synapse_params = {
     'e' : 0.,                   # reversal potential
     'syntype' : 'Exp2Syn',       # synapse type
     'tau1' : 0.1,                 # synaptic time constant
-    'tau2' : 2.,                 # synaptic time constant
+    'tau2' : 1.,                 # synaptic time constant
     'weight' : 0.001,            # synaptic weight
     'record_current' : True,    # record synapse current
 }
 
-insert_synapses_GABA_A_args = {
-    'section' : 'allsec',
-    'z_min': np.max(cell.zend) - depth,
-    'n' : 100,
-    'spTimesFun' : np.random.normal,#LFPy.inputgenerators.get_activation_times_from_distribution,
-    'args' : dict(size=1, #tstart=50, tstop=60,
-                  # distribution=scipy.stats.norm,
-                  # rvs_args=dict(loc=50, scale=0.001)
-                  loc=20,
-                  scale=2,
-                  )
-}
+# insert_synapses_GABA_A_args = {
+#     'section' : 'allsec',
+#     'z_min': np.max(cell.zend) - depth,
+#     'n' : 100,
+#     'spTimesFun' : np.random.normal,#LFPy.inputgenerators.get_activation_times_from_distribution,
+#     'args' : dict(size=1, #tstart=50, tstop=60,
+#                   # distribution=scipy.stats.norm,
+#                   # rvs_args=dict(loc=50, scale=0.001)
+#                   loc=20,
+#                   scale=2,
+#                   )
+# }
 
-if "single" in synapse_type:
-    if "soma" in synapse_type:
-        synapse_params["idx"] = cell.get_closest_idx(x=0, z=0)
-    elif "tuft" in synapse_type:
-        synapse_params["idx"] = cell.get_closest_idx(x=100, z=1400)
+if "soma" in synapse_type:
+    synapse_params["idx"] = cell.get_closest_idx(x=0, z=0)
+elif "tuft" in synapse_type:
+    synapse_params["idx"] = cell.get_closest_idx(x=100, z=1400)
 
-    synapse_params["weight"] = 0.1
-    synapses = [LFPy.Synapse(cell, **synapse_params)]
-    synapses[0].set_spike_times(np.array([1.]))
-else:
-    synapses = insert_synapses(cell, synapse_params, **insert_synapses_GABA_A_args)
+synapse_params["weight"] = 0.1
+synapses = [LFPy.Synapse(cell, **synapse_params)]
+synapses[0].set_spike_times(np.array([1., 5., .8]))
+
 
 # Create a grid of measurement locations, in (mum)
-grid_x, grid_z = np.mgrid[-700:701:25, -700:1701:25]
+grid_x, grid_z = np.mgrid[-400:401:25, -400:1401:25]
 grid_y = np.zeros(grid_x.shape)
 
 # Define electrode parameters
@@ -389,7 +476,7 @@ grid_elec_params = {
 
 
 # Create a grid of measurement locations, in (mum)
-laminar_z = np.linspace(-200, 800, 11)
+laminar_z = np.array([0, 200])
 laminar_x = np.ones(len(laminar_z)) * 30
 laminar_y = np.zeros(len(laminar_z))
 # Define electrode parameters
@@ -411,18 +498,23 @@ cell.simulate(rec_imem=True, rec_vmem=True)
 
 laminar_electrode = LFPy.RecExtElectrode(cell, **laminar_elec_params)
 laminar_electrode.calc_lfp()
-laminar_LFP = 1e6 * laminar_electrode.LFP
+laminar_LFP = 1e3 * laminar_electrode.LFP
 
 grid_electrode = LFPy.RecExtElectrode(cell, **grid_elec_params)
 grid_electrode.calc_lfp()
-grid_LFP = 1e6 * grid_electrode.LFP
+grid_LFP = 1e3 * grid_electrode.LFP
 
 grid_LFP -= grid_LFP[:, 0, None]
 
 max_elec, max_time_idx = np.unravel_index(np.abs(laminar_LFP).argmax(), grid_LFP.shape)
 
-for time_idx in range(len(cell.tvec))[0::20]:
-#     print(time_idx)
-    plot_one_timestep(cell, grid_LFP, laminar_LFP, time_idx,
-                           grid_x, grid_z, laminar_elec_params, synapses,
-                           synapse_params, sim_name, savefolder)
+# plot_EAP(cell, grid_LFP, laminar_LFP, None,
+#                             grid_x, grid_z, laminar_elec_params,  sim_name, savefolder)
+
+for time_idx in range(len(cell.tvec))[0::1]:
+    plot_EAP(cell, grid_LFP, laminar_LFP, time_idx,
+             grid_x, grid_z, laminar_elec_params, sim_name, savefolder)
+# #     print(time_idx)
+#     plot_one_LFP_timestep(cell, grid_LFP, laminar_LFP, time_idx,
+#                            grid_x, grid_z, laminar_elec_params, synapses,
+#                            synapse_params, sim_name, savefolder)
