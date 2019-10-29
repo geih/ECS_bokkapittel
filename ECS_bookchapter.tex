@@ -329,7 +329,7 @@ The formula in eq. \ref{eq:VCtheory} (or the line-source version of it) represen
 
 \item {\bf Quasi-static approximation of Maxwell's equations:} Terms with time derivative of the electrical and magnetic fields are neglected. This approximation appears to be well-justified for the relatively low frequencies relevant for brain signals, below about 10 kHz \citep{Nunez2006}.
 
-\item {\bf Linear extracellular medium:} Linear relationship ($\bf{I} = \sigma {\bf E}$) between the current density ${\bf I}$\tvnnote{I would have preferred J to mean current density and I total currents. Will this make things messy other places?} and the electrical field, ${\bf E}$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
+\item {\bf Linear extracellular medium:} Linear relationship ($\bf{I} = -\sigma {\nabla \phi}$) between the current density ${\bf I}$\tvnnote{I would have preferred J to mean current density and I total currents. Will this make things messy other places?} \ghnote{Maybe it messes things up, since I used $J_k$ for fluxes earlier.} and the electrical field, $\nabla \phi$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
 
 \item {\bf Frequency independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \cite{Logothetis2007, Miceli2017, Ranta2017}, but it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}.
 
@@ -353,8 +353,7 @@ We use the software LFPy \citep{Linden2014, Hagen2018, Hagen2019}, which has vol
 
 %\ghnote{Moved current-conservation figure here. I think that we could call it something else. Perhaps the Hay-neuron-example can be integrated with this figure? And perhaps we should name it single-cell contribution to extracellular potential}.
 
-The extracellular potentials caused by the transmembrane currents of a single neuron is a reflection of both cellular dynamics and morphology (the spatial structure of the cell). 
-Current conservation requires that the transmembrane currents across the entire cellular membrane at any given time sum to zero \citep{Koch1999, Nunez2006}. This implies that point neurons, that is, neurons with no spatial structure, will have no net transmembrane currents, and hence cause no extracellular potentials (Fig.~\ref{fig:EP_morph}A). The simplest neuron models that are capable of producing extracellular potentials are therefore two-compartment models, which will have two equal but opposite currents, and cause perfectly dipolar extracellular potentials (Fig.~\ref{fig:EP_morph}B).
+The extracellular potentials caused by the transmembrane currents of a single neuron is a reflection of both cellular dynamics and morphology (the spatial structure of the cell). Current conservation requires that the transmembrane currents across the entire cellular membrane at any given time sum to zero \citep{Koch1999, Nunez2006}. An excitatory synaptic input generates a current sink (negative current), will therefore necessarily lead to current sources elsewhere on the cell. \ghnote{Flyttet denne setningen fra kapittelet under og opp hit.} This implies that point neurons, that is, neurons with no spatial structure, will have no net transmembrane currents, and hence cause no extracellular potentials (Fig.~\ref{fig:EP_morph}A). The simplest neuron models that are capable of producing extracellular potentials are therefore two-compartment models, which will have two equal but opposite currents, and cause perfectly dipolar extracellular potentials (Fig.~\ref{fig:EP_morph}B).
 
 Multi-compartment neuron models mimicking the complex spatial structure of real neurons will typically give rise to complicated patterns of current sinks and sources (negative and positive currents respectively), leading to complex, but mostly dipolar-like extracellular potentials (Fig.~\ref{fig:EP_morph}C) \citep{Einevoll2013}.
 Note that this framework for calculating extracellular potentials is valid both for subthreshold and suprathreshold neural activity, that is, when a cell receives synaptic input that does not trigger, or does trigger an action potential, respectively (Fig.~\ref{fig:EP_morph}, D versus E).  
@@ -363,7 +362,7 @@ Note that this framework for calculating extracellular potentials is valid both 
 \begin{center}
 \includegraphics[width=1\textwidth]{single_cell_EP}
 \end{center}
-\caption{\textbf{Single-cell contributions to the extracellular potential.} 
+\caption{\textbf{Single-cell contributions to the extracellular potential.\ghnote{Knallfin!}} 
 {\bf A}: Point neurons have no net currents (top), and therefore cause no extracellular potentials (bottom). 
 {\bf B}: Two-compartment neuron models have two opposite currents
 of identical magnitude (top), and cause perfectly dipolar extracellular potentials (bottom). 
@@ -382,10 +381,7 @@ of identical magnitude (top), and cause perfectly dipolar extracellular potentia
 The Local Field Potential is the Low-Frequency Part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
 %, and what determines a single neuron's contribution to the LFP is both the geometrical structure of the neuron, and the location of the synaptic inputs.
 
-An excitatory synaptic input generates a current sink (negative current), and because of current conservation this will necessarily lead to current sources elsewhere on the cell.
-Broadly speaking, neurons can be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons, which make up about 20~\% and 80~\% of the total neuron numbers respectively \citep{Kandel2012}. 
-Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_EEG}A). This geometrical alignment transfers to the current dipoles originating from synaptic input to specific regions of a pyramidal cell population (Fig.~\ref{fig:LFP_EEG}B). 
-For example, basal excitatory synaptic input generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region, while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_EEG}C). 
+Broadly speaking, neurons can be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons, which make up about 20~\% and 80~\% of the total neuron numbers respectively \citep{Kandel2012}.  \ghnote{Hvor gjelder dette? Cortex?} Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_EEG}A). This geometrical alignment transfers to the current dipoles originating from synaptic input \ghnote{Litt forvirrende setning, dette her} to specific regions of a pyramidal cell population (Fig.~\ref{fig:LFP_EEG}B).  For example, basal excitatory synaptic input generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region, while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_EEG}C). 
 Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation in the LFP (Fig.~\ref{fig:LFP_EEG}C; but see also \cite{Ness2018}).
 The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed. 
 
@@ -409,6 +405,10 @@ In contrast to pyramidal neurons, interneurons often lack any clear orientationa
 \end{figure}
 
 %Large spatial extension generally give rise to larger extracellular potentials as there will be larger distances between currents.\tvnnote{Should we derive dipole-formula here, or wait for EEG section? Arguments for having it here: Talk about how large cells gets larger current dipole moments, and how dipoles dominate at larger distances.}
+
+\ghnote{Forslag som evt. erstatter subsectionen nedenfor:}
+Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \cite{Reimann2013}, calcium spikes \cite{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \cite{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
+
 
 \subsection*{Effect of spikes and active conductances}
 \label{sec:active}
@@ -463,6 +463,7 @@ No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}.
 
 \section{Electrodes}
 \tvnnote{Do we want this part?}
+\ghnote{I don't. Besides, we probably do not have space to include it.}
 \subsection{Size}
 Spatial averaging matters, but is relatively easily studied
 \subsection{Frequency filtering}
