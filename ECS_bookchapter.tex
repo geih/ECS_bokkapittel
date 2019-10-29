@@ -313,7 +313,8 @@ For the simplest case of a single point source $I_1$ at a point ${\bf r}=0$ in a
 \phi = \frac{I_1}{4\pi \sigma r },
 \label{eq:pointsource}
 \end{equation}
-where $r$ is the distance from the source. With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $, we can apply the superposition principle, and the potential in a point ${\bf r}$ is given by:
+\tvnnote{I think we should explain where $4\pi r$ comes from}
+where $r$ is the distance from the source. With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $, we can apply the superposition principle\tvnnote{Refer to linearity assumption}, and the potential in a point ${\bf r}$ is given by:
 
 \begin{equation}
 \phi({\bf r}) = \frac{I_1}{4\pi  \sigma {\bf |r-r_1|}} + \frac{I_2}{4\pi  \sigma {\bf |r-r_2|} } + \frac{I_3}{4\pi  \sigma {\bf |r-r_3|} } + ... = \sum_k \frac{I_k}{4\pi  \sigma {\bf |r-r_k|} }.
@@ -335,6 +336,7 @@ The formula in eq. \ref{eq:VCtheory} (or the line-source version of it) represen
 \item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, was assumed to be the same in all spatial directions. This is mostly an acceptable approximation, but it is also possible to expand the formalism to account for an anisotropic conductivities \citep{Ness2015}. \ghnote{Referere til et senere kapittel der vi bruker dette.}
 
 \item {\bf Homogeneous  conductivity:} The extracellular medium was assumed to have the same conductivity everywhere. Although neural tissue is highly non-homogeneous on the micrometer scale \citep{Nicholson1998}, microscale inhomogeneities may average out on a larger spatial scale, and a homogeneous conductivity seems to be a reasonable approximation within cortex \citep{Logothetis2007}. However, in many situations is will not be applicable, and in general, eq.~\ref{eq:CSDstandard} can always be solved for arbitrarily complex geometries using numerical methods, like the Finite Element Method (FEM) \citep{Logg2012}. For some example neuroscience applications, see \cite{Moffitt2005, Frey2009, Joucla2012, Haufe2015, Ness2015, Buccino2019b, Obien2019}. For some simple non-homogeneous cases analytical solutions can still be obtained, for example through the Method of Images for {\it in vitro} brain slices \citep{Ness2015}, and the four-sphere head model for EEG signals (Sec.~\ref{sec:EEG}) \citep{Naess2017}. \ghnote{Antar at vi her refererer til EEG-kapittelet og evt. flytter noe av dette materialet dit?}
+\tvnnote{Kun siste del-setning som spesifikt handler om EEG, i tillegg til noen av referansene.}
 
 \item {\bf No diffusion:} To account for diffusion, one would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
 
@@ -352,18 +354,21 @@ We use the software LFPy \citep{Linden2014, Hagen2018, Hagen2019}, which has vol
 %\ghnote{Moved current-conservation figure here. I think that we could call it something else. Perhaps the Hay-neuron-example can be integrated with this figure? And perhaps we should name it single-cell contribution to extracellular potential}.
 
 The extracellular potentials caused by the transmembrane currents of a single neuron is a reflection of both cellular dynamics and morphology (the spatial structure of the cell). 
-Current conservation requires that the transmembrane currents across the entire cellular membrane at any given time sum to zero \citep{Koch1999, Nunez2006}, implying that point neurons, that is, neurons with no spatial structure, will have no net transmembrane currents, and hence cause no extracellular potentials (Fig.~\ref{fig:EP_morph}A). The simplest neuron models that are capable of producing extracellular potentials are therfore two-compartment models, which will have two equal but opposite currents, and cause perfectly dipolar extracellular potentials (Fig.~\ref{fig:EP_morph}B).
+Current conservation requires that the transmembrane currents across the entire cellular membrane at any given time sum to zero \citep{Koch1999, Nunez2006}. This implies that point neurons, that is, neurons with no spatial structure, will have no net transmembrane currents, and hence cause no extracellular potentials (Fig.~\ref{fig:EP_morph}A). The simplest neuron models that are capable of producing extracellular potentials are therefore two-compartment models, which will have two equal but opposite currents, and cause perfectly dipolar extracellular potentials (Fig.~\ref{fig:EP_morph}B).
 
-Multi-compartment neuron models mimicing the complex spatial structure of real neurons will typically give rise to complicated patterns of current sinks and sources (negative and positive currents respectively), leading to complex, but mostly dipolar-like extracellular potentials (Fig.~\ref{fig:EP_morph}C) \citep{Einevoll2007}.
-Note that this framework for calculating extracellular potentials is valid both for subthreshold and suprathreshold neural activity, that is, when a cell receives synaptic input that does not trigger, or does trigger an action potential, respectively (Fig.~\ref{fig:EP_morph}D versus E).  
+Multi-compartment neuron models mimicking the complex spatial structure of real neurons will typically give rise to complicated patterns of current sinks and sources (negative and positive currents respectively), leading to complex, but mostly dipolar-like extracellular potentials (Fig.~\ref{fig:EP_morph}C) \citep{Einevoll2013}.
+Note that this framework for calculating extracellular potentials is valid both for subthreshold and suprathreshold neural activity, that is, when a cell receives synaptic input that does not trigger, or does trigger an action potential, respectively (Fig.~\ref{fig:EP_morph}, D versus E).  
 
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=1\textwidth]{single_cell_EP}
 \end{center}
 \caption{\textbf{Single-cell contributions to the extracellular potential.} 
-A: Point neurons have no net currents (top), and therefore cause no extracellular potentials (bottom). B: Two-compartment neuron models have two opposite currents
-of identical magnitude (top), and cause perfectly dipolar extracellular potentials (bottom). C: Multi-compartment neuron models \citep{Hay2011} give rise to complex source-sink patterns (top) and complex (but mostly dipolar-like) extracellular potentials (bottom). D, E: A single somatic synaptic input to a complex multi-compartment cell model, either subthreshold (D) or suprathreshold (E; double synaptic weight of D), illustrating that the same framework can be used to calculate both the LFP contribution from subthreshold synaptic input, and extracellular action potentials. 
+{\bf A}: Point neurons have no net currents (top), and therefore cause no extracellular potentials (bottom). 
+{\bf B}: Two-compartment neuron models have two opposite currents
+of identical magnitude (top), and cause perfectly dipolar extracellular potentials (bottom). 
+{\bf C}: Multi-compartment neuron models \citep{Hay2011} give rise to complex source-sink patterns (top) and complex (but mostly dipolar-like) extracellular potentials (bottom). 
+{\bf D, E}: A single somatic synaptic input to a complex multi-compartment cell model, either subthreshold (D) or suprathreshold (E; double synaptic weight of D), illustrating that the same framework can be used to calculate both the LFP contribution from subthreshold synaptic input, and extracellular action potentials. 
 }
 \label{fig:EP_morph}
 \end{figure}
@@ -374,51 +379,57 @@ of identical magnitude (top), and cause perfectly dipolar extracellular potentia
 % \tvnnote{How much of an intro should we have here? If the Chapter intro has a broader focus and only refer to modelling of brain signals, we should have full LFP intro here.}
 % \ghnote{I think we could skim through the different measurement modalities in the intro, and mention LFP, MUA, ECoG and EEG. As of now, there is just a line there, saying that it is very important to model what you measure, and measure what you model.  I suggest that Gaute expands on this, and talks about the needs within the field. However, I suggest that we make it rather brief, and focus this chapter on the technical aspect of how to compute the different measures here.}
 
-The Local Field Potential is the Low-Frequency Part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}, and what determines a single neuron's contribution to the LFP is both the geometrical structure of the neuron, and the location of the synaptic inputs.  
+The Local Field Potential is the Low-Frequency Part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
+%, and what determines a single neuron's contribution to the LFP is both the geometrical structure of the neuron, and the location of the synaptic inputs.
 
-Excitatory synaptic inputs  current sink (negative current). As we have seen, this will necessarily lead to a current source somewhere else on the cell (Sec.~\ref{sec:corrent_conservation}).  
-Excitatory synaptic input to the apical dendrite of a pyramidal cell, will tend to give an apical current sink and a corresponding basal current source (Fig.~\ref{fig:dipole_basics}A), while excitatory synaptic input to the basal dendrite will give the opposite: a basal sink and an apical source (Fig.~\ref{fig:dipole_basics}B). Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation, and result in a much weaker contribution to the LFP (Fig.~\ref{fig:dipole_basics}C) (but see \cite{Ness2018}).
-The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed (Fig.~\ref{fig:dipole_basics}D-F). 
+An excitatory synaptic input generates a current sink (negative current), and because of current conservation this will necessarily lead to current sources elsewhere on the cell.
+Broadly speaking, neurons can be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons, which make up about 20~\% and 80~\% of the total neuron numbers respectively \citep{Kandel2012}. 
+Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_EEG}A). This geometrical alignment transfers to the current dipoles originating from synaptic input to specific regions of a pyramidal cell population (Fig.~\ref{fig:LFP_EEG}B). 
+For example, basal excitatory synaptic input generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region, while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_EEG}C). 
+Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation in the LFP (Fig.~\ref{fig:LFP_EEG}C; but see also \cite{Ness2018}).
+The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed. 
 
-Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input (Fig.~\ref{fig:dipole_basics}, A versus E), and indeed, separating between cases like this poses a real challenge in interpreting LFP signals [cite]. 
+Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input, and indeed, separating between cases like this pose a real challenge in interpreting LFP signals [cite]. 
 
-Broadly speaking, neurons can be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons, which make up about 20~\% and 80~\% of the total neuron numbers respectively \citep{Kandel2012}. While a typical pyramidal neuron has a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction, this is much less true for interneurons, which often lack any clear orientational specificity. This has important consequences for their ability to contribute to the LFP: 
-
-
-%\ghnote{Maybe move this synapse-stuff to the Population LFP-subsection. If we only look at a single neuron, like here, I guess spikes are more important.}
-
-%Although important insights can be learned from considering single-cell contributions to the LFP, thousands of cells are expected to contribute to measured LFP signals \citep{Linden2011, Pesaran2018}. Because of linearity (Sec.~\ref{sec:VC_theory}), the contribution from each cell can just be summed to obtain the population LFP.
-
-In general, the same principles that apply for single cells also apply for populations of cells (Fig.~\ref{fig:LFP_EEG_MEG}A), for example basal excitatory input to a population of pyramidal cells results in a negative LFP deflection in the basal region (Fig.~\ref{fig:LFP_EEG_MEG}B-C, t=50~ms), while apical excitatory input case a positive LFP deflection (Fig.~\ref{fig:LFP_EEG_MEG}B-C, t=140~ms), and uniform synaptic input causes no deflection (Fig.~\ref{fig:LFP_EEG_MEG}B-C, t=200~ms). \ghnote{Perhaps put specific findings in figure text and use the body-text to more general findings?}
+In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles do not align, leading to negligible contribution to LFP signals, except indirectly through giving synaptic input to pyramidal cells \citep{Hagen2016, Telenczuk2016}.
 
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=1\textwidth]{population_EEG_MEG.png}
 %\includegraphics[width=1\textwidth]{PC_versus_IN}
 \end{center}
-\caption{\textbf{Extracellular potentials from different waves of synaptic input}. Different brain signals from separate waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.}
-\label{fig:LFP_EEG_MEG}
+\caption{\textbf{Extracellular potentials from different waves of synaptic input}. Different brain signals from separate waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.
+{\bf A}: A subset of 100 pyramidal cells, with the LFP electrode locations indicated in the center (colored dots).
+{\bf B}: Depth-resolved synaptic inputs arrive in three waves, first targeting the basal dendrites (t=$\sim$60~ms), then the apical dendrites (t=$\sim$130~ms), and lastly uniformly across the entire depth (t=$\sim$200~ms). Note that all synaptic input is pre-defined, that is, there is no network activity.
+{\bf C}: The LFP at different depths (colors correspond to dots in panel A)
+{\bf D}: The four-sphere head model with two orientations of the neural population, either radial, mimicing a population in a gyrus (top) or tangential, mimicing a population in a sulcus (bottom).
+{\bf E}: A snapshot of the EEG signal at the head surface for apical input (time marked with dotted line in panel B and C), for a radial population (top) or tangential population (bottom).
+}
+\label{fig:LFP_EEG}
 \end{figure}
 
-
-Large spatial extension generally give rise to larger extracellular potentials as there will be larger distances between currents.\tvnnote{Should we derive dipole-formula here, or wait for EEG section? Arguments for having it here: Talk about how large cells gets larger current dipole moments, and how dipoles dominate at larger distances.}
+%Large spatial extension generally give rise to larger extracellular potentials as there will be larger distances between currents.\tvnnote{Should we derive dipole-formula here, or wait for EEG section? Arguments for having it here: Talk about how large cells gets larger current dipole moments, and how dipoles dominate at larger distances.}
 
 \subsection*{Effect of spikes and active conductances}
 \label{sec:active}
-\ghnote{Perhaps make this stuff more compact, and not have it as separate subsection?}
-Spikes are typically not expected to have an important role in shaping cortical LFP signals \citep{Einevoll2013, Haider2016}, but see also \cite{Reimann2013}.
-However, highly synchronized spikes are expected to be very important for hippocampal sharp wave ripples \citep{Schomburg2012, Luo2018}. 
+\ghnote{Perhaps make this stuff more compact, and not have it as separate subsection?} \tvnnote{I kind off made it more compact, but also expanded the text a bit.}
+%Active conductances can affect LFP signals in different ways, for example through the presence of somatic action potentials, dendritic calcium spikes or subthreshold processing of synaptic inputs.
+Somatic action potentials are typically not expected to have an important role in shaping cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. 
+There are, however, indications that in particular the relatively long-lasting after-hyperpolarization might, at least in some cases, have a role in shaping the LFP, see for example \cite{Reimann2013}.
+Note that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
-Subthreshold active conductances can also be expected to effect the LFP, and in particular the hyperpolarization-activated cation channel I$_{\rm h}$ might have a key role in shaping the LFP \citep{Ness2016, Ness2018}.
+It has been demonstrated by \cite{Suzuki2017} that calcium spikes can make sizable contributions to the LFP and ECoG signals, which opens up for exciting research opportunities, given the assumed important physiological role of such calcium spikes\tvnnote{remove?}.
 
-\cite{Suzuki2017} demonstrated that calcium spikes can also make sizable contributions to the LFP and ECoG signals, which opens up for exciting research opportunities, given the assumed important physiological role of such calcium spikes.
+Subthreshold active conductances can also be expected to affect the LFP, and in particular the hyperpolarization-activated cation channel I$_{\rm h}$ might play a key role in this, see \cite{Ness2016, Ness2018}.
 
 \section{MUA}
-While LFPs are thought to mainly reflect the synaptic input to large populations, the multi-unit activity (MUA) can be used to probe the spiking activity. MUA can be used in combination with LFP to estimate the population dynamics, as for example in Laminar Population Analysis \citep{Einevoll2007, Blomquist2009}  
+While LFPs are thought to mainly reflect the synaptic input to large populations, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Pettersen2008}. This can be usefull, as some cell-types, like stellate cells and interneurons are expected to have very weak LFP contributions, but might still be measureable through their spiking activity.
+MUA can be used in combination with LFP to estimate the population dynamics, as for example in Laminar Population Analysis \citep{Einevoll2007, Blomquist2009}.
+\tvnnote{Not sure what to say about MUA. Could make illustration figures similar to those from Pettersen, Hagen, Einevoll (2008)?} 
 
 \section{ECoG and EEG}
 \label{sec:EEG}
-LFP signals are measured inside different brain structures, in the immediate vicinity of the current sources that are causing the LFP signals. A disadvantage with this is that it is invasive, in the sense that electrodes must be inserted into the brain tissue which can only be done in humans when there is a clear medical need, like for patients with intractable epilepsy [cite]. However, the current sources that are causing the LFP signals are also causing measurable signals at the brain surface, electrocorticography (ECoG), and at the outside of the head, called electroencephalograpy (EEG) for electric signals measured at the head surface, and magnetoencephalography (MEG) for magnetic signals measured outside the head (Fig.~\ref{fig:multimodal}).
+LFP signals are measured inside different brain structures, in the immediate vicinity of the current sources that are causing the LFP signals. A disadvantage with this is that it is invasive, in the sense that electrodes must be inserted into the brain tissue which can only be done in humans when there is a clear medical need, like for patients with intractable epilepsy [cite]. However, the current sources that are causing the LFP signals are also causing measurable electrical signals at the brain surface, electrocorticography (ECoG), and outside of the head, called electroencephalograpy (EEG) (Fig.~\ref{fig:multimodal}).
 
 Any combination of current sinks and sources can set up current multipoles \citep{Nunez2006}, and from electrodynamics we know that extracellular potentials at a distance $R$ from the source can be precisely described by a multipole expansion
 \begin{equation}
@@ -438,7 +449,7 @@ Can also used pre-solved complex head models, like the New York head (Fig. \ref{
 
 No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}.
 
-\tvnnote{Show extracellular potential through four-sphere head model for single synaptic input to Hay model (same as earlier LFP figure?}
+\tvnnote{Show extracellular potential through four-sphere head model for single synaptic input to Hay model (same as earlier LFP figure)?}
 
 \begin{figure}[!ht]
 \begin{center}
@@ -449,16 +460,6 @@ No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}.
 \end{figure}
 
 
-\section{Other brain signals}
-\subsection*{MEG}
-Same same, but different. 
-Much of what is said about electric signals also apply to the magnetic signals.
-\subsection*{Voltage-sensitive dye imaging}
-In princible easy, just area-weighted membrane potential
-\subsection*{Calcium imaging}
-Depends on cell models with good calcium dynamics, which is a weakness of many present models.
-\subsection*{fMRI}
-Underlying mechanism for other signals seems clear, but this is not so for fMRI. fMRI is thought to be a measure of ''metabolic cost``, but appears cell-type dependent, with an important role of NPY interneurons.
 
 \section{Electrodes}
 \tvnnote{Do we want this part?}
@@ -479,8 +480,11 @@ Location and Cell type: \citep{DelgadoRuz2014, Buccino2018}
 LPA
 
 \section{Other approaches}
-Kernels \citep{Hagen2016}.
+Kernels \citep{Hagen2016}
+
 Proxies \cite{Mazzoni2015}
+
+LFP Kernels from experimental spike-triggered averages (Destexhe?)
 
 \section{Software tools}
 LFPy etc.
@@ -489,9 +493,22 @@ LFPy etc.
 
 Typically split into two separate tasks: Simulate neural activity, mostly relying on the NEURON simulator \citep{Hines1997}, through the Python interface \citep{Hines2009}. Extracellular potentials are then calculated from these currents, through volume conductor theory. 
 
-\section{Discussion}
-\label{sec:discussion}
-\tvnnote{Since it is textbook, should we rename to 'Summary'?}
+\section{Other brain signals}
+This chapter concerns modelling of extracellular potentials, but the same approach can often be easily extended to also simultaneously calculate other brain signals.
+
+\subsection*{Magnetoencephalograpy (MEG)}
+MEG are expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), that is, synaptic input
+to geometically aligned populations of pyramidal neurons, but
+is a measure of magnetic instead of electric fields \citep{Hamalainen1993}, and because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:LFP_EEG}D). Except for this difference, much of what is said about electric signals also applies to the magnetic signals.
+\subsection*{Voltage-sensitive dye imaging}
+In principle easy to model, just area-weighted membrane potential
+\subsection*{Calcium imaging}
+Depends on cell models with good calcium dynamics, which is a weakness of many present models.
+\subsection*{fMRI}
+Underlying mechanism for other signals seems clear, but this is not so for fMRI. fMRI is thought to be a measure of ''metabolic cost``, but appears cell-type dependent, with an important role of NPY interneurons.
+
+\section{Summary}
+\label{sec:summary}
 \begin{enumerate}
  \item Summary of chapter
  \item Ongoing large-scale projects (HBP, Allen)
@@ -506,7 +523,7 @@ Typically split into two separate tasks: Simulate neural activity, mostly relyin
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Acknowledgements}
+\section*{Acknowledgements}
 \label{sec:acknowledgements}
 This research has received funding from the European Union Horizon 2020 Framework Programme for Research
 and Innovation under Specific Grant Agreement No. 785907 (Human Brain Project SGA2), the Research Council of Norway (Notur, nn4661k), and \tvnnote{INCF?}
@@ -516,7 +533,7 @@ and Innovation under Specific Grant Agreement No. 785907 (Human Brain Project SG
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Bibliography}
+\section*{References}
 \label{sec:bibliography}
 \bibliography{ECS_bookchapter.bib}
 
@@ -606,7 +623,7 @@ In words, the exact same amount of current that goes into one compartment, goes 
 \subsection*{Illustration with multi-compartment cell model}
 For multi-compartment cell models, the situation becomes more complex, but current conservation is still key in shaping extracellular potentials, and ensures that there are no current monopoles. This means that in general neural activity can be expected to cause both negative and positive currents, resulting in both positive and negative extracellular potentials (Fig.~\ref{fig:EP_morph}C).
 
-
+LFP is low-pass filtered, but note that spikes, like delta-funcitons, have substantial power in low-frequencies.
 
 \subsection*{Correlations boost LFP signals}
 Correlations have been demonstrated to play a vital role, and can increase the amplitude of the LFP by orders of magnitude \citep{Linden2011, Leski2013}. The effect is in principle easy to understand (Fig.~\ref{fig:correlation_effect}).
