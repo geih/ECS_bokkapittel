@@ -392,7 +392,10 @@ of identical magnitude (top), and cause perfectly dipolar extracellular potentia
 \label{fig:EP_morph}
 \end{figure}
 
-\section{Local field potentials}
+\section{Intra-cortical measurements from neural populations}
+Measured signal often spit in two frequency parts, LFP and MUA. Tell us different things about neural activity.
+
+\subsection{Local field potentials}
 
 % \tvnnote{How much of an intro should we have here? If the Chapter intro has a broader focus and only refer to modelling of brain signals, we should have full LFP intro here.}
 % \ghnote{I think we could skim through the different measurement modalities in the intro, and mention LFP, MUA, ECoG and EEG. As of now, there is just a line there, saying that it is very important to model what you measure, and measure what you model.  I suggest that Gaute expands on this, and talks about the needs within the field. However, I suggest that we make it rather brief, and focus this chapter on the technical aspect of how to compute the different measures here.}
@@ -429,10 +432,7 @@ In contrast to pyramidal neurons, interneurons often lack any clear orientationa
 %\tvnnote{Tenkte det ble litt ryddigere med underoverskrifter, slik at det er lettere \aa~finne tilbake igjen? Ellers syntes jeg det var en bra omskrivning. }
 Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \cite{Reimann2013}, calcium spikes \cite{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \cite{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
-
-
-
-\section{MUA}
+\subsection{MUA}
 While LFPs are thought to mainly reflect the synaptic input to large populations, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Pettersen2008}. This can be usefull, as some cell-types, like stellate cells and interneurons are expected to have very weak LFP contributions, but might still be measureable through their spiking activity.
 MUA can be used in combination with LFP to estimate the population dynamics, as for example in Laminar Population Analysis \citep{Einevoll2007, Blomquist2009}.
 \tvnnote{Not sure what to say about MUA. Could make illustration figures similar to those from Pettersen, Hagen, Einevoll (2008)?} 
