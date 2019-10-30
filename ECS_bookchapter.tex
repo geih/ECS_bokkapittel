@@ -239,6 +239,10 @@ We start this book chapter by giving an overview of the theory used for forward 
 \label{fig:multimodal}
 \end{figure}
 
+Motivation: Simulated test-data for benchmarking
+Spike-sorting: \cite{Hagen2016, Buccino2019}, CSD: \cite{Pettersen2006, Potworowski2012, Ness2015}, 
+Location and Cell type: \citep{DelgadoRuz2014, Buccino2018}, 
+LPA
 
 \section{%Theory: 
 From electrodiffusion to volume conductor theory}
@@ -331,7 +335,7 @@ The formula in eq. \ref{eq:VCtheory} (or the line-source version of it) represen
 
 \item {\bf Linear extracellular medium:} Linear relationship ($\bf{I} = -\sigma {\nabla \phi}$) between the current density ${\bf I}$\tvnnote{I would have preferred J to mean current density and I total currents. Will this make things messy other places?} \ghnote{Maybe it messes things up, since I used $J_k$ for fluxes earlier.} \tvnnote{Hmm, im my mind current density and flux was the same thing?} and the electrical field, $\nabla \phi$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
 
-\item {\bf Frequency independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \cite{Logothetis2007, Miceli2017, Ranta2017}, but it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}.
+\item {\bf Frequency independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \cite{Logothetis2007, Miceli2017, Ranta2017}, but it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}. See Fig.~\ref{fig:freq_dep}.
 
 \item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, was assumed to be the same in all spatial directions. This is mostly an acceptable approximation, but it is also possible to expand the formalism to account for an anisotropic conductivities \citep{Ness2015}. \ghnote{Referere til et senere kapittel der vi bruker dette.}
 
@@ -341,6 +345,19 @@ The formula in eq. \ref{eq:VCtheory} (or the line-source version of it) represen
 \item {\bf No diffusion:} To account for diffusion, one would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
 
 \end{enumerate}
+
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{frequency_dependence}
+\end{center}
+\caption{\textbf{Literature review of reported conductivities in various species and experimental setups.} 
+Gabriel et al. (1996): data from bovine brains recorded with a two-electrode setup. Elbohouty (2013): data recorded in vitro in slices of mouse cerebral cortex with a two-electrode setup. Logothetis et al. (2007): data from monkey recorded with a four-electrode setup. The average conductivity value, 0.405 S/m, combined with the reported increase of $\sim$25\%. Wagner et al. (2014): recordings from cat cerebral cortex with a two-electrode setup, which was similar to the setup used by Gabriel et al. (1996). Ranck (1963): data from rabbit brain.
+}
+\label{fig:freq_dep}
+\end{figure}
+
+
 
 Volume conductor theory is the fundament for forward modeling of extracellular potentials at different spatial scales, from extracellular spikes, LFPs and MUAs, to ECoGs and EEGs. In the following sections we shall review previous modeling works, and insights from simulating electrical potentials at these different scales.
 We use the software LFPy \citep{Linden2014, Hagen2018, Hagen2019}, which has volume conductor theory incorporated and can in principle be used to compute extracellular potentials on arbitrarily large spatial scales, surrounding arbitrarily large neuronal populations. 
@@ -365,7 +382,7 @@ Note that this framework for calculating extracellular potentials is valid both 
 \begin{center}
 \includegraphics[width=1\textwidth]{single_cell_EP}
 \end{center}
-\caption{\textbf{Single-cell contributions to the extracellular potential.\ghnote{Knallfin!}} 
+\caption{\textbf{Single-cell contributions to the extracellular potential.} 
 {\bf A}: Point neurons have no net currents (top), and therefore cause no extracellular potentials (bottom). 
 {\bf B}: Two-compartment neuron models have two opposite currents
 of identical magnitude (top), and cause perfectly dipolar extracellular potentials (bottom). 
@@ -375,20 +392,19 @@ of identical magnitude (top), and cause perfectly dipolar extracellular potentia
 \label{fig:EP_morph}
 \end{figure}
 
-
 \section{Local field potentials}
 
 % \tvnnote{How much of an intro should we have here? If the Chapter intro has a broader focus and only refer to modelling of brain signals, we should have full LFP intro here.}
 % \ghnote{I think we could skim through the different measurement modalities in the intro, and mention LFP, MUA, ECoG and EEG. As of now, there is just a line there, saying that it is very important to model what you measure, and measure what you model.  I suggest that Gaute expands on this, and talks about the needs within the field. However, I suggest that we make it rather brief, and focus this chapter on the technical aspect of how to compute the different measures here.}
 
 The Local Field Potential is the Low-Frequency Part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
-%, and what determines a single neuron's contribution to the LFP is both the geometrical structure of the neuron, and the location of the synaptic inputs.
+\tvnnote{Find place to put sentence of two on importance of correlation.}
 
-Broadly speaking, neurons can be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_EEG}A). This geometrical alignment transfers to the current dipoles originating from synaptic input \ghnote{Litt forvirrende setning, dette her} to specific regions of a pyramidal cell population (Fig.~\ref{fig:LFP_EEG}B).  For example, basal excitatory synaptic input generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region, while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_EEG}C). 
+In cortex and hippocampus, neuron can broadly speaking be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_EEG}A). This geometrical alignment transfers to the current dipoles originating from synaptic input \ghnote{Litt forvirrende setning, dette her} to specific regions of a pyramidal cell population (Fig.~\ref{fig:LFP_EEG}B).  For example, basal excitatory synaptic input generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region, while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_EEG}C). 
 Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation in the LFP (Fig.~\ref{fig:LFP_EEG}C; but see also \cite{Ness2018}).
 The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed. 
 
-Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input, and indeed, separating between cases like this pose a real challenge in interpreting LFP signals [cite]. 
+Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input, and indeed, separating between cases like this pose a real challenge in interpreting LFP signals \citep{Linden2010}. 
 
 In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles do not align, leading to negligible contribution to LFP signals, except indirectly through giving synaptic input to pyramidal cells \citep{Hagen2016, Telenczuk2016}.
 
@@ -409,22 +425,12 @@ In contrast to pyramidal neurons, interneurons often lack any clear orientationa
 
 %Large spatial extension generally give rise to larger extracellular potentials as there will be larger distances between currents.\tvnnote{Should we derive dipole-formula here, or wait for EEG section? Arguments for having it here: Talk about how large cells gets larger current dipole moments, and how dipoles dominate at larger distances.}
 
-\ghnote{Forslag som evt. erstatter subsectionen nedenfor:}
-\tvnnote{Tenkte det ble litt ryddigere med underoverskrifter, slik at det er lettere \aa~finne tilbake igjen? Ellers syntes jeg det var en bra omskrivning. }
+%\ghnote{Forslag som evt. erstatter subsectionen nedenfor:}
+%\tvnnote{Tenkte det ble litt ryddigere med underoverskrifter, slik at det er lettere \aa~finne tilbake igjen? Ellers syntes jeg det var en bra omskrivning. }
 Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \cite{Reimann2013}, calcium spikes \cite{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \cite{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
 
-\subsection*{Effect of spikes and active conductances}
-\label{sec:active}
-\ghnote{Perhaps make this stuff more compact, and not have it as separate subsection?} \tvnnote{I kind off made it more compact, but also expanded the text a bit.}
-%Active conductances can affect LFP signals in different ways, for example through the presence of somatic action potentials, dendritic calcium spikes or subthreshold processing of synaptic inputs.
-Somatic action potentials are typically not expected to have an important role in shaping cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. 
-There are, however, indications that in particular the relatively long-lasting after-hyperpolarization might, at least in some cases, have a role in shaping the LFP, see for example \cite{Reimann2013}.
-Note that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
-It has been demonstrated by \cite{Suzuki2017} that calcium spikes can make sizable contributions to the LFP and ECoG signals, which opens up for exciting research opportunities, given the assumed important physiological role of such calcium spikes\tvnnote{remove?}.
-
-Subthreshold active conductances can also be expected to affect the LFP, and in particular the hyperpolarization-activated cation channel I$_{\rm h}$ might play a key role in this, see \cite{Ness2016, Ness2018}.
 
 \section{MUA}
 While LFPs are thought to mainly reflect the synaptic input to large populations, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Pettersen2008}. This can be usefull, as some cell-types, like stellate cells and interneurons are expected to have very weak LFP contributions, but might still be measureable through their spiking activity.
@@ -453,7 +459,11 @@ Can also used pre-solved complex head models, like the New York head (Fig. \ref{
 
 No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}.
 
+
+\tvnnote{Write something about the spatial filtering from electrode size.}
 \tvnnote{Show extracellular potential through four-sphere head model for single synaptic input to Hay model (same as earlier LFP figure)?}
+
+
 
 \begin{figure}[!ht]
 \begin{center}
@@ -472,12 +482,6 @@ Proxies \cite{Mazzoni2015}
 
 LFP Kernels from experimental spike-triggered averages (Destexhe?)
 
-\section{Software tools}
-LFPy etc.
-\tvnnote{Recycle text from LFPy 2.0 paper about other softwares (sec 4.7.}
-\tvnnote{Maybe we don't need this section? Just say that 'here we've used LFPy'}
-
-Typically split into two separate tasks: Simulate neural activity, mostly relying on the NEURON simulator \citep{Hines1997}, through the Python interface \citep{Hines2009}. Extracellular potentials are then calculated from these currents, through volume conductor theory. 
 
 \section{Other brain signals}
 This chapter concerns modelling of extracellular potentials, but the same approach can often be easily extended to also simultaneously calculate other brain signals.
@@ -492,6 +496,15 @@ In principle easy to model, just area-weighted membrane potential
 Depends on cell models with good calcium dynamics, which is a weakness of many present models.
 \subsection*{fMRI}
 Underlying mechanism for other signals seems clear, but this is not so for fMRI. fMRI is thought to be a measure of ''metabolic cost``, but appears cell-type dependent, with an important role of NPY interneurons.
+
+
+\section{Software tools}
+LFPy etc.
+\tvnnote{Recycle text from LFPy 2.0 paper about other softwares (sec 4.7.}
+\tvnnote{Maybe we don't need this section? Just say that 'here we've used LFPy'}
+
+Typically split into two separate tasks: Simulate neural activity, mostly relying on the NEURON simulator \citep{Hines1997}, through the Python interface \citep{Hines2009}. Extracellular potentials are then calculated from these currents, through volume conductor theory. 
+
 
 \section{Summary}
 \label{sec:summary}
@@ -690,16 +703,17 @@ Spatial averaging matters, but is relatively easily studied
 \subsection{Frequency filtering}
 Nelson says no (for recording electrodes) \citep{Nelson2010}
 
+\subsection*{Effect of spikes and active conductances}
+\label{sec:active}
+\ghnote{Perhaps make this stuff more compact, and not have it as separate subsection?} \tvnnote{I kind off made it more compact, but also expanded the text a bit.}
+%Active conductances can affect LFP signals in different ways, for example through the presence of somatic action potentials, dendritic calcium spikes or subthreshold processing of synaptic inputs.
+Somatic action potentials are typically not expected to have an important role in shaping cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. 
+There are, however, indications that in particular the relatively long-lasting after-hyperpolarization might, at least in some cases, have a role in shaping the LFP, see for example \cite{Reimann2013}.
+Note that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
-\section{Simulated test-data for benchmarking}
-\tvnnote{Should we have this?}
+It has been demonstrated by \cite{Suzuki2017} that calcium spikes can make sizable contributions to the LFP and ECoG signals, which opens up for exciting research opportunities, given the assumed important physiological role of such calcium spikes\tvnnote{remove?}.
 
-Spike-sorting: \cite{Hagen2016, Buccino2019}
+Subthreshold active conductances can also be expected to affect the LFP, and in particular the hyperpolarization-activated cation channel I$_{\rm h}$ might play a key role in this, see \cite{Ness2016, Ness2018}.
 
-CSD: \cite{Pettersen2006, Potworowski2012, Ness2015}
-
-Location and Cell type: \citep{DelgadoRuz2014, Buccino2018} 
-
-LPA
 
 \end{document}  
