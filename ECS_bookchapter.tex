@@ -376,7 +376,7 @@ Current conservation requires that the transmembrane currents across the entire 
 an excitatory synaptic input generates a current sink (negative current), this will necessarily lead to current sources elsewhere on the cell. This implies that point neurons, that is, neurons with no spatial structure, will have no net transmembrane currents, and hence cause no extracellular potentials (Fig.~\ref{fig:EP_morph}A). The simplest neuron models that are capable of producing extracellular potentials are therefore two-compartment models, which will have two equal but opposite currents, and cause perfectly dipolar extracellular potentials (Fig.~\ref{fig:EP_morph}B).
 
 Multi-compartment neuron models mimicking the complex spatial structure of real neurons will typically give rise to complicated patterns of current sinks and sources (negative and positive currents respectively), leading to complex, but mostly dipolar-like extracellular potentials (Fig.~\ref{fig:EP_morph}C) \citep{Einevoll2013}.
-Note that this framework for calculating extracellular potentials is valid both for subthreshold and suprathreshold neural activity, that is, when a cell receives synaptic input that does not trigger, or does trigger an action potential, respectively (Fig.~\ref{fig:EP_morph}, D versus E).  
+Note that this framework for calculating extracellular potentials is valid both for subthreshold and suprathreshold neural activity, that is, when a cell receives synaptic input that does not trigger, or does trigger an action potential, respectively (Fig.~\ref{fig:EP_morph}, D versus E).
 
 \begin{figure}[!ht]
 \begin{center}
@@ -393,8 +393,8 @@ of identical magnitude (top), and cause perfectly dipolar extracellular potentia
 \end{figure}
 
 \section{Intra-cortical extracellular potentials from neural populations}
-Extracellular potentials measured within neural tissue often contains contributions from both synaptic input to large populations of neurons, and from the action potentials of neurons in the immediate vicinity of the recording electrode (Fig.~\ref{fig:LFP_MUA}A-C). 
-Since these two contributions have different biophysical origins, they also contain different information about the ongoing neural activity, and they can be separated by splitting the extracellular potential into two separate frequency parts. The low frequency part, that is, the LFP, reflects synaptic input to populations of pyramidal cells (Fig.~\ref{fig:LFP_MUA}D), while the high-frequency part, that is, the multi-unit activity (MUA), reflects the population spiking activity (Fig.~\ref{fig:LFP_MUA}E-F).
+Extracellular potentials measured within neural tissue are often split into two separate frequency domains, which reflect different aspects of the underlying neural activity. 
+The low frequency part, that is, the local field potential (LFP), is thought to mostly reflect synaptic input to populations of pyramidal cells, while the high-frequency part, that is, the multi-unit activity (MUA), reflects the population spiking activity (Fig.~\ref{fig:LFP_MUA}).
 
 \begin{figure}[!ht]
 \begin{center}
@@ -414,13 +414,8 @@ Since these two contributions have different biophysical origins, they also cont
 
 
 \subsection{Local field potentials}
-
-% \tvnnote{How much of an intro should we have here? If the Chapter intro has a broader focus and only refer to modelling of brain signals, we should have full LFP intro here.}
-% \ghnote{I think we could skim through the different measurement modalities in the intro, and mention LFP, MUA, ECoG and EEG. As of now, there is just a line there, saying that it is very important to model what you measure, and measure what you model.  I suggest that Gaute expands on this, and talks about the needs within the field. However, I suggest that we make it rather brief, and focus this chapter on the technical aspect of how to compute the different measures here.}
-
-The local field potential (LFP) is the low-frequency part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
 \tvnnote{Find place to put sentence or two on importance of correlation.}
-
+The LFP is the low-frequency part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
 In cortex and hippocampus, neuron can broadly speaking be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_MUA}A). This geometrical alignment is important because the LFP contributions from the individual pyramidal cells also align and therefore sum constructively \ghnote{Litt forvirrende setning, dette her}\tvnnote{Hva med naa?}.  For example, basal excitatory synaptic input generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region, while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_MUA}D). 
 Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation in the LFP (Fig.~\ref{fig:LFP_MUA}D; but see also \cite{Ness2018}).
 The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed. 
@@ -429,7 +424,7 @@ Note that, for example, the LFP signature of apical excitatory synaptic input is
 
 In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles do not align, leading to negligible contribution to LFP signals, except indirectly through giving synaptic input to pyramidal cells \citep{Hagen2016, Telenczuk2016}.
 
-It has been demonstrated that correlations among the synaptic inputs can amplify the LFP signal power by orders of magnitude
+It has been demonstrated that correlations among the synaptic inputs to pyramidal cells can amplify the LFP signal power by orders of magnitude \citep{Linden2011, Leski2013}
 
 Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \cite{Reimann2013}, calcium spikes \cite{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \cite{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
