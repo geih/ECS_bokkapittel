@@ -333,9 +333,9 @@ The formula in eq. \ref{eq:VCtheory} (or the line-source version of it) represen
 
 \item {\bf Quasi-static approximation of Maxwell's equations:} Terms with time derivative of the electrical and magnetic fields are neglected. This approximation appears to be well-justified for the relatively low frequencies relevant for brain signals, below about 10 kHz \citep{Nunez2006}.
 
-\item {\bf Linear extracellular medium:} Linear relationship ($\bf{I} = -\sigma {\nabla \phi}$) between the current density ${\bf I}$\tvnnote{I would have preferred J to mean current density and I total currents. Will this make things messy other places?} \ghnote{Maybe it messes things up, since I used $J_k$ for fluxes earlier.} \tvnnote{Hmm, im my mind current density and flux was the same thing?} and the electrical field, $\nabla \phi$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
+\item {\bf Linear extracellular medium:} Linear relationship ($\bf{I} = -\sigma {\nabla \phi}$) between the current density ${\bf I}$\tvnnote{I would have preferred J to mean current density and I total currents. Will this make things messy other places?} \ghnote{Maybe it messes things up, since I used $J_k$ for fluxes earlier.} and the electrical field, $\nabla \phi$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
 
-\item {\bf Frequency independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \cite{Logothetis2007, Miceli2017, Ranta2017}, but it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}. See Fig.~\ref{fig:freq_dep}.
+\item {\bf Frequency independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \citep{Logothetis2007, Miceli2017, Ranta2017}, see Fig.~\ref{fig:freq_dep}. Note that it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}. 
 
 \item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, was assumed to be the same in all spatial directions. This is mostly an acceptable approximation, but it is also possible to expand the formalism to account for an anisotropic conductivities \citep{Ness2015}. \ghnote{Referere til et senere kapittel der vi bruker dette.}
 
@@ -352,7 +352,8 @@ The formula in eq. \ref{eq:VCtheory} (or the line-source version of it) represen
 \includegraphics[width=0.6\textwidth]{frequency_dependence}
 \end{center}
 \caption{\textbf{Literature review of reported conductivities in various species and experimental setups.} 
-Gabriel et al. (1996): data from bovine brains recorded with a two-electrode setup. Elbohouty (2013): data recorded in vitro in slices of mouse cerebral cortex with a two-electrode setup. Logothetis et al. (2007): data from monkey recorded with a four-electrode setup. The average conductivity value, 0.405 S/m, combined with the reported increase of $\sim$25\%. Wagner et al. (2014): recordings from cat cerebral cortex with a two-electrode setup, which was similar to the setup used by Gabriel et al. (1996). Ranck (1963): data from rabbit brain.
+Most studies seem to indicate a very weak frequency dependence of the extracellular conductivity, which would have a negligible effect on measured extracellular potentials \citep{Miceli2017}. The very low and strongly frequency dependent values measured by \cite{Gabriel1996} represents an outlier, and although it has received substantial attention, it has to the best of our knowledge not been reproduced by any other study.
+For details about the data, see \citep{Miceli2017}, and references therein \citep{Ranck1963, Gabriel1996, Logothetis2007, Elbohouty2013, Wagner2014}
 }
 \label{fig:freq_dep}
 \end{figure}
@@ -416,24 +417,30 @@ The low frequency part, that is, the local field potential (LFP), is thought to 
 \subsection{Local field potentials}
 \tvnnote{Find place to put sentence or two on importance of correlation.}
 The LFP is the low-frequency part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
-In cortex and hippocampus, neuron can broadly speaking be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_MUA}A). This geometrical alignment is important because the LFP contributions from the individual pyramidal cells also align and therefore sum constructively \ghnote{Litt forvirrende setning, dette her}\tvnnote{Hva med naa?}.  For example, basal excitatory synaptic input generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region, while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_MUA}D). 
-Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation in the LFP (Fig.~\ref{fig:LFP_MUA}D; but see also \cite{Ness2018}).
-The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents reversed. 
+In cortex and hippocampus, neuron can broadly speaking be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_MUA}A). This geometrical alignment is important because the LFP contributions from the individual pyramidal cells also align and therefore sum constructively \ghnote{Litt forvirrende setning, dette her}\tvnnote{Hva med naa?}.  For example, basal excitatory synaptic input (Fig.~\ref{fig:LFP_MUA}B, time marked by red line) generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region (Fig.~\ref{fig:LFP_MUA}D, time marked by red line), while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_MUA}B,D, time marked by blue line). 
+Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation and a weak LFP contribution (Fig.~\ref{fig:LFP_MUA}B, D, time marked by orange line).
+The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents and LFPs reversed. 
 
 Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input, and indeed, separating between cases like this pose a real challenge in interpreting LFP signals \citep{Linden2010}. 
 
 In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles do not align, leading to negligible contribution to LFP signals, except indirectly through giving synaptic input to pyramidal cells \citep{Hagen2016, Telenczuk2016}.
 
-It has been demonstrated that correlations among the synaptic inputs to pyramidal cells can amplify the LFP signal power by orders of magnitude \citep{Linden2011, Leski2013}
+It has been demonstrated that correlations among the synaptic inputs to pyramidal cells can amplify the LFP signal power by orders of magnitude \citep{Linden2011, Leski2013}.
 
 Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \cite{Reimann2013}, calcium spikes \cite{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \cite{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
 \subsection{MUA}
-While LFPs are thought to mainly reflect the synaptic input to large populations, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Pettersen2008}. This can be usefull, as some cell-types, like stellate cells and interneurons are expected to have very weak LFP contributions, but might still be measureable through their spiking activity.
-MUA can be used in combination with LFP to estimate the population dynamics, as for example in Laminar Population Analysis \citep{Einevoll2007, Blomquist2009}.
-\tvnnote{Not sure what to say about MUA. Could make illustration figures similar to those from Pettersen, Hagen, Einevoll (2008)?} 
+While LFPs are thought to mainly reflect the synaptic input to large populations of pyramidal neurons, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Pettersen2008}. This can be useful, as some cell-types, like stellate cells and interneurons are expected to have very weak LFP contributions \citep{Linden2011}, but might still be measureable through their spiking activity. Similarly, spatially uniformly distributed synaptic input to pyramidal neurons results in a negligible LFP contribution (Fig.~\ref{fig:LFP_MUA}C, time marked by orange line), while the population might still contribute substantially to the MUA through the extracellular action potentials (Fig.~\ref{fig:LFP_MUA}E-F, time marked by orange line).
 
+Since MUAs and LFPs reflect different aspects of neural activity, they can be used in combination to gain additional insights, as is for example done in Laminar Population Analysis \citep{Einevoll2007, Blomquist2009}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{ECoG and EEG}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:EEG}
 LFP signals are measured inside different brain structures, in the immediate vicinity of the current sources that are causing the LFP signals. A disadvantage with this is that it is invasive, in the sense that electrodes must be inserted into the brain tissue which can only be done in humans when there is a clear medical need, like for patients with intractable epilepsy [cite]. However, the current sources that are causing the LFP signals are also causing measurable electrical signals at the brain surface, electrocorticography (ECoG), and outside of the head, called electroencephalograpy (EEG) (Fig.~\ref{fig:multimodal}).
 
@@ -497,7 +504,7 @@ This chapter concerns modelling of extracellular potentials, but the same approa
 \subsection*{Magnetoencephalograpy (MEG)}
 MEG are expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), that is, synaptic input
 to geometically aligned populations of pyramidal neurons, but
-is a measure of magnetic instead of electric fields \citep{Hamalainen1993}, and because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:LFP_EEG}D). Except for this difference, much of what is said about electric signals also applies to the magnetic signals.
+is a measure of magnetic instead of electric fields \citep{Hamalainen1993}, and because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). Except for this difference, much of what is said about electric signals also applies to the magnetic signals.
 \subsection*{Voltage-sensitive dye imaging}
 In principle easy to model, just area-weighted membrane potential
 \subsection*{Calcium imaging}
