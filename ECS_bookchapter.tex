@@ -425,7 +425,7 @@ Note that, for example, the LFP signature of apical excitatory synaptic input is
 
 In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles do not align, leading to negligible contribution to LFP signals, except indirectly through giving synaptic input to pyramidal cells \citep{Hagen2016, Telenczuk2016}.
 
-It has been demonstrated that correlations among the synaptic inputs to pyramidal cells can amplify the LFP signal power by orders of magnitude \citep{Linden2011, Leski2013}.
+It has been demonstrated that correlations among the synaptic inputs to pyramidal cells can amplify the LFP signal power by orders of magnitude, with the implication that populations receiving correlated synaptic input can dominate the LFP also 1-2~mm outside of the population \citep{Linden2011, Leski2013}.
 
 Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \cite{Reimann2013}, calcium spikes \cite{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \cite{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
@@ -442,7 +442,7 @@ Since MUAs and LFPs reflect different aspects of neural activity, they can be us
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:EEG}
-LFP signals are measured inside different brain structures, in the immediate vicinity of the current sources that are causing the LFP signals. A disadvantage with this is that it is invasive, in the sense that electrodes must be inserted into the brain tissue which can only be done in humans when there is a clear medical need, like for patients with intractable epilepsy [cite]. However, the current sources that are causing the LFP signals are also causing measurable electrical signals at the brain surface, electrocorticography (ECoG), and outside of the head, called electroencephalograpy (EEG) (Fig.~\ref{fig:multimodal}).
+LFP signals are measured inside different brain structures, in the immediate vicinity of the current sources that are causing the LFP signals. A disadvantage with this is that it is invasive, in the sense that electrodes must be inserted into the brain tissue which can only be done in humans when there is a clear medical need, like for patients with intractable epilepsy [cite]. However, the current sources that are causing the LFP signals are also causing measurable electrical signals at the brain surface, called electrocorticography (ECoG), and outside of the head, called electroencephalograpy (EEG) (Fig.~\ref{fig:multimodal}).
 
 Any combination of current sinks and sources can set up current multipoles \citep{Nunez2006}, and from electrodynamics we know that extracellular potentials at a distance $R$ from the source can be precisely described by a multipole expansion
 \begin{equation}
@@ -455,6 +455,12 @@ Since current monopoles are unphysical due to current conservation, and the quad
 \label{eq:dipole}
 \end{equation}
 Here, $\mathbf{p}$ is the current dipole moment in a medium with conductivity $\sigma$, $R = |\mathbf{R}|$, where $\mathbf{R}$ is the distance between the current dipole moment and the electrode location and $\theta$ denotes the angle between $\mathbf{p}$ and $\mathbf{R}$. As mentioned above, this approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length $d$, $R > 3d$ or $4d$ \citep{Nunez2006}.
+\tvnnote{Should we substantially shorten the above paragraph and remove equations?}
+
+
+\tvnnote{Write breifly about how we can calculate EEGs from arbitrary neural activity} 
+We can calculate EEG from arbitrary neural activity (Fig. \ref{fig:EEG_MEG}).
+
 
 \begin{figure}[!ht]
 \begin{center}
@@ -468,15 +474,26 @@ Here, $\mathbf{p}$ is the current dipole moment in a medium with conductivity $\
 \label{fig:EEG_MEG}
 \end{figure}
 
+
+
 \subsection{Head models}
 Can use analytic four-sphere (Fig. \ref{fig:head_models}A) \citep{Hagen2018, Naess2017}
 Can also used pre-solved complex head models, like the New York head (Fig. \ref{fig:head_models}B) \citep{Huang2016}.
 
-No important signal filtering by head \citep{Pfurtscheller1975, Ranta2017}.
+No important frequency  filtering on EEG signal by head \citep{Pfurtscheller1975, Ranta2017}, however, substantial spatial filtering (Fig.~\ref{fig:foursphere_contour}).
 
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{4o_contour}
+%\includegraphics[width=1\textwidth]{PC_versus_IN}
+\end{center}
+\caption{\textbf{Effect of head inhomogeneities}.
+The same current dipole will give substantially different potentials on the head surface when the different conductivities of the head is included.
+}
+\label{fig:foursphere_contour}
+\end{figure}
 
 \tvnnote{Write something about the spatial filtering from electrode size.}
-\tvnnote{Show extracellular potential through four-sphere head model for single synaptic input to Hay model (same as earlier LFP figure)?}
 
 
 
