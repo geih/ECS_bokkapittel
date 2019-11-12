@@ -429,10 +429,18 @@ It has been demonstrated that correlations among the synaptic inputs to pyramida
 
 Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \cite{Reimann2013}, calcium spikes \cite{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \cite{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
+\subsubsection*{Other approaches}
+\tvnnote{Make this section one sentence in LFP}.
+Kernels \citep{Hagen2016}
+
+Proxies \cite{Mazzoni2015}
+
+LFP Kernels from experimental spike-triggered averages (Destexhe?)
+
 \subsection{MUA}
 While LFPs are thought to mainly reflect the synaptic input to large populations of pyramidal neurons, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Pettersen2008}. This can be useful, as some cell-types, like stellate cells and interneurons are expected to have very weak LFP contributions \citep{Linden2011}, but might still be measureable through their spiking activity. Similarly, spatially uniformly distributed synaptic input to pyramidal neurons results in a negligible LFP contribution (Fig.~\ref{fig:LFP_MUA}C, time marked by orange line), while the population might still contribute substantially to the MUA through the extracellular action potentials (Fig.~\ref{fig:LFP_MUA}E-F, time marked by orange line).
 
-Since MUAs and LFPs reflect different aspects of neural activity, they can be used in combination to gain additional insights, as is for example done in Laminar Population Analysis \citep{Einevoll2007, Blomquist2009}.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -507,15 +515,40 @@ The same current dipole will give substantially different potentials on the head
 
 
 
-\section{Other approaches}
-Kernels \citep{Hagen2016}
-
-Proxies \cite{Mazzoni2015}
-
-LFP Kernels from experimental spike-triggered averages (Destexhe?)
 
 
+\section{Inverse modelling}
+
+CSD
+
+EEG dipoles
+
+Spke sorting
+
+Since MUAs and LFPs reflect different aspects of neural activity, they can be used in combination to gain additional insights, as is for example done in Laminar Population Analysis \citep{Einevoll2007, Blomquist2009}.
+
+\section{Software tools}
+LFPy etc.
+\tvnnote{Recycle text from LFPy 2.0 paper about other softwares (sec 4.7.}
+\tvnnote{Maybe we don't need this section? Just say that 'here we've used LFPy'}
+
+Typically split into two separate tasks: Simulate neural activity, mostly relying on the NEURON simulator \citep{Hines1997}, through the Python interface \citep{Hines2009}. Extracellular potentials are then calculated from these currents, through volume conductor theory. 
+
+
+\section{Summary and Discussion}
+
+
+\label{sec:summary}
+\begin{enumerate}
+ \item Summary of chapter
+ \item Ongoing large-scale projects (HBP, Allen)
+ \subitem Using LFP in constraining models?
+ \item Brain-Machine interfaces?
+ \item Where to go?
+ \subitem fMRI, VSD, Ca img.
+\end{enumerate}
 \section{Other brain signals}
+\tvnnote{Massive shortening}
 This chapter concerns modelling of extracellular potentials, but the same approach can often be easily extended to also simultaneously calculate other brain signals.
 
 \subsection*{Magnetoencephalograpy (MEG)}
@@ -528,26 +561,6 @@ In principle easy to model, just area-weighted membrane potential
 Depends on cell models with good calcium dynamics, which is a weakness of many present models.
 \subsection*{fMRI}
 Underlying mechanism for other signals seems clear, but this is not so for fMRI. fMRI is thought to be a measure of ''metabolic cost``, but appears cell-type dependent, with an important role of NPY interneurons.
-
-
-\section{Software tools}
-LFPy etc.
-\tvnnote{Recycle text from LFPy 2.0 paper about other softwares (sec 4.7.}
-\tvnnote{Maybe we don't need this section? Just say that 'here we've used LFPy'}
-
-Typically split into two separate tasks: Simulate neural activity, mostly relying on the NEURON simulator \citep{Hines1997}, through the Python interface \citep{Hines2009}. Extracellular potentials are then calculated from these currents, through volume conductor theory. 
-
-
-\section{Summary}
-\label{sec:summary}
-\begin{enumerate}
- \item Summary of chapter
- \item Ongoing large-scale projects (HBP, Allen)
- \subitem Using LFP in constraining models?
- \item Brain-Machine interfaces?
- \item Where to go?
- \subitem fMRI, VSD, Ca img.
-\end{enumerate}
 
 
 
