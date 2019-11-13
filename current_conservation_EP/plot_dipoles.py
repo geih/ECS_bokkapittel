@@ -12,7 +12,7 @@ import neuron
 h = neuron.h
 import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
-from plotting_convention import mark_subplots, simplify_axes
+#from plotting_convention import mark_subplots, simplify_axes
 
 
 np.random.seed(1234)
@@ -100,7 +100,7 @@ def return_cell(cell_name, sim_name):
             'nsegs_method': None,
             'dt': 2**-6,
             'tstart': -150,
-            'tstop': 10,
+            'tstop': 50,
             'v_init': -70,
             'celsius': 34,
             'pt3d': True,
@@ -515,6 +515,7 @@ def plot_spatial_time_traces(cell, grid_LFP, grid_elec_params,
     plt.savefig(join(savefolder, 'traces_{}.png'.format(sim_name)), dpi=150)
 
 
+
 synapse_type = ["single_tuft", "single_soma"][1]
 cell_name = ["two_comp", "hay"][1]
 
@@ -540,10 +541,10 @@ if "soma" in synapse_type:
 elif "tuft" in synapse_type:
     synapse_params["idx"] = cell.get_closest_idx(x=100, z=1400)
 
-synapse_params["weight"] = 0.05#0.2
+synapse_params["weight"] = 0.2
 synapses = [LFPy.Synapse(cell, **synapse_params)]
-# synapses[0].set_spike_times(np.array([1., 5., 9.]))
-synapses[0].set_spike_times(np.array([1.]))
+synapses[0].set_spike_times(np.array([1., 5., 9.]))
+# synapses[0].set_spike_times(np.array([1.]))
 
 # Create a grid of measurement locations, in (mum)
 # grid_x, grid_z = np.mgrid[-550:551:25, -600:1501:25]
@@ -574,6 +575,10 @@ laminar_elec_params = {
 # Run simulation, electrode object argument in cell.simulate
 print("running simulation...")
 cell.simulate(rec_imem=True, rec_vmem=True)
+
+
+
+
 
 laminar_electrode = LFPy.RecExtElectrode(cell, **laminar_elec_params)
 laminar_electrode.calc_lfp()
