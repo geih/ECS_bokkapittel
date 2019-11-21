@@ -275,7 +275,7 @@ where $\epsilon$ is the permittivity of the system, and $\rho$ is the charge den
 \rho = F \sum_k z_k c_k.
 \label{eq:F}
 \end{equation}
-An alternative, more computationally efficient approach is to replace the Poisson equation with the simplifying approximation that the bulk solution is electroneutral \citep{Mori2008, Mori2009, Mori2009a, Mori2011, Halnes2015, Halnes2013, Halnes2015arxiv, Pods2017, Niederer2013, OConnell2016, Solbra2018}, which is a good approximation on spatiotemporal scales larger than micrometers and microseconds \citep{Grodzinsky2011, Pods2017, Solbra2018}. 
+An alternative, more computationally efficient approach is to replace the Poisson equation with the simplifying approximation that the bulk solution is electroneutral \citep{Mori2008, Mori2009, Mori2009a, Mori2011, Halnes2015, Halnes2013, Pods2017, Niederer2013, OConnell2016, Solbra2018}, which is a good approximation on spatiotemporal scales larger than micrometers and microseconds \citep{Grodzinsky2011, Pods2017, Solbra2018}. 
 
 Both the PNP formalism and the electroneutral formalism allow us to compute the dynamics of ion concentrations and the electrical potential in the extracellular space of neural tissue containing an arbitrary set of neuronal and glial current sources. For example, in a recent work, a version of the electroneutral formalism was developed into a framework for computing the extracellular dynamics (of $c_k$ and $\phi$) in a 3D space surrounding morphologically complex neurons simulated with the NEURON simulation tool \citep{Solbra2018}. However, both the PNP and electroneutral formalisms keep track of the spatial distribution of ion concentrations, and as such they require a suitable meshing of the 3D space, and numerical solutions based on finite difference- or finite element methods. In both cases, simulations can become very heavy, and for systems at a tissue level, the computational demand may become incommensurable. For that reason, there is much to gain from deriving simpler frameworks where effects of ion concentration dynamics are neglected, since, for many scenarios, this may be a good approximation. Below, we will derive these simpler frameworks using the Nernst-Planck fluxes (eq. \ref{eq:JNP}) as a starting point, as this approach will make the involved approximations transparent.
 
@@ -310,16 +310,16 @@ As eq. (\ref{eq:CSD}) indicates, also diffusive processes can in principle contr
 \subsection{Volume conductor theory}
 \label{sec:VC_theory}
 In simulations of morphologically complex neurons, we typically compute a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. Commonly, one assumes that the extracellular potential does not effect the neurons (i.e., no ephaptic coupling), since extracellular potentials are typically much smaller than the membrane potential of $\sim$-70~mV. 
-By assuming that the tissue medium is a volume conductor \citep{Holt1999, Linden2014},  one can then use the standard CSD-equation (eq. \ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
+By assuming that the tissue medium is a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD-equation (eq. \ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
 
-For the simplest case of a single point source $I_1$ at a point ${\bf r}=0$ in an isotropic medium, the solution is: 
+If we consider the simplest possible case of a single point current source $I_1$ in ${\bf r}=0$ in an isotropic medium, the current density $I = -\sigma \nabla \phi$ through a spherical shell with area $4\pi r^2$ must equal $I_1/4\pi r^2$. 
+Due to the the spherical symmetry of the problem, $\nabla \phi = d\phi/dr$, and integration with respect to $r$ gives us:
 
 \begin{equation}
-\phi = \frac{I_1}{4\pi \sigma r },
+\phi = \frac{I_1}{4\pi \sigma r},
 \label{eq:pointsource}
 \end{equation}
-\tvnnote{I think we should explain where $4\pi r$ comes from}
-where $r$ is the distance from the source. With several point-current sources, $I_{1}, I_2, I_3, ... $ in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $, we can apply the superposition principle\tvnnote{Refer to linearity assumption}, and the potential in a point ${\bf r}$ is given by:
+where $r$ is the distance from the source. If we have several point-current sources, $I_{1}, I_2, I_3, ... $ in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $), their contributions add up due to the linearity assumption, and the potential in a point ${\bf r}$ is given by:
 
 \begin{equation}
 \phi({\bf r}) = \frac{I_1}{4\pi  \sigma {\bf |r-r_1|}} + \frac{I_2}{4\pi  \sigma {\bf |r-r_2|} } + \frac{I_3}{4\pi  \sigma {\bf |r-r_3|} } + ... = \sum_k \frac{I_k}{4\pi  \sigma {\bf |r-r_k|} }.
@@ -338,10 +338,9 @@ The formula in eq. \ref{eq:VCtheory} (or the line-source version of it) represen
 
 \item {\bf Frequency independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \citep{Logothetis2007, Miceli2017, Ranta2017}, see Fig.~\ref{fig:freq_dep}. Note that it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}. 
 
-\item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, was assumed to be the same in all spatial directions. This is mostly an acceptable approximation, but it is also possible to expand the formalism to account for an anisotropic conductivities \citep{Ness2015}. \ghnote{Referere til et senere kapittel der vi bruker dette.}
+\item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, was assumed to be the same in all spatial directions. This is mostly an acceptable approximation, but it is also possible to expand the formalism to account for an anisotropic conductivities \citep{Ness2015}.
 
-\item {\bf Homogeneous  conductivity:} The extracellular medium was assumed to have the same conductivity everywhere. Although neural tissue is highly non-homogeneous on the micrometer scale \citep{Nicholson1998}, microscale inhomogeneities may average out on a larger spatial scale, and a homogeneous conductivity seems to be a reasonable approximation within cortex \citep{Logothetis2007}. However, in many situations is will not be applicable, and in general, eq.~\ref{eq:CSDstandard} can always be solved for arbitrarily complex geometries using numerical methods, like the Finite Element Method (FEM) \citep{Logg2012}. For some example neuroscience applications, see \cite{Moffitt2005, Frey2009, Joucla2012, Haufe2015, Ness2015, Buccino2019b, Obien2019}. For some simple non-homogeneous cases analytical solutions can still be obtained, for example through the Method of Images for {\it in vitro} brain slices \citep{Ness2015}, and the four-sphere head model for EEG signals (Sec.~\ref{sec:EEG}) \citep{Naess2017}. \ghnote{Antar at vi her refererer til EEG-kapittelet og evt. flytter noe av dette materialet dit?}
-\tvnnote{Kun siste del-setning som spesifikt handler om EEG, i tillegg til noen av referansene.}
+\item {\bf Homogeneous  conductivity:} The extracellular medium was assumed to have the same conductivity everywhere. Although neural tissue is highly non-homogeneous on the micrometer scale \citep{Nicholson1998}, microscale inhomogeneities may average out on a larger spatial scale, and a homogeneous conductivity seems to be a reasonable approximation within cortex \citep{Logothetis2007}. However, in many situations is will not be applicable, and in general, eq.~\ref{eq:CSDstandard} can always be solved for arbitrarily complex geometries using numerical methods, like the Finite Element Method (FEM) \citep{Logg2012}. For some example neuroscience applications, see \cite{Moffitt2005, Frey2009, Joucla2012, Haufe2015, Ness2015, Buccino2019b, Obien2019}. For some simple non-homogeneous cases analytical solutions can still be obtained, for example through the Method of Images for {\it in vitro} brain slices \citep{Ness2015}, and the four-sphere head model for EEG signals (Sec.~\ref{sec:EEG}) \citep{Naess2017}.
 
 \item {\bf No diffusion:} To account for diffusion, one would need to compute the electrodynamics of the system using one of the electrodiffusive frameworks presented in Section \ref{sec:eldiff}.
 
@@ -418,7 +417,7 @@ The low frequency part, that is, the local field potential (LFP), is thought to 
 \subsection{Local field potentials}
 \tvnnote{Find place to put sentence or two on importance of correlation.}
 The LFP is the low-frequency part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
-In cortex and hippocampus, neuron can broadly speaking be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_MUA}A). This geometrical alignment is important because the LFP contributions from the individual pyramidal cells also align and therefore sum constructively \ghnote{Litt forvirrende setning, dette her}\tvnnote{Hva med naa?}.  For example, basal excitatory synaptic input (Fig.~\ref{fig:LFP_MUA}B, time marked by red line) generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region (Fig.~\ref{fig:LFP_MUA}D, time marked by red line), while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_MUA}B,D, time marked by blue line). 
+In cortex and hippocampus, neuron can broadly speaking be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_MUA}A). This geometrical alignment is important because the LFP contributions from the individual pyramidal cells also align and therefore sum constructively.  For example, basal excitatory synaptic input (Fig.~\ref{fig:LFP_MUA}B, time marked by red line) generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region (Fig.~\ref{fig:LFP_MUA}D, time marked by red line), while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_MUA}B,D, time marked by blue line). 
 Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation and a weak LFP contribution (Fig.~\ref{fig:LFP_MUA}B, D, time marked by orange line).
 The same arguments also applies to inhibitory synaptic inputs, with the signs of the currents and LFPs reversed. 
 
@@ -537,9 +536,12 @@ Typically split into two separate tasks: Simulate neural activity, mostly relyin
 
 
 \section{Summary and Discussion}
-\tvnnote{Geir skriver dette}
-
 \label{sec:summary}
+In this chapter, we reviewed the theory for modelling extracellular potentials. Starting at the level of extracellular ionic movements, we showed how neuronal activity gives rise to electrical fluctuations that can be picked up at various spatial scales ranging from the local of MUA and LFP scale to the more global scale of ECoG and EEG. We further reviewed how recorded signals at these various spatial scales can be interpreted in terms of how various features in the recorded signals reflect various aspects of neuronal activity. In brief, the MUA reflects the spiking activity of nearby neurons, the LFP reflect the distribution of synaptic inputs to nearby neuronal populations, while ECoG and EEG reflect the same as the LFP, but on a larger spatial scale. 
+
+We note that there are several related measurement modalities that were not considered here, including magnetoencephalograpy (MEG), voltage-sensitive dye imaging (VSDI), calcium imaging, functional magnetic resonance imaging (fMRI) and positron emission tomography (PET). Of these, the MEG is expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), i.e., from synaptic input to geometically aligned populations of pyramidal neurons \citep{Hamalainen1993}, and can be modeled with similar approaches as those reviewed above. However, because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). VSDI and calcium imaging reflect the reflecting area-weighted neuronal membrane potentials and intracellular calcium dynamics, which and are in principle easily accessed variables in neuronal simulations, while fMRI and PET reflect blood supply and metabolic cost, which are typically not explicitly included in models. 
+ 
+
 \begin{enumerate}
  \item Summary of chapter
  \item Ongoing large-scale projects (HBP, Allen)
@@ -548,20 +550,12 @@ Typically split into two separate tasks: Simulate neural activity, mostly relyin
  \item Where to go?
  \subitem fMRI, VSD, Ca img.
 \end{enumerate}
+
 \section{Other brain signals}
 \tvnnote{Massive shortening}
-This chapter concerns modelling of extracellular potentials, but the same approach can often be easily extended to also simultaneously calculate other brain signals.
 
 \subsection*{Magnetoencephalograpy (MEG)}
-MEG are expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), that is, synaptic input
-to geometically aligned populations of pyramidal neurons, but
-is a measure of magnetic instead of electric fields \citep{Hamalainen1993}, and because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). Except for this difference, much of what is said about electric signals also applies to the magnetic signals.
-\subsection*{Voltage-sensitive dye imaging}
-In principle easy to model, just area-weighted membrane potential
-\subsection*{Calcium imaging}
-Depends on cell models with good calcium dynamics, which is a weakness of many present models.
-\subsection*{fMRI}
-Underlying mechanism for other signals seems clear, but this is not so for fMRI. fMRI is thought to be a measure of ''metabolic cost``, but appears cell-type dependent, with an important role of NPY interneurons.
+
 
 
 
