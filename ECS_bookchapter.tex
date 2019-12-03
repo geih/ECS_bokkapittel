@@ -435,11 +435,17 @@ Applying the current dipole approximation, we neglect the quadrupole and higher-
 It is important to note that when computing the electric potential in the far-field limit from a distribution of transmembrane currents in neural tissue, the dipole contribution will be the dominating term \cite{Nunez2006}. By computing the total current dipole moment from a distribution of current sources
 \begin{equation}
 \mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k,
+\label{eq:grillfest}
 \end{equation}
 
 we can approximate the electric potential from neural activity by applying the current dipole approximation.
 
 The point-source approximation, eq. \ref{eq:VCtheory} (or the line-source version of it), and the current dipole approximation, eq.~\eqref{eq:CDA} represent} volume conductor theory in its simplest form, and \sntxt{are} based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
+
+\ghtxt{GH: Wouldn't it be nice to introduce $\mathbf{p}$ already in eq. \ref{eq:multipole}. As far as I can tell, eq. \ref{eq:grillfest} implies that $|\mathbf{p}| = \sum_{k=1}^N I_k r_k$ (no vectors anymore) and isn't then $r_k$ here the same as $r_k^c$ in the eq. \ref{eq:multipole}?
+}
+\ghnote{Check!}
+
 
 \begin{enumerate}
 
