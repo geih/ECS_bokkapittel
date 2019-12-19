@@ -320,8 +320,8 @@ In simulations of morphologically complex neurons, we typically compute a set of
 By assuming that the tissue medium is a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD-equation (eq. \ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
 
 If we consider the simplest possible case of a single point current source $I_1$ in ${\bf r}=0$ in an isotropic medium, the current density $I = -\sigma \nabla \phi$ through a spherical shell with area $4\pi r^2$ must equal $I_1/4\pi r^2$. 
-\snnote{It would be nice with a clearer distinction between current and current density..}
-Due to the the spherical symmetry of the problem, $\nabla \phi = d\phi/dr$, and integration with respect to $r$ gives us:
+\snnote{It would be nice with a clearer distinction between current and current density.. What about using uppercase I for current and lowercase i for current density?}
+Due to the spherical symmetry of the problem, $\nabla \phi = d\phi/dr$, and integration with respect to $r$ gives us:
 
 \begin{equation}
 \phi = \frac{I_1}{4\pi \sigma r},
@@ -336,116 +336,41 @@ where $r$ is the distance from the source. If we have several point-current sour
 
 Eq.~\ref{eq:VCtheory} is often referred to as the point-source approximation \citep{Holt1999, Pettersen2008a}, since the membrane current from a neuronal segment is assumed to enter the extracellular medium in a single point. An often used further development is obtained by integrating eq.~\ref{eq:VCtheory} along the segment axis, corresponding to the transmembrane current being evenly distributed along the segment axis, giving the line-source approximation \citep{Holt1999, Linden2014}.
 
-\snnote{current dipole approximation, suggestion 1:}
+\snnote{multipole expansion and current dipole approximation}
+
+
+%\slntxt{
+%Imagine that we want to compute the electric potential from a volume of current sinks and sources. The obvious choice would be to apply the point-source approximation, eq.~\eqref{eq:VCtheory}.
+%	
+%The point-source approximation can also be reformulated into an infinite series called the multipole expansion for current sources:
+%
+%\begin{equation}
+%\Phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ... .
+%\end{equation}
+%The multipole expansion will precisely give us the electric potential at a distance $R$ away from the volume, when $R$ is larger than the maximal radius of the volume: $R > |r_{vol}|_{max}$.
+%
+%The multipole expansion is apparently not so useful in it's original form, but let us:
+%}
 
 \sntxt{
-Due to current conservation in neural tissue, a current source $I_1 = I$ will always be accompanied by a respective current sink $I_2 = -I$. Here we envision a two-compartment neuron model, like the one in Fig.~\ref{fig:EP_morph}, panel B.
-We can find the exact electric potential from these two currents, by applying eq. \eqref{eq:VCtheory}:
-\begin{equation}\label{eq:PHItwomonopoles}
-\Phi(\mathbf{r}) = \frac{I}{4 \pi \sigma} \left( \frac{1}{|\mathbf{r} - \mathbf{r}_1|} - \frac{1}{|\mathbf{r} - \mathbf{r}_2|} \right),
+By reformulating Eq.~\eqref{eq:VCtheory}, we find that the electric potential from a volume containing a combination of current sinks and sources, can be precisely described by the multipole expansion \citep{Nunez2006}:
+
+\begin{equation}\label{eq:multipole}
+\Phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ...
 \end{equation}
-where $\mathbf{r}_1$ and $\mathbf{r}_2$ are the locations of current sink $I_1$ and current source $I_2$. 
+when the distance from the center of the volume to the measurement point is larger than the maximal distance from volume center to source [cite - find Jackson!].
 
-This expression can be generalized by introducing the current dipole moment $\mathbf{p}$:
-
-\begin{equation}\label{eq:dip}
-\mathbf{p} = \sum_{n=1}^N I_n \mathbf{r}_n, 
-\end{equation}
-where $I_n$ is the transmembrane current at location $\mathbf{r}_n$.
-
-
-
-For our two-compartment model, the current dipole moment can be written as
-
-\begin{equation}\label{eq:DIPtwomonopoles}
-\mathbf{p} = I_1 \mathbf{r}_1 + I_2 \mathbf{r}_2 = I (\mathbf{r}_1- \mathbf{r}_2) = I \mathbf{d},
-\end{equation}
-where $\mathbf{d} = \mathbf{r}_1 - \mathbf{r}_2$ gives the dipole length ($d$) and orientation of the current dipole moment.
-
-
-Applying the cosine rule and a binomial expansion we find that $\frac{1}{|\mathbf{r} - \mathbf{r}_1|} - \frac{1}{|\mathbf{r} - \mathbf{r}_2|} \approx \frac{d \cos \theta}{R^2}$, for $R >> d$, where $R$ is the distance between the midpoint of the dipole and $\mathbf{r}$.
-By inserting this relation into eq.~\eqref{eq:PHItwomonopoles}, we arrive at the so-called current dipole approximation:
-
+In neural tissue, current monopoles are unphysical due to current conservation and the quadrupole, octopole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current dipole approximation \citep{Nunez2006}:
 \begin{equation}\label{eq:CDA}
-\Phi(\mathbf{R}) \approx \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2},
+\Phi(\mathbf{R}) \approx \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}.
 \end{equation}
-which gives a reasonable approximation of the electric potential measured at a distance $R$ larger than $3d$ or $4d$ away from the dipole $\mathbf{p} = I \mathbf{d}$ \cite{Nunez2006}. 
-
-In order to get a better understanding of what we lose by using the current dipole approximation over the point source approximation, we can take a look at the multipole expansion for electric current point sources.
-
-Imagine a volume containing a distribution of current sinks and sources $I_k$ positioned at $\mathbf{r}_k$, as illustrated in Fig. x, where $\mathbf{r}_c$ marks the center of the volume, and $R = |\mathbf{r}_c - \mathbf{r}|$ is the distance from the center of the current distribution to the point where we want to calculate the potential.
-
-Making use of the cosine rule and a binomial expansion for $1/|\mathbf{r} - \mathbf{r_k}|$, we can rewrite eq.~\eqref{eq:VCtheory}. The result is the multipole expansion for current sources:
-
-\begin{align}\label{eq:multipole}
-\Phi(R) =~& 
-\frac{1}{4 \pi \sigma} \Bigg[\frac{1}{R} \sum_{k=1}^N I_k \nonumber\\
-&~~~~+ \frac{1}{R^2} \sum_{k=1}^N I_k r_k^c \cos \theta_k \\
-&~~~~+  \frac{1}{R^3} \sum_{k=1}^N I_k r_k^{c~2} \left( \frac{3}{2} \cos^2 \theta_k - \frac{1}{2} \right) + ... \nonumber \Bigg]
-\end{align}
-
-valid for $R > r_k^c$, where $r_k^c$ is the distance from the current distribution center $\mathbf{r}_c$ to current source $I_k$ at $\mathbf{r}_k$, and $\theta_k$ is the angle between $\mathbf{r}_c^k$ and $\mathbf{R}$. Here, the various terms are often referred to as the monopole contribution, the dipole contribution, the quadrupole contribution, etc..
-For a current dipole, consisting of a single current sink and a single current source, the monopole term vanishes. The dipole term gives us eq. \eqref{eq:CDA}. Perhaps more surprisingly, the quadrupole and other higher-order terms will also give nonzero contributions to the electric potential from a current dipole! These higher-order terms will be negligible for $R > 3d$ or $R > 4d$, since they fall more rapidly with distance. 
-
-In other words, by using the current dipole approximation for computing the electric potential from a current dipole, we lose the quadrupole, octupole and higher-order contributions. This is a good approximation when the measurement point is far away from the current dipole.
-}
-
-
-\snnote{current dipole approximation, suggestion 2}
-\slntxt{  
-
-In the next paragraph, we outline the current dipole approximation, as an alternative to eq.~\eqref{eq:VCtheory}. We picture $N$ currents $I_k$ located at $\mathbf{r}_k$ in a volume centered around position $\mathbf{r}_c = \sum_{k = 1}^N \frac{\mathbf{r}_k}{N}$. Our measurement electrode is positioned a distance $R = |\mathbf{R}| = |\mathbf{r}_c - \mathbf{r}|$ away from the current distribution.
-
-Starting out with eq.~\eqref{eq:VCtheory}, we can rewrite $\frac{1}{|\mathbf{r} - \mathbf{r}_k|}$ as a binomial expansion, by first applying the cosine rule. From this, we end up with an infinite series, better known as the multipole expansion for current sources:
-
-\begin{align}\label{eq:multipole}
-\Phi(R) =~& 
-\frac{1}{4 \pi \sigma} \Bigg[\frac{1}{R} \sum_{k=1}^N I_k \nonumber\\
-&~~~~+ \frac{1}{R^2} \sum_{k=1}^N I_k r_k^c \cos \theta_k \\
-&~~~~+  \frac{1}{R^3} \sum_{k=1}^N I_k r_k^{c~2} \left( \frac{3}{2} \cos^2 \theta_k - \frac{1}{2} \right) + ... \nonumber \Bigg]
-\end{align}
-
-Where $r_k^c = |\mathbf{r}_k^c|$ is the distance between current source $k$ at position $\mathbf{r}_k$ and the distribution midpoint $\mathbf{r}_c$,
-and $\theta_k$ is the angle between $\mathbf{r}_k^c$ and $\mathbf{R}$.
-The multipole expansion gives us the exact potential at location $\mathbf{r}$, when $R > r_{k~max}$. Computing electric potentials applying the multipole expansion directly, is however not very useful, since we would need infinitely many terms.
-Looking at the various terms in the multipole expansion, we notice that the terms decay with distance from the current distribution as $1/R$, $1/R^2$, $1/R^3$. The terms are often referred to as the \emph{monopole contribution}, the \emph{dipole contribution}, the \emph{quadrupole contribution}, etc, respectively.  For the case of a single current source, all terms but the monopole contribution, would give non-zero contributions to the electric potential. Due to current conservation, single current monopoles are unphysical in neural tissue.
-The simplest current distribution that can result from neural activity is the current dipole, i.e. a current sink $I_1 = -I$ and a current source $I_2 = I$. Inserting this into the multipole expansion, we see that there is no monopole contribution, but the dipole contribution and higher-order terms will  contribute to the electric potential.
-The dipole contribution from a single current dipole is known as the current dipole approximation and can be written on the form:
-\begin{equation}\label{eq:CDA}
-\Phi^{dipole}(\mathbf{R}) = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2},
+Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle between the current dipole moment and the distance vector $\mathbf{R}$. The current dipole moment can be found by summing up all the transmembrane currents from a neuron \citep{Pettersen2008, Pettersen2014, Nunez2006}: 
+\begin{equation}\label{eq:dipole}
+\mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k.
 \end{equation}
-where $R = |\mathbf{r}_c - \mathbf{r}|$ is the distance from the midpoint of the so-called current dipole moment $\mathbf{p}$ to the electrode, and $\theta$ is the angle between $\mathbf{p}$ and $\mathbf{R}$.
+For a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the length $d$ and direction of the current dipole. As mentioned above, the current dipole approximation is applicable when we are in the far-field limit, that is when $R$ is much larger than the dipole length: $R > 3d$ or $R > 4d$ \citep{Nunez2006}.
 
-The current dipole moment from a current sink $I_1 = I$ and a current source $I_2 = -I$, located at position $\mathbf{r}_1$ and $\mathbf{r}_2$, respectively, can be calculated as
-\begin{align}\label{eq:p}
-\mathbf{p} &= I_1 \mathbf{r}_1 + I_2 \mathbf{r}_2 \nonumber\\
-  &= I \mathbf{r}_1 - I \mathbf{r}_2 \\
-  &= I \mathbf{d}, \nonumber
-\end{align}
-
-where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the length and direction of the dipole.
-
-Applying the current dipole approximation, we neglect the quadrupole and higher-order contributions to the electric potential. This is a good approximation in the far-field limit, that is when $R$ is much larger than the dipole length $d$, $R > 3d$ or $R > 4d$, since the higher-order terms decay rapidly with increasing distance \cite{Nunez2006}.
-}
-
-\snnote{To be included for both suggestions:}
-
-\sntxt{
-
-It is important to note that when computing the electric potential in the far-field limit from a distribution of transmembrane currents in neural tissue, the dipole contribution will be the dominating term \cite{Nunez2006}. By computing the total current dipole moment from a distribution of current sources
-\begin{equation}
-\mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k,
-\label{eq:grillfest}
-\end{equation}
-
-we can approximate the electric potential from neural activity by applying the current dipole approximation.
-
-The point-source approximation, eq. \ref{eq:VCtheory} (or the line-source version of it), and the current dipole approximation, eq.~\eqref{eq:CDA} represent} volume conductor theory in its simplest form, and \sntxt{are} based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
-
-\ghtxt{GH: Wouldn't it be nice to introduce $\mathbf{p}$ already in eq. \ref{eq:multipole}. As far as I can tell, eq. \ref{eq:grillfest} implies that $|\mathbf{p}| = \sum_{k=1}^N I_k r_k$ (no vectors anymore) and isn't then $r_k$ here the same as $r_k^c$ in the eq. \ref{eq:multipole}?
-}
-\ghnote{Check!}
-
+The point-source approximation, Eq. \ref{eq:VCtheory} (or the line-source version of it), and the current dipole approximation, Eq.~\eqref{eq:CDA} represent} volume conductor theory in its simplest form, and \sntxt{are} based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
 
 \begin{enumerate}
 
@@ -568,26 +493,25 @@ While LFPs are thought to mainly reflect the synaptic input to large populations
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:EEG}
-LFP signals are measured inside different brain structures, in the immediate vicinity of the current sources that are causing the LFP signals. A disadvantage with this is that it is invasive, in the sense that electrodes must be inserted into the brain tissue which can only be done in humans when there is a clear medical need, like for patients with intractable epilepsy [cite]. However, the current sources that are causing the LFP signals are also causing measurable electrical signals at the brain surface, called electrocorticography (ECoG), and outside of the head, called electroencephalograpy (EEG) (Fig.~\ref{fig:multimodal}).
+\sntxt{
+In order to measure \emph{electric potentials in the immediate vicinity of neurons} \slntxt{(OR: LFP and MUA signals)}, we need to insert sharp electrodes into the brain. This highly invasive technique is quite common in animal studies, but can only be applied to humans when there is a clear medical need, for example in patients with intractable epilepsy \citep{Zangiabadi2019}. Fortunately, electric potentials generated by neural activity extend beyond neural tissue and can be picked up by electrodes placed on the brain surface or on top of the scalp. The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG).
 
-\snnote{Short: How to compute ECoGs and EEGs, refer to equations in theory.}
+Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, Eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see Eq.~\eqref{dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
 
-Any combination of current sinks and sources can set up current multipoles \citep{Nunez2006}, and from electrodynamics we know that extracellular potentials at a distance $R$ from the source can be precisely described by a multipole expansion
-\begin{equation}
-\phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ...~.
-\label{eq:dipole_expansion}
-\end{equation}
-Since current monopoles are unphysical due to current conservation, and the quadrupole, octupole and higher order terms are decreasing more strongly with distance $R$ than the dipole term, when $R$ is sufficiently large, the extracellular potential from a neuron simulation can be estimated with the \textit{current dipole approximation} \citep{Pettersen2008, Pettersen2014, Nunez2006}:
-\begin{equation}
-\phi(\mathbf{r}) = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}~.
-\label{eq:dipole}
-\end{equation}
-Here, $\mathbf{p}$ is the current dipole moment in a medium with conductivity $\sigma$, $R = |\mathbf{R}|$, where $\mathbf{R}$ is the distance between the current dipole moment and the electrode location and $\theta$ denotes the angle between $\mathbf{p}$ and $\mathbf{R}$. As mentioned above, this approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length $d$, $R > 3d$ or $4d$ \citep{Nunez2006}.
-\tvnnote{Should we substantially shorten the above paragraph and remove equations?}
+The current dipole approximation is however not an obvious candidate for computing ECoG signals, as the ECOG electrodes are located too close to the signal sources, see \citep{Hagen2018}.
 
 
-\tvnnote{Write breifly about how we can calculate EEGs from arbitrary neural activity} 
-We can calculate EEG from arbitrary neural activity (Fig. \ref{fig:EEG_MEG}).
+
+
+}
+
+%LFP signals are measured inside different brain structures, in the immediate vicinity of the current sources that are causing the LFP signals. A disadvantage with this is that it is invasive, in the sense that electrodes must be inserted into the brain tissue which can only be done in humans when there is a clear medical need, like for patients with intractable epilepsy [cite]. However, the current sources that are causing the LFP signals are also causing measurable electrical signals at the brain surface, called electrocorticography (ECoG), and outside of the head, called electroencephalograpy (EEG) (Fig.~\ref{fig:multimodal}).
+
+%\tvnnote{Should we substantially shorten the above paragraph and remove equations?}
+%
+%
+%\tvnnote{Write breifly about how we can calculate EEGs from arbitrary neural activity} 
+%We can calculate EEG from arbitrary neural activity (Fig. \ref{fig:EEG_MEG}).
 
 
 \begin{figure}[!ht]
@@ -605,15 +529,26 @@ We can calculate EEG from arbitrary neural activity (Fig. \ref{fig:EEG_MEG}).
 
 
 \subsection{Head models}
-Can use analytic four-sphere (Fig. \ref{fig:head_models}A) \citep{Hagen2018, Naess2017}
-Can also used pre-solved complex head models, like the New York head (Fig. \ref{fig:head_models}B) \citep{Huang2016}.
+\sntxt{
+Electric potentials measured on the scalp surface will be affected by the geometries and conductivities of the different constituents of the head \citep{Nunez2006}. This can be incorporated in our EEG calculations by applying simplified or more complex head models.
+A well-known simplified head model is the analytical four-sphere model, consisting of four conentric shells representing brain tissue, cerebrospinal fluid (CSF), skull and scalp, where the conductivity can be set individually for each shell \citep{Naess2017, Srinivasan1998, Nunez2006} (Fig.~\ref{fig:head_models}A).
+More complex head models make use of high-resolution anatomical MRI-data to map out a geometrically detailed head volume conductor. The link between current dipoles in the brain and resulting EEG signals is determined applying numerical methods such as the finite element method \citep{Larson2013, Logg2012}. Once this link is established we can in principle insert a dipole representing arbitrary neural activity into such a model, and compute the resulting EEG signals quite straightforwardly. The New York Head model is an example of one such pre-solved complex head model, see Fig.~\ref{fig:head_models} \citep{Huang2016}.
 
-No important frequency  filtering on EEG signal by head \citep{Pfurtscheller1975, Ranta2017}, however, substantial spatial filtering (Fig.~\ref{fig:foursphere_contour}).
+
+The head models introduce no essential frequency filtering of the EEG signal \citep{Pfurtscheller1975, Ranta2017}, however, substantial spatial filtering will occur (Fig.~\ref{fig:foursphere_contour}).
+The relatively large size of the EEG electrodes will also contribute to spatial summation of the EEG signals [cite?].
+}
+
+%
+%Can use analytic four-sphere (Fig. \ref{fig:head_models}A) \citep{Hagen2018, Naess2017}
+%Can also used pre-solved complex head models, like the New York head (Fig. \ref{fig:head_models}B) \citep{Huang2016}.
+%
+%No important frequency  filtering on EEG signal by head \citep{Pfurtscheller1975, Ranta2017}, however, substantial spatial filtering (Fig.~\ref{fig:foursphere_contour}).
 
 \begin{figure}[!ht]
 \begin{center}
-%\includegraphics[width=1.0\textwidth]{4o_contour}
-\includegraphics[width=1\textwidth]{PC_versus_IN}
+\includegraphics[width=1.0\textwidth]{4o_contour}
+%\includegraphics[width=1\textwidth]{PC_versus_IN}
 \end{center}
 \caption{\textbf{Effect of head inhomogeneities}.
 The same current dipole will give substantially different potentials on the head surface when the different conductivities of the head is included.
@@ -622,14 +557,16 @@ The same current dipole will give substantially different potentials on the head
 \end{figure}
 
 \tvnnote{Write something about the spatial filtering from electrode size.}
-
+\snnote{Torbjorn: Was it something in the means of the last sentence above, that you had in mind? Or do  Do you have any suggestions for papers to cite?}
 
 
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=1\textwidth]{head_models.png}
 \end{center}
-\caption{\textbf{[placeholder] Head models} A: Four-sphere. B: New York head model.}
+\caption{\textbf{[placeholder] Head models} A: Four-sphere. B: New York head model.
+\snnote{I'm going to fix this fig!}
+}
 \label{fig:head_models}
 \end{figure}
 
