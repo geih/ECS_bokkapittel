@@ -318,12 +318,13 @@ This the standard expression used in current source density (CSD)\snnote{abbrevi
 As eq. (\ref{eq:CSD}) indicates, also diffusive processes can in principle contribute to the Laplacian of $\phi$, and if present, they could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources ($CSD = 0$). Previous computational \sntxt{studies} have predicted that effects of diffusion on extracellular potentials are not necessarily small, but tend to be very slow, meaning that they will only affect the very low-frequency components of $\phi$ \citep{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time scale (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1Hz \citep{Einevoll2013}, which means that most of the tentative diffusive contribution will be filtered out from experimental recordings. It may therefore be a good approximation to neglect the diffusive term, except in the case of pathologically dramatic concentration variations. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq.~(\ref{eq:CSDstandard}).
 
 \subsection{Volume conductor theory}
-\label{sec:VC_theory}
-In simulations of morphologically complex neurons, we typically compute a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. Commonly, one assumes that the extracellular potential does not effect \snnote{affect?} the neurons (i.e., no ephaptic coupling), since extracellular potentials are typically much smaller than the membrane potential of $\sim$-70~mV. 
-By assuming that the tissue medium is a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD-equation (eq. \ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
 \snnote{I've made some letters boldface and added a few unit vectors to ensure that ${\bf \nabla}$ always is a vector. Torbjorn: Do you agree?}
+
+\label{sec:VC_theory}
+In simulations of morphologically complex neurons, we typically compute a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. Commonly, one assumes that the extracellular potential does not  \sntxt{affect} the neurons (i.e., no ephaptic coupling), since extracellular potentials are typically much smaller than the membrane potential of $\sim$-70~mV. 
+By assuming that the tissue medium is a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD-equation (eq. \ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
+\snnote{How about exchanging the following "in ${\bf r} = 0$" with "at the origin"? For me, this would make the next ${r}$ easier to understand, but I guess this is a matter of taste..}
 If we consider the simplest possible case of a single point current source $I_1$ in ${\bf r}=0$ 
-\snnote{How about exchanging "in ${\bf r} = 0$" with "at the origin"? For me, this would make the next ${r}$ easier to understand, but I guess this is a matter of taste..}
 in an isotropic medium, the current density ${\bf i} = -\sigma {\bf \nabla} \phi$ through a spherical shell with area $4\pi r^2$ must equal $I_1/4\pi r^2~{\bf \hat{r}}$. 
 Due to the spherical symmetry of the problem, ${\bf \nabla} \phi = \partial \phi/ \partial r~{\bf \hat{r}}$, and integration with respect to $r$ gives us:
 
@@ -340,14 +341,15 @@ where $r$ is the distance from the source. If we have several point-current sour
 
 Eq.~\ref{eq:VCtheory} is often referred to as the point-source approximation \citep{Holt1999, Pettersen2008a}, since the membrane current from a neuronal segment is assumed to enter the extracellular medium in a single point. An often used further development is obtained by integrating eq.~\ref{eq:VCtheory} along the segment axis, corresponding to the transmembrane current being evenly distributed along the segment axis, giving the line-source approximation \citep{Holt1999, Linden2014}.
 
-When estimating the extracellular potential at large distances, it can often be useful to express Eq.~\eqref{eq:VCtheory} in terms of an infinite series. That is, the electric potential outside a volume containing a combination of current sinks and sources, can be precisely described by the multipole expansion \citep{Nunez2006}:
+When estimating the extracellular potential at large distances, it can often be useful to express Eq.~\eqref{eq:VCtheory} in terms of an infinite series.
+Specifically, the electric potential outside a volume containing a combination of current sinks and sources, can be precisely described by the multipole expansion \citep{Nunez2006}:
 
 \begin{equation}\label{eq:multipole}
-\phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ... ,
+\phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ... .
 \end{equation}
-when the distance from the center of the volume to the measurement point is larger than the distance from volume center to the most peripheral source \citep{Jackson1998}. The monopole contribution $C_{monopole}$, dipole contribution $C_{dipole}$ and quadrupole contribution $C_{quadrupole}$, etc are \snnote{somehow} defined in \cite{Riera2012}.
+This equation holds when when the distance $R$ from the center of the volume to the measurement point is larger than the distance from volume center to the most peripheral source \citep{Jackson1998}. Here, the monopole contribution $C_{monopole}$, dipole contribution $C_{dipole}$ and quadrupole contribution $C_{quadrupole}$, etc are \snnote{somehow} defined in \cite{Riera2012}.
 
-In neural tissue, current monopoles are unphysical due to current conservation and the quadrupole, octopole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current dipole approximation \citep{Nunez2006}:
+In neural tissue, current monopoles are unphysical due to current conservation, and the quadrupole, octupole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current dipole approximation \citep{Nunez2006}:
 \begin{equation}\label{eq:CDA}
 \phi(\mathbf{R}) \approx \frac{C_{dipole}}{R^2} = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}.
 \end{equation}
@@ -355,7 +357,7 @@ Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle betwee
 \begin{equation}\label{eq:dipole}
 \mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k.
 \end{equation}
-In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the length $d$ and direction of the current dipole. As mentioned above, the current dipole approximation is applicable when we are in the far-field limit, that is when $R$ is much larger than the dipole length: $R > 3d$ or $R > 4d$ \citep{Nunez2006}.
+In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the length $d$ and direction of the current dipole. As mentioned above, the current dipole approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length: $R > 3d$ or $R > 4d$ \citep{Nunez2006}.
 
 The point-source approximation, Eq. \ref{eq:VCtheory} (or the line-source version of it), and the current dipole approximation, Eq.~\eqref{eq:CDA}, represent volume conductor theory in its simplest form, and are based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
 
@@ -363,7 +365,7 @@ The point-source approximation, Eq. \ref{eq:VCtheory} (or the line-source versio
 
 \item {\bf Quasi-static approximation of Maxwell's equations:} Terms with time derivative of the electrical and magnetic fields are neglected. This approximation appears to be well-justified for the relatively low frequencies relevant for brain signals, below about 10 kHz \citep{Nunez2006}.
 
-\item {\bf Linear extracellular medium:} Linear relationship ($\bf{i} = -\sigma {\nabla \phi}$) between the current density ${\bf i}$\tvnnote{I would have preferred J to mean current density and I total currents. Will this make things messy other places?} \ghnote{Maybe it messes things up, since I used $J_k$ for fluxes earlier.} and the electrical field, $\nabla \phi$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
+\item {\bf Linear extracellular medium:} Linear relationship ($\bf{i} = -\sigma {\nabla \phi}$) between the current density ${\bf i}$\tvnnote{I would have preferred J to mean current density and I total currents. Will this make things messy other places?} \ghnote{Maybe it messes things up, since I used $J_k$ for fluxes earlier.} \snnote{$\bf{i}$ OK?} and the electrical field, $\nabla \phi$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
 
 \item {\bf Frequency independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \citep{Logothetis2007, Miceli2017, Ranta2017}, see Fig.~\ref{fig:freq_dep}. Note that it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}. 
 
@@ -525,7 +527,7 @@ The same current dipole will give substantially different potentials on the head
 \end{figure}
 
 \tvnnote{Write something about the spatial filtering from electrode size.}
-\snnote{Torbjorn: Was it something in the means of the last sentence above, that you had in mind? Do you have any suggestions for papers to cite? Feel free to make changes.}
+\snnote{Torbjorn: Was it something in the means of the last sentence above, that you had in mind? Do you have any suggestions for papers to cite? Feel free to make changes!}
 
 
 \begin{figure}[!ht]
