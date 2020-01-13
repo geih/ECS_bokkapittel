@@ -259,23 +259,23 @@ We start at the very smallest of scales considered in neuroscience, by describin
 
 \subsection{Ion concentration dynamics}
 \label{sec:eldiff}
-\snnote{After discussing with Geir and Torbjorn, we decided to change the notation a bit, such that lowercase $j_k$ is flux density, lowercase i is current density and uppercase I is current. Torbjorn and Geir: can you please double check that I got it right?}
-\snnote{Do we write equation as Eq. or eq.? Now we use both..}
-
+\snnote{After discussing with Geir and Torbjorn, we decided to change the notation a bit, such that lowercase $j_k$ is flux density, lowercase i is current density and uppercase I is current. Torbjorn and Geir: can you please double check that I got it right?} \tvnnote{Looks good to me}
+\snnote{Do we write equation as eq. or Eq.? Now we use both..}
+\tvnnote{I wrote Eq., but since most of theory is now eq. I changed all to this.}
 In electrodiffusive processes, the flux density of an ion species $k$ is given by \cite{Koch1999}:
 \begin{equation}
 {\bf j_k} = - D_{k} {\bf \nabla} c_{k} - \frac{D_k z_k c_k}{\psi} {\bf \nabla} \phi,
 \label{eq:JNP}
 \end{equation}
-where the first term on the right is Fick's law for the diffusive flux density $j_{k}^\text{diff}$, and the second term is the drift flux density $j_{k}^\text{drift}$, which expands Fick's law in the case where the diffusing particles also move due to electrostatic forces with a mobility $D_k/\psi$ (cf. the Einstein-relation \cite{Mori2008}). Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation:
+where the first term on the right is Fick's law for the diffusive flux density $j_{k}^\text{diff}$, and the second term is the drift flux density $j_{k}^\text{drift}$, which expands Fick's law in the case where the diffusing particles also move due to electrostatic forces with a mobility $D_k/\psi$ (cf. the Einstein-relation, \cite{Mori2008}). Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation:
 
 \begin{equation}
 \frac{\partial c_k}{\partial t} = - {\bf \nabla} \cdot {\bf j_k} + f_k = {\bf \nabla} \cdot \left[ D_k {\bf \nabla} c_k + \frac{D_k z_k c_k}{\psi} {\bf \nabla} \phi \right] + f_k
 \label{eq:NP}
 \end{equation}
-where $f_k$ represents any source term in the system, such as e.g., an ionic transmembrane current source   \cite{Solbra2018}. 
+where $f_k$ represents any source term in the system, such as e.g., an ionic transmembrane current source \citep{Solbra2018}. 
 
-In order the solve a set (i.e., one for each ion species present) of equations like (\ref{eq:NP}), one needs an expression for the electrical potential $\phi$. There are two main approaches to this. The physically most detailed approach is to use the Poisson-Nernst-Planck (PNP) formalism \citep{Leonetti1998, Leonetti2004, Lu2007, Lopreore2008, Nanninga2008, Pods2013, Gardner2015}. Then $\phi$ is determined from Poisson's equation from electrostatics, 
+In order the solve a set (i.e., one for each ion species present) of equations like eq.~\ref{eq:NP}, one needs an expression for the electrical potential $\phi$. There are two main approaches to this. The physically most detailed approach is to use the Poisson-Nernst-Planck (PNP) formalism \citep{Leonetti1998, Leonetti2004, Lu2007, Lopreore2008, Nanninga2008, Pods2013, Gardner2015}. Then $\phi$ is determined from Poisson's equation from electrostatics, 
 \begin{equation}
 \nabla^2 \phi = -\rho/\epsilon, 
 \label{eq:poisson}
@@ -287,10 +287,10 @@ where $\epsilon$ is the permittivity of the system, and $\rho$ is the charge den
 \end{equation}
 An alternative, more computationally efficient approach is to replace the Poisson equation with the simplifying approximation that the bulk solution is electroneutral \citep{Mori2008, Mori2009, Mori2009a, Mori2011, Halnes2015, Halnes2013, Pods2017, Niederer2013, OConnell2016, Solbra2018}, which is a good approximation on spatiotemporal scales larger than micrometers and microseconds \citep{Grodzinsky2011, Pods2017, Solbra2018}. 
 
-Both the PNP formalism and the electroneutral formalism allow us to compute the dynamics of ion concentrations and the electrical potential in the extracellular space of neural tissue containing an arbitrary set of neuronal and glial current sources. For example, in recent work, a version of the electroneutral formalism was developed into a framework for computing the extracellular dynamics (of $c_k$ and $\phi$) in a 3D space surrounding morphologically complex neurons simulated with the NEURON simulation tool \citep{Solbra2018}. However, both the PNP and electroneutral formalisms keep track of the spatial distribution of ion concentrations, and as such they require a suitable meshing of the 3D space, and numerical solutions based on finite difference- or finite element methods. In both cases, simulations can become very heavy, and for systems at a tissue level, the computational demand may become incommensurable. For that reason, there is much to gain from deriving simpler frameworks where effects of ion concentration dynamics are neglected, since, for many scenarios, this may be a good approximation. Below, we will derive these simpler frameworks using the Nernst-Planck fluxes (eq. \ref{eq:JNP}) as a starting point, as this approach will make the involved approximations transparent.
+Both the PNP formalism and the electroneutral formalism allow us to compute the dynamics of ion concentrations and the electrical potential in the extracellular space of neural tissue containing an arbitrary set of neuronal and glial current sources. For example, in recent work, a version of the electroneutral formalism was developed into a framework for computing the extracellular dynamics (of $c_k$ and $\phi$) in a 3D space surrounding morphologically complex neurons simulated with the NEURON simulation tool \citep{Solbra2018}. However, both the PNP and electroneutral formalisms keep track of the spatial distribution of ion concentrations, and as such they require a suitable meshing of the 3D space, and numerical solutions based on finite difference- or finite element methods. In both cases, simulations can become very heavy, and for systems at a tissue level, the computational demand may become incommensurable. For that reason, there is much to gain from deriving simpler frameworks where effects of ion concentration dynamics are neglected, since, for many scenarios, this may be a good approximation. Below, we will derive these simpler frameworks using the Nernst-Planck fluxes (eq.~\ref{eq:JNP}) as a starting point, as this approach will make the involved approximations transparent.
 
 \subsection{Electrodynamics}
-If we multiply eq. \ref{eq:JNP} by $F\cdot z_k$ and take the sum over all ion species, we get an expression for the net electrical current density due to all particle fluxes:
+If we multiply eq.~\ref{eq:JNP} by $F\cdot z_k$ and take the sum over all ion species, we get an expression for the net electrical current density due to all particle fluxes:
 
 \begin{equation}
 {\bf i} = - \sum_k{F z_k D_{k}{\bf \nabla} c_{k}} - \sigma {\bf \nabla}{\phi}
@@ -306,50 +306,53 @@ Current conservation in the extracellular space implies that:
 {\bf \nabla} \cdot {\bf i} = - \sum_k{F z_k D_{k}\nabla^2 c_{k}} - {\bf \nabla} \cdot (\sigma {\bf \nabla} \phi) = - CSD,
 \label{eq:CSD}
 \end{equation}
-where $CSD$ denotes the current source density, reflecting e.g., local neuronal or glial transmembrane currents. We note that this is essentially equivalent to eq. \ref{eq:NP} at the level of single ion species, with the exception eq. \ref{eq:NP} contained a term $\partial c_k/ \partial t$ for accumulation of ion species $k$, while eq. \ref{eq:CSD} does \emph{not} contain a corresponding term ($\partial \rho/ \partial t$) for charge accumulation. Hence, in eq. (\ref{eq:CSD}) it is implicitly assumed that the extracellular bulk solution is electroneutral \citep{Solbra2018}. We note that in general, the $CSD$ term includes both ionic transmembrane currents and transmembrane capacitive currents, and that the latter means that the local charge accumulation building up the transmembrane potential still occurs in the membrane Debye-layer.
+where $CSD$ denotes the current source density, reflecting e.g., local neuronal or glial transmembrane currents. We note that this is essentially equivalent to eq.~\ref{eq:NP} at the level of single ion species, with the exception eq.~\ref{eq:NP} contained a term $\partial c_k/ \partial t$ for accumulation of ion species $k$, while eq.~\ref{eq:CSD} does \emph{not} contain a corresponding term ($\partial \rho/ \partial t$) for charge accumulation. Hence, in eq.~\ref{eq:CSD} it is implicitly assumed that the extracellular bulk solution is electroneutral \citep{Solbra2018}. We note that in general, the $CSD$ term includes both ionic transmembrane currents and transmembrane capacitive currents, and that the latter means that the local charge accumulation building up the transmembrane potential still occurs in the membrane Debye-layer.
 
-Note that if we assume all concentrations to be constant in space, the diffusive term vanishes, and eq. (\ref{eq:CSD}) reduces to:
+Note that if we assume all concentrations to be constant in space, the diffusive term vanishes, and eq.~\ref{eq:CSD} reduces to:
 \begin{equation}
-{\bf \nabla} \cdot (\sigma {\bf \nabla} \phi) = - CSD,
+{\bf \nabla} \cdot (\sigma {\bf \nabla} \phi) = - CSD.
 \label{eq:CSDstandard}
 \end{equation}
-This the standard expression used in current source density (CSD)\snnote{abbreviation already defined above?} theory \citep{Mitzdorf1985, Nicholson1975, Pettersen2006}, where spatially distributed recordings of $\phi$ are used to make theoretical predictions of underlying current sources. When using Eq. \ref{eq:CSDstandard}, it is implicitly assumed that the Laplacian of $\phi$ exclusively reflects transmembrane current sources, and that it is not contributed to by diffusive processes. 
+This the standard expression used in CSD theory \citep{Mitzdorf1985, Nicholson1975, Pettersen2006}, where spatially distributed recordings of $\phi$ are used to make theoretical predictions of underlying current sources. When using eq.~\ref{eq:CSDstandard}, it is implicitly assumed that the Laplacian of $\phi$ exclusively reflects transmembrane current sources, and that it is not contributed to by diffusive processes. 
 
-As eq. (\ref{eq:CSD}) indicates, also diffusive processes can in principle contribute to the Laplacian of $\phi$, and if present, they could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources ($CSD = 0$). Previous computational \sntxt{studies} have predicted that effects of diffusion on extracellular potentials are not necessarily small, but tend to be very slow, meaning that they will only affect the very low-frequency components of $\phi$ \citep{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time scale (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1Hz \citep{Einevoll2013}, which means that most of the tentative diffusive contribution will be filtered out from experimental recordings. It may therefore be a good approximation to neglect the diffusive term, except in the case of pathologically dramatic concentration variations. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq.~(\ref{eq:CSDstandard}).
+As eq.~\ref{eq:CSD} indicates, also diffusive processes can in principle contribute to the Laplacian of $\phi$, and if present, they could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources ($CSD = 0$). Previous computational studies have predicted that effects of diffusion on extracellular potentials are not necessarily small, but tend to be very slow, meaning that they will only affect the very low-frequency components of $\phi$ \citep{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time scale (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1Hz \citep{Einevoll2013}, which means that most of the tentative diffusive contribution will be filtered out from experimental recordings. It may therefore be a good approximation to neglect the diffusive term, except in the case of pathologically dramatic concentration variations. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq.~\ref{eq:CSDstandard}.
 
 \subsection{Volume conductor theory}
 \snnote{I've made some letters boldface and added a few unit vectors to ensure that ${\bf \nabla}$ always is a vector. Torbjorn: Do you agree?}
-
+\tvnnote{Looks good to me}
 \label{sec:VC_theory}
-In simulations of morphologically complex neurons, we typically compute a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. Commonly, one assumes that the extracellular potential does not  \sntxt{affect} the neurons (i.e., no ephaptic coupling), since extracellular potentials are typically much smaller than the membrane potential of $\sim$-70~mV. 
-By assuming that the tissue medium is a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD-equation (eq. \ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
-\snnote{How about exchanging the following "in ${\bf r} = 0$" with "at the origin"? For me, this would make the next ${r}$ easier to understand, but I guess this is a matter of taste..}
-If we consider the simplest possible case of a single point current source $I_1$ in ${\bf r}=0$ 
-in an isotropic medium, the current density ${\bf i} = -\sigma {\bf \nabla} \phi$ through a spherical shell with area $4\pi r^2$ must equal $I_1/4\pi r^2~{\bf \hat{r}}$. 
-Due to the spherical symmetry of the problem, ${\bf \nabla} \phi = \partial \phi/ \partial r~{\bf \hat{r}}$, and integration with respect to $r$ gives us:
+In simulations of morphologically complex neurons, we typically compute a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. Commonly, one assumes that the extracellular potential does not affect the neurons (i.e., no ephaptic coupling), since extracellular potentials are typically much smaller than the membrane potential of $\sim$-70~mV. 
+By assuming that the tissue medium \tvntxt{can be approximated as} a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD equation (eq.~\ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
+
+If we consider the simple case of a single point-current source $I_1$ at the origin in an isotropic medium, the current density ${\bf i} = -\sigma {\bf \nabla} \phi$ through a spherical shell with area $4\pi r^2$ must, due to the spherical symmetry, equal $I_1/4\pi r^2~{\bf \hat{r}}$. %${\bf \nabla} \phi = \partial \phi/ \partial r~{\bf \hat{r}}$, and 
+Integration with respect to $r$ gives us:
 
 \begin{equation}
 \phi = \frac{I_1}{4\pi \sigma r},
 \label{eq:pointsource}
 \end{equation}
-where $r$ is the distance from the source. If we have several point-current sources, $I_{1}, I_2, I_3, ... $ in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $), their contributions add up due to the linearity assumption, and the potential in a point ${\bf r}$ is given by:
+where $r$ is the distance from the source \tvnnote{OK?}. If we have several point-current sources, $I_{1}, I_2, I_3, ... $, in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $, their contributions add up due to the linearity assumption (see sec.~\ref{sec:VC_assumptions}), and the potential in a point ${\bf r}$ is given by:
 
 \begin{equation}
 \phi({\bf r}) = \frac{I_1}{4\pi  \sigma {\bf |r-r_1|}} + \frac{I_2}{4\pi  \sigma {\bf |r-r_2|} } + \frac{I_3}{4\pi  \sigma {\bf |r-r_3|} } + ... = \sum_k \frac{I_k}{4\pi  \sigma {\bf |r-r_k|} }.
 \label{eq:VCtheory}
 \end{equation}
 
-Eq.~\ref{eq:VCtheory} is often referred to as the point-source approximation \citep{Holt1999, Pettersen2008a}, since the membrane current from a neuronal segment is assumed to enter the extracellular medium in a single point. An often used further development is obtained by integrating eq.~\ref{eq:VCtheory} along the segment axis, corresponding to the transmembrane current being evenly distributed along the segment axis, giving the line-source approximation \citep{Holt1999, Linden2014}.
+Eq.~\ref{eq:VCtheory} is often referred to as the point-source approximation \citep{Holt1999, Linden2014}, since the membrane current from a neuronal segment is assumed to enter the extracellular medium in a single point. An often used further development is obtained by integrating eq.~\ref{eq:VCtheory} along the segment axis, corresponding to the transmembrane current being evenly distributed along the segment axis, giving the line-source approximation \citep{Holt1999, Linden2014}.
 
-When estimating the extracellular potential at large distances, it can often be useful to express Eq.~\eqref{eq:VCtheory} in terms of an infinite series.
-Specifically, the electric potential outside a volume containing a combination of current sinks and sources, can be precisely described by the multipole expansion \citep{Nunez2006}:
-
+\subsubsection{\tvntxt{Current-dipole approximation}}
+\tvnnote{Jeg skrev om litt her}
+When estimating the extracellular potential \tvntxt{from a set of current sources} at large distances \tvntxt{relative to the distances between the current sources}, 
+it can often be useful to express the current sorces in terms of \tvntxt{the current-dipole approximation. The extracellular potential}
+%eq.~\eqref{eq:VCtheory} in terms of an infinite series.
+%Specifically, the electric potential outside a volume containing a combination of current sinks and sources, 
+can be precisely described by the multipole expansion \citep{Nunez2006},
 \begin{equation}\label{eq:multipole}
-\phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ... .
+\phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ... ,
 \end{equation}
-This equation holds when when the distance $R$ from the center of the volume to the measurement point is larger than the distance from volume center to the most peripheral source \citep{Jackson1998}. Here, the monopole contribution $C_{monopole}$, dipole contribution $C_{dipole}$ and quadrupole contribution $C_{quadrupole}$, etc are \snnote{somehow} defined in \cite{Riera2012}.
+when the distance $R$ from the center of the volume to the measurement point is larger than the distance from volume center to the most peripheral source \citep{Jackson1998}. Here, the monopole contribution $C_{monopole}$, dipole contribution $C_{dipole}$ and quadrupole contribution $C_{quadrupole}$, etc., are \snnote{somehow} defined in \cite{Riera2012}.
 
-In neural tissue, current monopoles are unphysical due to current conservation, and the quadrupole, octupole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current dipole approximation \citep{Nunez2006}:
+In neural tissue, current monopoles are unphysical due to current conservation, and the quadrupole, octupole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current-dipole approximation \citep{Nunez2006}:
 \begin{equation}\label{eq:CDA}
 \phi(\mathbf{R}) \approx \frac{C_{dipole}}{R^2} = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}.
 \end{equation}
@@ -357,17 +360,19 @@ Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle betwee
 \begin{equation}\label{eq:dipole}
 \mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k.
 \end{equation}
-In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the length $d$ and direction of the current dipole. As mentioned above, the current dipole approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length: $R > 3d$ or $R > 4d$ \citep{Nunez2006}.
+In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the length $d$ and direction of the current dipole. The current-dipole approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length: $R > 3d$ or $R > 4d$ \citep{Nunez2006}.
 
-The point-source approximation, Eq. \ref{eq:VCtheory} (or the line-source version of it), and the current dipole approximation, Eq.~\eqref{eq:CDA}, represent volume conductor theory in its simplest form, and are based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
+\subsubsection{Assumptions in volume conductor theory}
+\label{sec:VC_assumptions}
+The point-source approximation, eq.~\ref{eq:VCtheory} (or the line-source version of it), and the current-dipole approximation, eq.~\eqref{eq:CDA}, represent volume conductor theory in its simplest form, and are based on a set of assumptions, some of which may be relaxed for problems where it is relevant: 
 
 \begin{enumerate}
 
 \item {\bf Quasi-static approximation of Maxwell's equations:} Terms with time derivative of the electrical and magnetic fields are neglected. This approximation appears to be well-justified for the relatively low frequencies relevant for brain signals, below about 10 kHz \citep{Nunez2006}.
 
-\item {\bf Linear extracellular medium:} Linear relationship ($\bf{i} = -\sigma {\nabla \phi}$) between the current density ${\bf i}$\tvnnote{I would have preferred J to mean current density and I total currents. Will this make things messy other places?} \ghnote{Maybe it messes things up, since I used $J_k$ for fluxes earlier.} \snnote{$\bf{i}$ OK?} and the electrical field, $\nabla \phi$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
+\item {\bf Linear extracellular medium:} Linear relationship ($\bf{i} = -\sigma {\nabla \phi}$) between the current density ${\bf i}$ and the electrical field, $\nabla \phi$. This is essentially Ohm's law for volume conductors, and the relation is constitutive, meaning that it is observed in nature rather than derived from any physical principle \citep{Nunez2006, Pettersen2012}.
 
-\item {\bf Frequency independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \citep{Logothetis2007, Miceli2017, Ranta2017}, see Fig.~\ref{fig:freq_dep}. Note that it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}. 
+\item {\bf Frequency-independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \citep{Logothetis2007, Miceli2017, Ranta2017}, see Fig.~\ref{fig:freq_dep}. Note that it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}. 
 
 \item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, was assumed to be the same in all spatial directions. This is mostly an acceptable approximation, but it is also possible to expand the formalism to account for an anisotropic conductivities \citep{Ness2015}.
 
@@ -388,7 +393,6 @@ For details about the data, see \citep{Miceli2017}, and references therein \cite
 }
 \label{fig:freq_dep}
 \end{figure}
-
 
 
 Volume conductor theory is the fundament for forward modeling of extracellular potentials at different spatial scales, from extracellular spikes, LFPs and MUAs, to ECoGs and EEGs. In the following sections we shall review previous modeling works, and insights from simulating electrical potentials at these different scales.
@@ -420,7 +424,6 @@ Note that this framework for calculating extracellular potentials is valid both 
 of identical magnitude (top), and cause perfectly dipolar extracellular potentials (bottom). 
 {\bf C}: Multi-compartment neuron models \citep{Hay2011} give rise to complex source-sink patterns (top) and complex (but mostly dipolar-like) extracellular potentials (bottom). 
 {\bf D, E}: A single somatic synaptic input to a complex multi-compartment cell model, either subthreshold (D) or suprathreshold (E; double synaptic weight of D), illustrating that the same framework can be used to calculate both the LFP contribution from subthreshold synaptic input, and extracellular action potentials. 
-\snnote{Top row, panel B: "two currentS". Top row, panel C: "distributed return currentS". Bottom row, panel A: $\phi$-font different from notation below color bar.}
 }
 \label{fig:EP_morph}
 \end{figure}
@@ -447,7 +450,7 @@ The low frequency part, that is, the local field potential (LFP), is thought to 
 
 
 \subsection{Local field potentials}
-\tvnnote{Find place to put sentence or two on importance of correlation.}
+%\tvnnote{Find place to put sentence or two on importance of correlation.}
 The LFP is the low-frequency part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by large numbers of synaptic inputs to populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
 In cortex and hippocampus, neurons can broadly speaking be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_MUA}A). This geometrical alignment is important because the LFP contributions from the individual pyramidal cells also align and therefore sum constructively.  For example, basal excitatory synaptic input (Fig.~\ref{fig:LFP_MUA}B, time marked by red line) generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region (Fig.~\ref{fig:LFP_MUA}D, time marked by red line), while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_MUA}B,D, time marked by blue line). 
 Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation and a weak LFP contribution (Fig.~\ref{fig:LFP_MUA}B, D, time marked by orange line).
@@ -455,19 +458,19 @@ The same arguments also apply to inhibitory synaptic inputs, with the signs of t
 
 Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input, and indeed, separating between cases like this pose a real challenge in interpreting LFP signals \citep{Linden2010}. 
 
-In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles do not align, leading to negligible contribution to LFP signals, except indirectly through giving synaptic input to pyramidal cells \citep{Hagen2016, Telenczuk2016}.
+In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles do not align, leading to negligible contribution to LFP signals, except indirectly through giving synaptic input to pyramidal cells \citep{Telenczuk2016, Hagen2016}.
 
 It has been demonstrated that correlations among the synaptic inputs to pyramidal cells can amplify the LFP signal power by orders of magnitude, with the implication that populations receiving correlated synaptic input can dominate the LFP also 1-2~mm outside of the population \citep{Linden2011, Leski2013}.
 
-Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \cite{Reimann2013}, calcium spikes \cite{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \cite{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
+Although the LFP is believed to predominantly reflect synaptic inputs, active conductances may also contribute to its shaping. Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \citep{Reimann2013}, calcium spikes \citep{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \citep{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
-\subsubsection*{Other approaches}
-\tvnnote{Make this section one sentence in LFP}.
-Kernels \citep{Hagen2016}
+%\subsubsection*{Other approaches}
+%\tvnnote{Make this section one sentence in LFP}.
+%Kernels \citep{Hagen2016}
+%Proxies \cite{Mazzoni2015}
+%LFP Kernels from experimental spike-triggered averages (Destexhe?)
 
-Proxies \cite{Mazzoni2015}
 
-LFP Kernels from experimental spike-triggered averages (Destexhe?)
 
 \subsection{MUA}
 While LFPs are thought to mainly reflect the synaptic input to large populations of pyramidal neurons, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Pettersen2008}. This can be useful, as some cell-types, like stellate cells and interneurons are expected to have very weak LFP contributions \citep{Linden2011}, but might still be measureable through their spiking activity. Similarly, spatially uniformly distributed synaptic input to pyramidal neurons results in a negligible LFP contribution (Fig.~\ref{fig:LFP_MUA}C, time marked by orange line), while the population might still contribute substantially to the MUA through the extracellular action potentials (Fig.~\ref{fig:LFP_MUA}E-F, time marked by orange line).
@@ -482,9 +485,9 @@ While LFPs are thought to mainly reflect the synaptic input to large populations
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:EEG}
-In order to measure \emph{electric potentials in the immediate vicinity of neurons} \slntxt{(OR better: LFP and MUA signals)}\snnote{$<-$ Torbjorn, which one do you prefer?}, we need to insert sharp electrodes into the brain. This highly invasive technique is quite common in animal studies, but can only be applied to humans when there is a clear medical need, for example in patients with intractable epilepsy \citep{Zangiabadi2019}. Fortunately, electric potentials generated by neural activity extend beyond neural tissue and can be picked up by electrodes placed on the brain surface or on top of the scalp. The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG).
+In order to measure electric potentials in the immediate vicinity of neurons, like LFP and MUA signals, \slntxt{(OR better: LFP and MUA signals)}\snnote{$<-$ Torbjorn, which one do you prefer?}\tvnnote{I liked both :-)}, we need to insert sharp electrodes into the brain. This highly invasive technique is quite common in animal studies, but can only be applied to humans when there is a clear medical need, for example in patients with intractable epilepsy \citep{Zangiabadi2019}. Fortunately, electric potentials generated by neural activity extend beyond neural tissue and can be picked up by electrodes placed on the brain surface or on top of the scalp. The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG).
 
-Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, Eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see Eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
+Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
 
 The current dipole approximation is however not an obvious candidate for computing ECoG signals, as the ECOG electrodes are located too close to the signal sources, see \cite{Hagen2018}.
 
@@ -505,10 +508,8 @@ Electric potentials measured on the scalp surface will be affected by the geomet
 A well-known simplified head model is the analytical four-sphere model, consisting of four conentric shells representing brain tissue, cerebrospinal fluid (CSF), skull and scalp, where the conductivity can be set individually for each shell \citep{Naess2017, Srinivasan1998, Nunez2006} (Fig.~\ref{fig:head_models}A,B).
 More complex head models make use of high-resolution anatomical MRI-data to map out a geometrically detailed head volume conductor. The link between current dipoles in the brain and resulting EEG signals is determined applying numerical methods such as the finite element method \citep{Larson2013, Logg2012}. Once this link is established we can in principle insert a dipole representing arbitrary neural activity into such a model, and compute the resulting EEG signals quite straightforwardly. The New York Head model is an example of one such pre-solved complex head model, see Fig.~\ref{fig:head_models}C,D \citep{Huang2016}.
 
-
-The head models introduce no essential frequency filtering of the EEG signal \citep{Pfurtscheller1975, Ranta2017}, however, substantial spatial filtering will occur (Fig.~\ref{fig:foursphere_contour}).
-The relatively large size of the EEG electrodes will also contribute to spatial summation of the EEG signals [cite?].
-
+The head models themselves introduce no essential frequency filtering of the EEG signal \citep{Pfurtscheller1975, Nunez2006, Ranta2017}, however, substantial spatial filtering will occur (Fig.~\ref{fig:foursphere_contour}). Additionally, the measured (or modelled) signals represent the average potential across the elecrode surface, and the large electrode sizes used in ECoG/EEG recordings can have important effect on the measured signals \citep{Nunez2006, Hagen2018, Dubey2019}.
+\snnote{Torbjorn: Was it something in the means of the last sentence above, that you had in mind? Do you have any suggestions for papers to cite? Feel free to make changes!} \tvnnote{OK?}
 %
 %Can use analytic four-sphere (Fig. \ref{fig:head_models}A) \citep{Hagen2018, Naess2017}
 %Can also used pre-solved complex head models, like the New York head (Fig. \ref{fig:head_models}B) \citep{Huang2016}.
@@ -521,13 +522,11 @@ The relatively large size of the EEG electrodes will also contribute to spatial 
 %\includegraphics[width=1\textwidth]{PC_versus_IN}
 \end{center}
 \caption{\textbf{Effect of head inhomogeneities}.
-The same current dipole will give substantially different potentials on the head surface when the different conductivities of the head is included.
+The same current dipole will give substantially different potentials on the head surface if the different conductivities of the head is included in a FEM model  \citep{Naess2017}. Left: Homogeneous sphere, with electrical conductivity, $\sigma=0.33$~S/m everywhere. Right: Standard four-sphere head model, with $\sigma_{\text{brain}}=0.33$~S/m, $\sigma_{\text{CSF}}=5\sigma_{\text{brain}}$, 
+$\sigma_{\text{skull}}=\sigma_{\text{brain}} / 20$, $\sigma_{\text{scalp}}=\sigma_{\text{brain}}$.
 }
 \label{fig:foursphere_contour}
 \end{figure}
-
-\tvnnote{Write something about the spatial filtering from electrode size.}
-\snnote{Torbjorn: Was it something in the means of the last sentence above, that you had in mind? Do you have any suggestions for papers to cite? Feel free to make changes!}
 
 \begin{figure}[!ht]
 \begin{center}
@@ -555,11 +554,8 @@ Since MUAs and LFPs reflect different aspects of neural activity, they can be us
 
 \section{Software tools}
 LFPy etc.
-\tvnnote{Recycle text from LFPy 2.0 paper about other softwares (sec 4.7.}
+\tvnnote{Recycle text from LFPy 2.0 paper about other softwares, sec 4.7?}
 \tvnnote{Maybe we don't need this section? Just say that 'here we've used LFPy'}
-
-Typically split into two separate tasks: Simulate neural activity, mostly relying on the NEURON simulator \citep{Hines1997}, through the Python interface \citep{Hines2009}. Extracellular potentials are then calculated from these currents, through volume conductor theory. 
-
 
 \section{Summary and Discussion}
 \label{sec:summary}
@@ -567,7 +563,6 @@ In this chapter, we reviewed the theory for modelling extracellular potentials. 
 
 We note that there are several related measurement modalities that were not considered here, including magnetoencephalograpy (MEG), voltage-sensitive dye imaging (VSDI), calcium imaging, functional magnetic resonance imaging (fMRI) and positron emission tomography (PET). Of these, the MEG is expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), i.e., from synaptic input to geometically aligned populations of pyramidal neurons \citep{Hamalainen1993}, and can be modeled with similar approaches as those reviewed above. However, because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). VSDI and calcium imaging reflect the reflecting area-weighted neuronal membrane potentials and intracellular calcium dynamics, which and are in principle easily accessed variables in neuronal simulations, while fMRI and PET reflect blood supply and metabolic cost, which are typically not explicitly included in models. 
  
-
 \begin{enumerate}
  \item Summary of chapter
  \item Ongoing large-scale projects (HBP, Allen)
@@ -576,13 +571,6 @@ We note that there are several related measurement modalities that were not cons
  \item Where to go?
  \subitem fMRI, VSD, Ca img.
 \end{enumerate}
-
-\section{Other brain signals}
-\tvnnote{Massive shortening}
-
-\subsection*{Magnetoencephalograpy (MEG)}
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
