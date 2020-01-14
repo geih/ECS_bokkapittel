@@ -233,11 +233,11 @@ extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 Very important to model what you measure, and measure what you model \citep{Einevoll2019, Maki-marttunen2019}
 
 
-Within the field of computational neuroscience, there has been a strong focus on modelling the membrane potential dynamics of morphologically complex neurons. Such simulations involve computing the transmembrane currents in all neuronal segments. This book chapter explains how one, based on knowing the transmembrane currents, can compute the electrical potential in the extracellular space surrounding the active neurons. 
+Within the field of computational neuroscience, there has been a strong focus on modeling the membrane potential dynamics of morphologically complex neurons. Such simulations involve computing the transmembrane currents in all neuronal segments. This book chapter explains how one, based on knowing the transmembrane currents, can compute the electrical potential in the extracellular space surrounding the active neurons. 
 
 The link between membrane currents and the extracellular potential is of course mediated by electrical currents. Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions migrate in electrical fields), (2) a diffusion component (ions diffuse), (3) an advective component (extracellular fluid flow drags ions along), and (4) a displacement component (ions pile up and changes the local charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and are typically neglected \citep{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \citep{Savtchenko2017, Pods2017}. At the level of tissue, it is commonly believed that the diffusive current is much smaller than the drift current, so that even diffusive currents are typically neglected \citep{Holt1999, Pettersen2008a}. This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, if concentration gradients are present, diffusive currents could in principle affect measurable extracellular potentials \citep{Halnes2016, Halnes2017, Solbra2018}, and in scenarios involving dramatic shifts in extracellular concentrations, such as spreading depression and related pathologies, diffusive effects are likely to be of key importance for shaping the extracellular potential \citep{Almeida2004, OConnell2016}.
 
-We start this book chapter by giving an overview of the theory used for forward modellng of extracellular potentials, and introduce the mathematical frameworks and software tools that can be used for such modelling. We start the theory-part at the rather fundamental level of electrodiffusive ion concentration dynamics, and derive an electrodiffusive framework for predicting the dynamics of the extracellular ion concentrations and potential. We next show how this theory can be reduced to the simpler, and more common VC-theory if we assume that the diffusive component is negligible. 
+We start this book chapter by giving an overview of the theory used for forward modeling of extracellular potentials, and introduce the mathematical frameworks and software tools that can be used for such modeling. We start the theory-part at the rather fundamental level of electrodiffusive ion concentration dynamics, and derive an electrodiffusive framework for predicting the dynamics of the extracellular ion concentrations and potential. We next show how this theory can be reduced to the simpler, and more common VC-theory if we assume that the diffusive component is negligible. 
 
 \begin{figure}[!ht]
 \begin{center}
@@ -318,11 +318,11 @@ This the standard expression used in CSD theory \citep{Mitzdorf1985, Nicholson19
 As eq.~\ref{eq:CSD} indicates, also diffusive processes can in principle contribute to the Laplacian of $\phi$, and if present, they could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources ($CSD = 0$). Previous computational studies have predicted that effects of diffusion on extracellular potentials are not necessarily small, but tend to be very slow, meaning that they will only affect the very low-frequency components of $\phi$ \citep{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time scale (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1Hz \citep{Einevoll2013}, which means that most of the tentative diffusive contribution will be filtered out from experimental recordings. It may therefore be a good approximation to neglect the diffusive term, except in the case of pathologically dramatic concentration variations. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq.~\ref{eq:CSDstandard}.
 
 \subsection{Volume conductor theory}
-\snnote{I've made some letters boldface and added a few unit vectors to ensure that ${\bf \nabla}$ always is a vector. Torbjorn: Do you agree?}
-\tvnnote{Looks good to me}
+%\snnote{I've made some letters boldface and added a few unit vectors to ensure that ${\bf \nabla}$ always is a vector. Torbjorn: Do you agree?}
+%\tvnnote{Looks good to me}
 \label{sec:VC_theory}
 In simulations of morphologically complex neurons, we typically compute a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. Commonly, one assumes that the extracellular potential does not affect the neurons (i.e., no ephaptic coupling), since extracellular potentials are typically much smaller than the membrane potential of $\sim$-70~mV. 
-By assuming that the tissue medium \tvntxt{can be approximated as} a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD equation (eq.~\ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
+By assuming that the tissue medium can be approximated as a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD equation (eq.~\ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). 
 
 If we consider the simple case of a single point-current source $I_1$ at the origin in an isotropic medium, the current density ${\bf i} = -\sigma {\bf \nabla} \phi$ through a spherical shell with area $4\pi r^2$ must, due to the spherical symmetry, equal $I_1/4\pi r^2~{\bf \hat{r}}$. %${\bf \nabla} \phi = \partial \phi/ \partial r~{\bf \hat{r}}$, and 
 Integration with respect to $r$ gives us:
@@ -331,7 +331,8 @@ Integration with respect to $r$ gives us:
 \phi = \frac{I_1}{4\pi \sigma r},
 \label{eq:pointsource}
 \end{equation}
-where $r$ is the distance from the source \tvnnote{OK?}. If we have several point-current sources, $I_{1}, I_2, I_3, ... $, in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $, their contributions add up due to the linearity assumption (see sec.~\ref{sec:VC_assumptions}), and the potential in a point ${\bf r}$ is given by:
+where $r$ is the distance from the source. %\tvnnote{OK?}\snnote{perfect!}
+If we have several point-current sources, $I_{1}, I_2, I_3, ... $, in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $, their contributions add up due to the linearity assumption (see sec.~\ref{sec:VC_assumptions}), and the potential in a point ${\bf r}$ is given by:
 
 \begin{equation}
 \phi({\bf r}) = \frac{I_1}{4\pi  \sigma {\bf |r-r_1|}} + \frac{I_2}{4\pi  \sigma {\bf |r-r_2|} } + \frac{I_3}{4\pi  \sigma {\bf |r-r_3|} } + ... = \sum_k \frac{I_k}{4\pi  \sigma {\bf |r-r_k|} }.
@@ -340,13 +341,12 @@ where $r$ is the distance from the source \tvnnote{OK?}. If we have several poin
 
 Eq.~\ref{eq:VCtheory} is often referred to as the point-source approximation \citep{Holt1999, Linden2014}, since the membrane current from a neuronal segment is assumed to enter the extracellular medium in a single point. An often used further development is obtained by integrating eq.~\ref{eq:VCtheory} along the segment axis, corresponding to the transmembrane current being evenly distributed along the segment axis, giving the line-source approximation \citep{Holt1999, Linden2014}.
 
-\subsubsection{\tvntxt{Current-dipole approximation}}
-\tvnnote{Jeg skrev om litt her}
-When estimating the extracellular potential \tvntxt{from a set of current sources} at large distances \tvntxt{relative to the distances between the current sources}, 
-it can often be useful to express the current sorces in terms of \tvntxt{the current-dipole approximation. The extracellular potential}
-%eq.~\eqref{eq:VCtheory} in terms of an infinite series.
-%Specifically, the electric potential outside a volume containing a combination of current sinks and sources, 
-can be precisely described by the multipole expansion \citep{Nunez2006},
+\subsubsection{Current-dipole approximation}
+%\tvnnote{Jeg skrev om litt her}
+When estimating the extracellular potential far away from a volume containing a combination of current sinks and sources, 
+it can often be useful to express eq.~\eqref{eq:VCtheory} in terms of a multipole expansion. 
+That is, $\Phi$
+can be precisely described by \citep{Nunez2006},
 \begin{equation}\label{eq:multipole}
 \phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ... ,
 \end{equation}
@@ -485,7 +485,11 @@ While LFPs are thought to mainly reflect the synaptic input to large populations
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:EEG}
-In order to measure electric potentials in the immediate vicinity of neurons, like LFP and MUA signals, \slntxt{(OR better: LFP and MUA signals)}\snnote{$<-$ Torbjorn, which one do you prefer?}\tvnnote{I liked both :-)}, we need to insert sharp electrodes into the brain. This highly invasive technique is quite common in animal studies, but can only be applied to humans when there is a clear medical need, for example in patients with intractable epilepsy \citep{Zangiabadi2019}. Fortunately, electric potentials generated by neural activity extend beyond neural tissue and can be picked up by electrodes placed on the brain surface or on top of the scalp. The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG).
+In order to measure electric potentials in the immediate vicinity of neurons, like LFP and MUA signals,
+%\slntxt{(OR better: LFP and MUA signals)}
+%\snnote{$<-$ Torbjorn, which one do you prefer?}
+%\tvnnote{I liked both :-)}
+we need to insert sharp electrodes into the brain. This highly invasive technique is quite common in animal studies, but can only be applied to humans when there is a clear medical need, for example in patients with intractable epilepsy \citep{Zangiabadi2019}. Fortunately, electric potentials generated by neural activity extend beyond neural tissue and can be picked up by electrodes placed on the brain surface or on top of the scalp. The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG).
 
 Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
 
@@ -508,8 +512,8 @@ Electric potentials measured on the scalp surface will be affected by the geomet
 A well-known simplified head model is the analytical four-sphere model, consisting of four conentric shells representing brain tissue, cerebrospinal fluid (CSF), skull and scalp, where the conductivity can be set individually for each shell \citep{Naess2017, Srinivasan1998, Nunez2006} (Fig.~\ref{fig:head_models}A,B).
 More complex head models make use of high-resolution anatomical MRI-data to map out a geometrically detailed head volume conductor. The link between current dipoles in the brain and resulting EEG signals is determined applying numerical methods such as the finite element method \citep{Larson2013, Logg2012}. Once this link is established we can in principle insert a dipole representing arbitrary neural activity into such a model, and compute the resulting EEG signals quite straightforwardly. The New York Head model is an example of one such pre-solved complex head model, see Fig.~\ref{fig:head_models}C,D \citep{Huang2016}.
 
-The head models themselves introduce no essential frequency filtering of the EEG signal \citep{Pfurtscheller1975, Nunez2006, Ranta2017}, however, substantial spatial filtering will occur (Fig.~\ref{fig:foursphere_contour}). Additionally, the measured (or modelled) signals represent the average potential across the elecrode surface, and the large electrode sizes used in ECoG/EEG recordings can have important effect on the measured signals \citep{Nunez2006, Hagen2018, Dubey2019}.
-\snnote{Torbjorn: Was it something in the means of the last sentence above, that you had in mind? Do you have any suggestions for papers to cite? Feel free to make changes!} \tvnnote{OK?}
+The head models themselves introduce no essential frequency filtering of the EEG signal \citep{Pfurtscheller1975, Nunez2006, Ranta2017}, however, substantial spatial filtering will occur (Fig.~\ref{fig:foursphere_contour}). Additionally, the measured (or modeled) signals represent the average potential across the elecrode surface, and the large electrode sizes used in ECoG/EEG recordings can have important effect on the measured signals \citep{Nunez2006, Hagen2018, Dubey2019}.
+%\snnote{Torbjorn: Was it something in the means of the last sentence above, that you had in mind? Do you have any suggestions for papers to cite? Feel free to make changes!} \tvnnote{OK?}
 %
 %Can use analytic four-sphere (Fig. \ref{fig:head_models}A) \citep{Hagen2018, Naess2017}
 %Can also used pre-solved complex head models, like the New York head (Fig. \ref{fig:head_models}B) \citep{Huang2016}.
@@ -532,7 +536,7 @@ $\sigma_{\text{skull}}=\sigma_{\text{brain}} / 20$, $\sigma_{\text{scalp}}=\sigm
 \begin{center}
 \includegraphics[width=0.6\textwidth]{head_models.pdf}
 \end{center}
-\caption{\textbf{The four-sphere head model and the NY Head model}. EEG signals from population dipole resulting from neural activity in cortical microcircuit model of $1$mm of primary visual cortex, see \cite{Hagen2016} Fig 1.
+\caption{\textbf{The four-sphere head model and the NY Head model}. EEG signals from population dipole resulting from waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.
 	{\bf A}: The four-sphere model consisting of four concentrical shells: brain, CSF, skull and scalp. 
 	{\bf B}: Maximum EEG signals ($\phi$) on scalp surface electrodes resulting from population dipole placed at location marked by orange star, computed with the four-sphere model.
 	{\bf C}: Illustration of the New York Head model.
@@ -542,7 +546,7 @@ $\sigma_{\text{skull}}=\sigma_{\text{brain}} / 20$, $\sigma_{\text{scalp}}=\sigm
 \end{figure}
 
 
-\section{Inverse modelling}
+\section{Inverse modeling}
 \tvnnote{Gaute will write}
 CSD
 
@@ -559,7 +563,7 @@ LFPy etc.
 
 \section{Summary and Discussion}
 \label{sec:summary}
-In this chapter, we reviewed the theory for modelling extracellular potentials. Starting at the level of extracellular ionic movements, we showed how neuronal activity gives rise to electrical fluctuations that can be picked up at various spatial scales ranging from the local of MUA and LFP scale to the more global scale of ECoG and EEG. We further reviewed how recorded signals at these various spatial scales can be interpreted in terms of how various features in the recorded signals reflect various aspects of neuronal activity. In brief, the MUA reflects the spiking activity of nearby neurons, the LFP reflect the distribution of synaptic inputs to nearby neuronal populations, while ECoG and EEG reflect the same as the LFP, but on a larger spatial scale. 
+In this chapter, we reviewed the theory for modeling extracellular potentials. Starting at the level of extracellular ionic movements, we showed how neuronal activity gives rise to electrical fluctuations that can be picked up at various spatial scales ranging from the local of MUA and LFP scale to the more global scale of ECoG and EEG. We further reviewed how recorded signals at these various spatial scales can be interpreted in terms of how various features in the recorded signals reflect various aspects of neuronal activity. In brief, the MUA reflects the spiking activity of nearby neurons, the LFP reflect the distribution of synaptic inputs to nearby neuronal populations, while ECoG and EEG reflect the same as the LFP, but on a larger spatial scale. 
 
 We note that there are several related measurement modalities that were not considered here, including magnetoencephalograpy (MEG), voltage-sensitive dye imaging (VSDI), calcium imaging, functional magnetic resonance imaging (fMRI) and positron emission tomography (PET). Of these, the MEG is expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), i.e., from synaptic input to geometically aligned populations of pyramidal neurons \citep{Hamalainen1993}, and can be modeled with similar approaches as those reviewed above. However, because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). VSDI and calcium imaging reflect the reflecting area-weighted neuronal membrane potentials and intracellular calcium dynamics, which and are in principle easily accessed variables in neuronal simulations, while fMRI and PET reflect blood supply and metabolic cost, which are typically not explicitly included in models. 
  
