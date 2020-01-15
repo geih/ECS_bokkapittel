@@ -259,10 +259,8 @@ We start at the very smallest of scales considered in neuroscience, by describin
 
 \subsection{Ion concentration dynamics}
 \label{sec:eldiff}
-\snnote{After discussing with Geir and Torbjorn, we decided to change the notation a bit, such that lowercase $j_k$ is flux density, lowercase i is current density and uppercase I is current. Torbjorn and Geir: can you please double check that I got it right?} \tvnnote{Looks good to me}
-\snnote{Do we write equation as eq. or Eq.? Now we use both..}
-\tvnnote{I wrote Eq., but since most of theory is now eq. I changed all to this.}
-In electrodiffusive processes, the flux density of an ion species $k$ is given by \cite{Koch1999}:
+\tvntxt{The movement of ions, that is, charged atoms, in the brain are described in terms of the flux, and there are essentially two different processed that cause ions to move in the brain, namely diffusion and electrical drift.}
+In \tvntxt{such} electrodiffusive processes, the flux density of an ion species $k$ is given by \citep{Koch1999}:
 \begin{equation}
 {\bf j_k} = - D_{k} {\bf \nabla} c_{k} - \frac{D_k z_k c_k}{\psi} {\bf \nabla} \phi,
 \label{eq:JNP}
@@ -345,7 +343,7 @@ Eq.~\ref{eq:VCtheory} is often referred to as the point-source approximation \ci
 %\tvnnote{Jeg skrev om litt her}
 When estimating the extracellular potential far away from a volume containing a combination of current sinks and sources, 
 it can often be useful to express eq.~\eqref{eq:VCtheory} in terms of a multipole expansion. 
-That is, $\Phi$
+That is, $\phi$
 can be precisely described by \citep{Nunez2006},
 \begin{equation}\label{eq:multipole}
 \phi(R) = \frac{C_{monopole}}{R} + \frac{C_{dipole}}{R^2} + \frac{C_{quadrupole}}{R^3} + \frac{C_{octupole}}{R^4} + ... ,
@@ -356,7 +354,7 @@ In neural tissue, current monopoles are unphysical due to current conservation, 
 \begin{equation}\label{eq:CDA}
 \phi(\mathbf{R}) \approx \frac{C_{dipole}}{R^2} = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}.
 \end{equation}
-Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle between the current dipole moment and the distance vector $\mathbf{R}$. The current dipole moment can be found by summing up all the transmembrane currents from a neuron \citep{Pettersen2008, Pettersen2014, Nunez2006}: 
+Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle between the current dipole moment and the distance vector $\mathbf{R}$. The current dipole moment can be found by summing up all the \tvntxt{position-weighted} transmembrane currents from a neuron \citep{Pettersen2008, Pettersen2014, Nunez2006}: 
 \begin{equation}\label{eq:dipole}
 \mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k.
 \end{equation}
@@ -374,7 +372,7 @@ The point-source approximation, eq.~\ref{eq:VCtheory} (or the line-source versio
 
 \item {\bf Frequency-independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \citep{Logothetis2007, Miceli2017, Ranta2017}, see Fig.~\ref{fig:freq_dep}. Note that it is possible to expand the formalism to include a frequency dependent conductivity \citep{Tracey2011, Miceli2017}. 
 
-\item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, was assumed to be the same in all spatial directions. This is mostly an acceptable approximation, but it is also possible to expand the formalism to account for an anisotropic conductivities \citep{Ness2015}.
+\item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, was assumed to be the same in all spatial directions. This is mostly an acceptable approximation, but it is also possible to expand the formalism to account for anisotropic conductivities \citep{Ness2015}.
 
 \item {\bf Homogeneous  conductivity:} The extracellular medium was assumed to have the same conductivity everywhere. Although neural tissue is highly non-homogeneous on the micrometer scale \citep{Nicholson1998}, microscale inhomogeneities may average out on a larger spatial scale, and a homogeneous conductivity seems to be a reasonable approximation within cortex \citep{Logothetis2007}. However, in many situations is will not be applicable, and in general, eq.~\ref{eq:CSDstandard} can always be solved for arbitrarily complex geometries using numerical methods, like the Finite Element Method (FEM) \citep{Logg2012}. For some example neuroscience applications, see \cite{Moffitt2005, Frey2009, Joucla2012, Haufe2015, Ness2015, Buccino2019b, Obien2019}. For some simple non-homogeneous cases analytical solutions can still be obtained, for example through the Method of Images for {\it in vitro} brain slices \citep{Ness2015}, and the four-sphere head model for EEG signals (Sec.~\ref{sec:EEG}) \citep{Naess2017}.
 
@@ -406,7 +404,7 @@ We use the software LFPy \citep{Linden2014, Hagen2018, Hagen2019}, which has vol
 
 %\ghnote{Moved current-conservation figure here. I think that we could call it something else. Perhaps the Hay-neuron-example can be integrated with this figure? And perhaps we should name it single-cell contribution to extracellular potential}.
 
-The transmembrane currents of a neuron during some arbitrary neural activity can be used to calculate extracellular potentials, by applying the formalism described in Sec.~\ref{sec:VC_theory}, and in the simplest case eg.~\ref{eq:VCtheory}.
+The transmembrane currents of a neuron during some arbitrary neural activity can be used to calculate extracellular potentials, by applying the formalism described in Sec.~\ref{sec:VC_theory}, and in the simplest case eq.~\ref{eq:VCtheory}.
 %The extracellular potentials from a single neuron is a reflection of both cellular dynamics and morphology (the spatial structure of the cell). 
 Current conservation requires that the transmembrane currents across the entire cellular membrane at any given time sum to zero \citep{Koch1999, Nunez2006}, and since
 an excitatory synaptic input generates a current sink (negative current), this will necessarily lead to current sources elsewhere on the cell. This implies that point neurons, that is, neurons with no spatial structure, will have no net transmembrane currents, and hence cause no extracellular potentials (Fig.~\ref{fig:EP_morph}A). The simplest neuron models that are capable of producing extracellular potentials are therefore two-compartment models, which will have two equal but opposite currents, and cause perfectly dipolar extracellular potentials (Fig.~\ref{fig:EP_morph}B).
@@ -493,7 +491,7 @@ we need to insert sharp electrodes into the brain. This highly invasive techniqu
 
 Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
 
-The current dipole approximation is however not an obvious candidate for computing ECoG signals, as the ECOG electrodes are located too close to the signal sources, see \cite{Hagen2018}.
+The current dipole approximation is however not an obvious candidate for computing ECoG signals, as the ECoG electrodes are located too close to the signal sources, see \cite{Hagen2018}.
 
 \begin{figure}[!ht]
 \begin{center}
@@ -508,8 +506,8 @@ The current dipole approximation is however not an obvious candidate for computi
 \end{figure}
 
 \subsection{Head models}
-Electric potentials measured on the scalp surface will be affected by the geometries and conductivities of the different constituents of the head \citep{Nunez2006}. This can be incorporated in our EEG calculations by applying simplified or more complex head models.
-A well-known simplified head model is the analytical four-sphere model, consisting of four conentric shells representing brain tissue, cerebrospinal fluid (CSF), skull and scalp, where the conductivity can be set individually for each shell \citep{Naess2017, Srinivasan1998, Nunez2006} (Fig.~\ref{fig:head_models}A,B).
+Electric potentials measured on the scalp surface will be affected by the geometries and conductivities of the different constituents of the head \citep{Nunez2006}. This can be incorporated in EEG calculations by applying simplified or more complex head models.
+A well-known simplified head model is the analytical four-sphere model, consisting of four concentric shells representing brain tissue, cerebrospinal fluid (CSF), skull and scalp, where the conductivity can be set individually for each shell \citep{Naess2017, Srinivasan1998, Nunez2006} (Fig.~\ref{fig:foursphere_contour}).
 More complex head models make use of high-resolution anatomical MRI-data to map out a geometrically detailed head volume conductor. The link between current dipoles in the brain and resulting EEG signals is determined applying numerical methods such as the finite element method \citep{Larson2013, Logg2012}. Once this link is established we can in principle insert a dipole representing arbitrary neural activity into such a model, and compute the resulting EEG signals quite straightforwardly. The New York Head model is an example of one such pre-solved complex head model, see Fig.~\ref{fig:head_models}C,D \citep{Huang2016}.
 
 The head models themselves introduce no essential frequency filtering of the EEG signal \citep{Pfurtscheller1975, Nunez2006, Ranta2017}, however, substantial spatial filtering will occur (Fig.~\ref{fig:foursphere_contour}). Additionally, the measured (or modeled) signals represent the average potential across the elecrode surface, and the large electrode sizes used in ECoG/EEG recordings can have important effect on the measured signals \citep{Nunez2006, Hagen2018, Dubey2019}.
