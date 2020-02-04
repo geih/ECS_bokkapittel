@@ -354,11 +354,11 @@ In neural tissue, current monopoles are unphysical due to current conservation, 
 \begin{equation}\label{eq:CDA}
 \phi(\mathbf{R}) \approx \frac{C_{dipole}}{R^2} = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}.
 \end{equation}
-Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle between the current dipole moment and the distance vector $\mathbf{R}$. The current dipole moment can be found by summing up all the \tvntxt{position-weighted} transmembrane currents from a neuron \citep{Pettersen2008, Pettersen2014, Nunez2006}: 
+Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle between the current dipole moment and the distance vector $\mathbf{R}$. The current dipole moment can be found by summing up all the position-weighted transmembrane currents from a neuron \citep{Pettersen2008, Pettersen2014, Nunez2006}: 
 \begin{equation}\label{eq:dipole}
 \mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k.
 \end{equation}
-In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the length $d$ and direction of the current dipole. The current-dipole approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length: $R > 3d$ or $R > 4d$ \citep{Nunez2006}.
+In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the dipole length $d$ and direction of the current dipole. The current-dipole approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length: $R > 3d$ or $R > 4d$ \citep{Nunez2006}.
 
 \subsubsection{Assumptions in volume conductor theory}
 \label{sec:VC_assumptions}
