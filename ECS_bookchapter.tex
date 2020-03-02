@@ -183,7 +183,7 @@
 \author{Geir Halnes\fnref{label1,label2}}
 \author{Torbj\o{}rn V. Ness \fnref{label1}}
 \author{Solveig N\ae{}ss\fnref{label2}}
-\author{Klas Pettersen \fnref{label3}}
+\author{Klas H. Pettersen \fnref{label3}}
 \author{Gaute T. Einevoll\corref{cor1}\fnref{label1,label2,label4}}
 
 \address[label1]{Faculty of Science and Technology, Norwegian University of Life Sciences, {{\AA}}s, Norway}
@@ -222,22 +222,55 @@ extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 \linenumbers
 
 \section{Introduction}
-\tvnnote{Gaute skriver dette}
 \label{sec:introduction}
 
-\ghnote{First something about why we are interested in electrical fields and some historical perspectives. Perhaps Gaute should write this.}
+\begin{itemize}
+%
+\item History of use of electrical potentials 
+\begin{itemize}
+\item EEG
+\item Spikes
+\item LFP, ECoG
+\item MEG
+\end{itemize}
+%
+\item Tradition in computational neuroscience
+\begin{itemize} 
+\item Within the field of computational neuroscience, there has been a strong focus on modeling the membrane potential dynamics 
+\item Model what you measure, and measure what you model \citep{Einevoll2019}
+\end{itemize}
+\item Motivation: Use to test large-scale network models
+\begin{itemize}
+\item LFP
+\begin{itemize}
+\item Allen-model
+\item Blue Brain (Reimann2013)
+\item Skaar et al. 2019
+\end{itemize}
+%
+\item Motivation: Test data analysis methods  (benchmarking data)
+\begin{itemize}
+\item Spike-sorting: \cite{Hagen2016, Buccino2019}, CSD: \cite{Pettersen2006, Potworowski2012, Ness2015}, 
+\item Location and Cell type: \citep{DelgadoRuz2014, Buccino2018}, 
+\item LPA, CSD 
+\end{itemize}
+%
+\end{itemize}
 
-\ghnote{End intro with bridge to theory-section. Probably we should add some older references to VC-theory?}
+\begin{itemize}
+\item Standard way to compute extracellular potentials
+\begin{itemize} 
+\item Use multicompartmental modeling to compute transmembrane currents  in all neuronal segments
+\item Use VC theory to compute extracellular potentials, cf. Figure \ref{fig:multimodal}
+\end{itemize}
+%
+\item This book chapter describes
+\begin{itemize}
+\item The origin of VC-theory, i.e., how it can be derived from the more detailed electrodiffusive theory 
+GH: Probably we should add some older references to VC-theory?
+\item Example applications
+\end{itemize}
 
-
-Very important to model what you measure, and measure what you model \citep{Einevoll2019, Maki-marttunen2019}
-
-
-Within the field of computational neuroscience, there has been a strong focus on modeling the membrane potential dynamics of morphologically complex neurons. Such simulations involve computing the transmembrane currents in all neuronal segments. This book chapter explains how one, based on knowing the transmembrane currents, can compute the electrical potential in the extracellular space surrounding the active neurons. 
-
-The link between membrane currents and the extracellular potential is of course mediated by electrical currents. Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions migrate in electrical fields), (2) a diffusion component (ions diffuse), (3) an advective component (extracellular fluid flow drags ions along), and (4) a displacement component (ions pile up and changes the local charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and are typically neglected \citep{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \citep{Savtchenko2017, Pods2017}. At the level of tissue, it is commonly believed that the diffusive current is much smaller than the drift current, so that even diffusive currents are typically neglected \citep{Holt1999, Pettersen2008a}. This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, if concentration gradients are present, diffusive currents could in principle affect measurable extracellular potentials \citep{Halnes2016, Halnes2017, Solbra2018}, and in scenarios involving dramatic shifts in extracellular concentrations, such as spreading depression and related pathologies, diffusive effects are likely to be of key importance for shaping the extracellular potential \citep{Almeida2004, OConnell2016}.
-
-We start this book chapter by giving an overview of the theory used for forward modeling of extracellular potentials, and introduce the mathematical frameworks and software tools that can be used for such modeling. We start the theory-part at the rather fundamental level of electrodiffusive ion concentration dynamics, and derive an electrodiffusive framework for predicting the dynamics of the extracellular ion concentrations and potential. We next show how this theory can be reduced to the simpler, and more common VC-theory if we assume that the diffusive component is negligible. 
 
 \begin{figure}[!ht]
 \begin{center}
@@ -247,14 +280,25 @@ We start this book chapter by giving an overview of the theory used for forward 
 \label{fig:multimodal}
 \end{figure}
 
-Motivation: Simulated test-data for benchmarking
-Spike-sorting: \cite{Hagen2016, Buccino2019}, CSD: \cite{Pettersen2006, Potworowski2012, Ness2015}, 
-Location and Cell type: \citep{DelgadoRuz2014, Buccino2018}, 
-LPA
+
+
+
+
+%The link between membrane currents and the extracellular potential is of course mediated by electrical currents. Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions migrate in electrical fields), (2) a diffusion component (ions diffuse), (3) an advective component (extracellular fluid flow drags ions along), and (4) a displacement component (ions pile up and changes the local charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and are typically neglected \citep{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \citep{Savtchenko2017, Pods2017}. At the level of tissue, it is commonly believed that the diffusive current is much smaller than the drift current, so that even diffusive currents are typically neglected \citep{Holt1999, Pettersen2008a}. This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, if concentration gradients are present, diffusive currents could in principle affect measurable extracellular potentials \citep{Halnes2016, Halnes2017, Solbra2018}, and in scenarios involving dramatic shifts in extracellular concentrations, such as spreading depression and related pathologies, diffusive effects are likely to be of key importance for shaping the extracellular potential \citep{Almeida2004, OConnell2016}.
+
+
+%how one, based on knowing the transmembrane currents, can compute the electrical potential in the extracellular space surrounding the active neurons. 
+%
+%We start this book chapter by giving an overview of the theory used for forward modeling of extracellular potentials, and introduce the mathematical frameworks and software tools that can be used for such modeling. We start the theory-part at the rather fundamental level of electrodiffusive ion concentration dynamics, and derive an electrodiffusive framework for predicting the dynamics of the extracellular ion concentrations and potential. We next show how this theory can be reduced to the simpler, and more common VC-theory if we assume that the diffusive component is negligible. 
+
 
 \section{%Theory: 
 From electrodiffusion to volume conductor theory}
 \label{sec:theory}
+
+\ghtxt{The link between membrane currents and the extracellular potential is of course mediated by electrical currents. Electrical currents in the brain are mediated by the movement of ions, and it is these currents that a recording electrode pick up.  A net electrical current through the extracellular space of the brain could in principle include several components, such as (1) a drift component (ions migrate in electrical fields), (2) a diffusion component (ions diffuse), (3) an advective component (extracellular fluid flow drags ions along), and (4) a displacement component (ions pile up and changes the local charge density). Since the extracellular bulk fluid has very fast relaxation times and is very close to electroneutral, the latter two current components (3-4) are extremely small and are typically neglected \citep{Grodzinsky2011, Gratiy2017}. The diffusive component (3) is acknowledged to play an important role for voltage dynamics on a tiny spatial scale, such as in synaptic clefts or in the close vicinity of neuronal membrane, where ion concentrations can change dramatically within very short time \citep{Savtchenko2017, Pods2017}. At the level of tissue, it is commonly believed that the diffusive current is much smaller than the drift current, so that even diffusive currents are typically neglected \citep{Holt1999, Pettersen2008a}. This is often a useful approximation, since modeling of electrodiffusive processes is computationally expensive and may not be feasible for large and complex systems. However, if concentration gradients are present, diffusive currents could in principle affect measurable extracellular potentials \citep{Halnes2016, Halnes2017, Solbra2018}, and in scenarios involving dramatic shifts in extracellular concentrations, such as spreading depression and related pathologies, diffusive effects are likely to be of key importance for shaping the extracellular potential \citep{Almeida2004, OConnell2016}.}
+
+
 We start at the very smallest of scales considered in neuroscience, by describing the fundamentals of how ions are moving through the brain under the influence of electric fields and concentration gradients. Building on this, we describe how ionic currents affect the electric extracellular potentials inside neural tissue, like the local field potential (LFP), and furthermore, how they cause electric potentials and magnetic fields that are measurable even outside of the head.
 
 \subsection{Ion concentration dynamics}
