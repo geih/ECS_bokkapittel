@@ -224,30 +224,23 @@ extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 \section{Introduction}
 \label{sec:introduction}
 
+Arguably, most of what we have learned about the mechanisms of which neurons and networks operate in living brains comes from recordings of 
+extracellular potentials. In such recordings, electrical potentials are measured by electrodes that are either placed between cells in brain tissue (spikes, LFPs), at the cortical surface (ECoG, electrocorticography), or at the scalp (EEG, electroencephalograpy). Spikes, the high-frequency part of the extracellular potentials recorded inside gray matter, are reliable signatures of neuronal action potentials, and spike measurements have been instrumental in mapping out, for example, receptive fields accounting for how sensory stimuli are represented in the brain. The analysis of the LFP signal, the low-frequency part of electrical potentials recorded inside gray matter, as well the ECoG, and EEG signals is less straightforward. Interpretation of the signal in terms of the underlying neural activity has been difficult, and most analysis of the data has been purely statistical~\citep{Nunez2006,Buzsaki2012,Einevoll2013,Ilmoniemi2019}.
+
+The tradition of physics is different. Here candidate hypotheses are typically formulated as specific mathematical models, and predictions computed from the models are compared with experiments. In neuroscience this approach has been used to model activity in individual neurons using, for example, biophysically detailed neuron models based on the cable equation formalism (see, e.g., \citet{Koch1999,Sterratt2011}).  
+Here the models have been developed and tested by comparison with membrane potentials recorded by intracellular electrodes in 
+\emph{in vitro} settings. To pursue this mechanistic approach to network models in layered structures such as cortex or hippocampus, 
+one would like to compare model predictions with all available experimental data, that is, not only spike times recorded for a small subset of the neurons, but also population measures such as LFP, ECoG and EEG signals~\citep{Einevoll2019}. This chapter addresses how to model such electrical population signals from neuron and network models.
+
+In addition to allowing for validation on large-scale network models mimicking specific biological 
+networks, e.g., \citet{Reimann2013,Markram2015,Billeh2020}, we believe a key application is to generate  
+model-based benchmarking data for validation of data analysis methods~\citep{Denker2012}.
+
+
+
+
+
 \begin{itemize}
-%
-\item History of use of electrical potentials 
-\begin{itemize}
-\item EEG
-\item Spikes
-\item LFP, ECoG
-\item MEG
-\end{itemize}
-%
-\item Tradition in computational neuroscience
-\begin{itemize} 
-\item Within the field of computational neuroscience, there has been a strong focus on modeling the membrane potential dynamics 
-\item Model what you measure, and measure what you model \citep{Einevoll2019}
-\end{itemize}
-\item Motivation: Use to test large-scale network models
-\begin{itemize}
-\item LFP
-\begin{itemize}
-\item Allen-model
-\item Blue Brain (Reimann2013)
-\item Skaar et al. 2019
-\end{itemize}
-%
 \item Motivation: Test data analysis methods  (benchmarking data)
 \begin{itemize}
 \item Spike-sorting: \cite{Hagen2016, Buccino2019}, CSD: \cite{Pettersen2006, Potworowski2012, Ness2015}, 
@@ -255,7 +248,6 @@ extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 \item LPA, CSD 
 \end{itemize}
 %
-\end{itemize}
 
 \begin{itemize}
 \item Standard way to compute extracellular potentials
@@ -697,6 +689,8 @@ LFPy etc.
 In this chapter, we reviewed the theory for modeling extracellular potentials. Starting at the level of extracellular ionic movements, we showed how neuronal activity gives rise to electrical fluctuations that can be picked up at various spatial scales ranging from the local of MUA and LFP scale to the more global scale of ECoG and EEG. We further reviewed how recorded signals at these various spatial scales can be interpreted in terms of how various features in the recorded signals reflect various aspects of neuronal activity. In brief, the MUA reflects the spiking activity of nearby neurons, the LFP reflect the distribution of synaptic inputs to nearby neuronal populations, while ECoG and EEG reflect the same as the LFP, but on a larger spatial scale. 
 
 We note that there are several related measurement modalities that were not considered here, including magnetoencephalograpy (MEG), voltage-sensitive dye imaging (VSDI), calcium imaging, functional magnetic resonance imaging (fMRI) and positron emission tomography (PET). Of these, the MEG is expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), i.e., from synaptic input to geometically aligned populations of pyramidal neurons \citep{Hamalainen1993}, and can be modeled with similar approaches as those reviewed above. However, because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). VSDI and calcium imaging reflect the reflecting area-weighted neuronal membrane potentials and intracellular calcium dynamics, which and are in principle easily accessed variables in neuronal simulations, while fMRI and PET reflect blood supply and metabolic cost, which are typically not explicitly included in models. 
+
+\gen{Ta med Skaar 2020} 
  
 \begin{enumerate}
  \item Summary of chapter
