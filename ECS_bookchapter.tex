@@ -419,9 +419,13 @@ can be precisely described by \citep{Nunez2006},
 when the distance $R$ from the center of the volume to the measurement point is larger than the distance from volume center to the most peripheral source \citep{Jackson1998}. 
 %Here, the monopole contribution $C_{monopole}$, dipole contribution $C_{dipole}$ and quadrupole contribution $C_{quadrupole}$, etc., are \snnote{somehow} defined in \cite{Riera2012}.
 
-In neural tissue, current monopoles are unphysical due to current conservation, \gex{that is, $C_\text{monopole}=0$.}  
+%In neural tissue, current conservation ensures that there is no current monopole contribution to the extracellular potential, that is, $C_\text{monopole}=0$.
+\sntxt{Due to current conservation in neural tissue, there is no current monopole contribution to extracellular potentials, }\gex{that is, $C_\text{monopole}=0$.}   
+
+%In neural tissue, there will be no current monopole contribution to the extracellular potential, due to current conservation, \gex{that is, $C_\text{monopole}=0$.}  
 \gen{Synes ikke "unphysical due to current conservation" er optimal formulering. F{\o}ringen er jo at summen av str{\o}mmene er null.}
-\gex{Further,}  the quadrupole, octupole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current-dipole approximation \citep{Nunez2006}:
+\snnote{Bedre naa?}
+Further, the quadrupole, octupole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current-dipole approximation \citep{Nunez2006}:
 %%%
 \begin{equation}\label{eq:CDA}
 \phi(\mathbf{R}) \approx \frac{C_\text{dipole}}{R^2} = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}.
@@ -433,8 +437,13 @@ Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle betwee
 \mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k.
 \end{equation}
 %%%
-In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the dipole length $d$ and direction of the current dipole. The current-dipole approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length: $R > 3d$ or $R > 4d$ \citep{Nunez2006}.
+In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the dipole length $d$ and direction of the current dipole. The current-dipole approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length. \sntxt{In general, this means when $R > 3d$ or $R > 4d$ \citep{Nunez2006}. Specifically, when computing the extracellular potential from a single apical synaptic input to a pyramidal cell, \cite {Linden2010} found that the measurement point must be about 1-2 mm away from the cell for the approximation to be applicable.}
 \gen{I Linden2010 viser vi noen beregninger for konkrete nevronmodeller som jeg vil tro kan gi et bedre grunnlag for en tommelfingerregel enn Nunez2006.}
+\snnote{Jeg er litt usikker p\aa{} hva som er lurt \aa{} gj\o re her.. I Lind\'en2010 gjelder tommelfingerregelen for en spesiell pyramidalcelle med apikalt input. Jeg synes kanskje vi ogs\aa{} b\o r nevne Nunezs regel, siden denne er mer generell.}
+
+
+
+%{Hva med forslag over? I Nunez snakker de generelt om n\aa r dipolapproksimasjonen kan predikere potensialet fra to monopoler, mens i Linden har vi et spesifikt eksempel der vi ikke bare ser p\aa  dipolapproksimasjonen i seg selv, men ogs\aa  den forenklinga vi gj\o r ved \aa  summere alle str\o mmer til \'e n enkelt dipol med \'e n enklet plassering.}
 
 \subsubsection{Assumptions in volume conductor theory}
 \label{sec:VC_assumptions}
@@ -589,14 +598,21 @@ In order to measure electric potentials in the immediate vicinity of neurons, li
 %\slntxt{(OR better: LFP and MUA signals)}
 %\snnote{$<-$ Torbjorn, which one do you prefer?}
 %\tvnnote{I liked both :-)}
-we need to insert sharp electrodes into the brain. This highly invasive technique is quite common in animal studies, but can only be applied to humans when there is a clear medical need, for example in patients with intractable epilepsy \citep{Zangiabadi2019}. Fortunately, electric potentials generated by neural activity extend beyond neural tissue and can be picked up by electrodes placed on the brain surface or on top of the scalp. The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG). \gen{Her kan det hoeres ut som vi kategoriserer ECoG som non-invasive, og det er jo ikke riktig.}
+we need to insert sharp electrodes into the brain. This highly invasive technique is quite common in animal studies, but can only be applied to humans when there is a clear medical need, for example in patients with intractable epilepsy \citep{Zangiabadi2019}. \sntxt{\sout{Fortunately} However}, electric potentials generated by neural activity extend beyond neural tissue \sntxt{and can also be measured outside of the brain:
+Placing electrodes on the brain surface, electrocorticography (ECoG), is a technique that requires some surgery. With electroencephalogram (EEG), on the other hand, potentials are measured non-invasively, directly on top of the scalp.}
+
+
+%The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG).
+\gen{Her kan det hoeres ut som vi kategoriserer ECoG som non-invasive, og det er jo ikke riktig.}
+\snnote{\AA! Det var ikke meninga. Ble dette bedre?}
 
 Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
 
-The current dipole approximation is however not \gex{unproblematic to use for computing ECoG signals, as the ECoG electrodes may be located too close to the 
-signal sources for the approximation to apply}, see \cite{Hagen2018}.
+The current dipole approximation is however not unproblematic to use for computing ECoG signals, as the ECoG electrodes may be located too close to the 
+signal sources for the approximation to apply, see \cite{Hagen2018}.
 
 \gen{Vi maa referere til den nye boka "Brain Signals" et passende sted.}
+\snnote{Har ikke f\aa tt skaffet meg denne enn\aa.=/ Geir, har du forslag?}
 
 \begin{figure}[!ht]
 \begin{center}
