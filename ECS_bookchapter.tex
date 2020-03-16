@@ -228,8 +228,9 @@ Arguably, most of what we have learned about the mechanisms of which neurons and
 extracellular potentials. In such recordings, electrical potentials are measured by electrodes that are either placed between cells in brain tissue (spikes, LFPs), at the cortical surface (ECoG, electrocorticography), or at the scalp (EEG, electroencephalograpy) (Figure~\ref{fig:multimodal}). Spikes, the high-frequency part of the extracellular potentials recorded inside gray matter, are reliable signatures of neuronal action potentials, and spike measurements have been instrumental in mapping out, for example, receptive fields accounting for how sensory stimuli are represented in the brain. The analysis of the LFP signal, the low-frequency part of electrical potentials recorded inside gray matter, as well the ECoG, and EEG signals is less straightforward. Interpretation of the signal in terms of the underlying neural activity has been difficult, and most analysis of the data has been purely statistical~\citep{Nunez2006,Buzsaki2012,Einevoll2013,Ilmoniemi2019}.
 
 The tradition of physics is different. Here candidate hypotheses are typically formulated as specific mathematical models, and predictions computed from the models are compared with experiments. In neuroscience this approach has been used to model activity in individual neurons using, for example, biophysically detailed neuron models based on the cable equation formalism (see, e.g., \citet{Koch1999,Sterratt2011}).  
-Here the models have been developed and tested by comparison with membrane potentials recorded by intracellular electrodes in 
-\emph{in vitro} settings. To pursue this mechanistic approach to network models in layered structures such as cortex or hippocampus, 
+Here the models have largely been developed and tested by comparison with membrane potentials recorded by intracellular electrodes in 
+\emph{in vitro} settings (but see \citet{Gold2007}).
+To pursue this mechanistic approach to network models in layered structures such as cortex or hippocampus, 
 one would like to compare model predictions with all available experimental data, that is, not only spike times recorded for a small subset of the neurons, but also population measures such as LFP, ECoG and EEG signals~\citep{Einevoll2019}. This chapter addresses how to model such electrical population signals from neuron and network models.
 
 In addition to allowing for validation on large-scale network models mimicking specific biological 
@@ -398,8 +399,7 @@ can be precisely described by \citep{Nunez2006},
 when the distance $R$ from the center of the volume to the measurement point is larger than the distance from volume center to the most peripheral source \citep{Jackson1998}. 
 %Here, the monopole contribution $C_{monopole}$, dipole contribution $C_{dipole}$ and quadrupole contribution $C_{quadrupole}$, etc., are \snnote{somehow} defined in \cite{Riera2012}.
 
-In neural tissue, current monopoles are unphysical, \gex{that is, $C_\text{monopole}=0$. This follows from the requirement inherent in the cable equation that the sum over all transmembrane currents, including the capacitive currents, across the neuronal surface has to be zero at all points in time.} 
-\gen{Har vi en passende refereanse her?} 
+In neural tissue, current monopoles are unphysical, \gex{that is, $C_\text{monopole}=0$. This follows from the requirement inherent in the cable equation that the sum over all transmembrane currents, including the capacitive currents, across the neuronal surface has to be zero at all points in time~\citep{Pettersen2012}.} 
 \gex{Further,} 
 the quadrupole, octupole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current-dipole approximation \citep{Nunez2006}:
 %%%
@@ -655,28 +655,35 @@ LFPy etc.
 \tvnnote{Maybe we don't need this section? Just say that 'here we've used LFPy'}
 \gen{I suggest we just list other tools that computes brain signals (NetPyne, BMTK, Human Brain Solver, VISAPy, VIMEAPy, MEARec, .....?).}
 
-\section{Summary and Discussion}
+\section{Discussion}
 \label{sec:summary}
-\gen{Jeg skriver dette til slutt.}
-\gen{Foreslaar aa integrere "inverse modelling" her.}
+
+In the present chapter we have derived and applied well-established biophysical forward-modeling schemes for computing extracellular electrical potentials recorded inside and outside the brain. These electrical potentials include spikes (both single-unit and multiunit activity (MUA)), LFP, ECoG and EEG signals. The obvious application of this scheme is computation of electrical signals from neuron and network activity for comparison with experiments so that candidate models can be tested~\citep{Einevoll2019} or inferred~\citep{Goncalves2019,Skaar2020}.
+Another key application is the computation of benchmarking data for testing of data analysis methods such as 
+spike sorting or CSD analysis~\citep{Denker2012}. 
+
+Inverse modeling of recorded electrical potentials, that is, estimation of the neural sources underlying the signals, is inherently an ill-posed problem. This means that no unique solution exists. However, prior knowledge about the underlying sources and how they generate the recorded signals, can be used to increase the identifiability. For example, several methods for the estimation of so-called current-source density from LFP recordings have been developed by building the present forward model into the CSD 
+estimator~\citep{Pettersen2006,Potworowski2012,Cserpan2017}.
+
+ 
 
 \begin{itemize}
-% 
-\item Forward models used to make analysis methods 
+\item Inverse modeling 
 \begin{itemize}
-\item iCSD
-\item EEG?
+\item Ill-posed
+\item Build forward models into inverse method
+\item Example: iCSD and kCSD and skCSD
 \end{itemize}
-%
+\item Other measurement modalities: 
+We note that there are several related measurement modalities that were not considered here, including magnetoencephalograpy (MEG), voltage-sensitive dye imaging (VSDI), calcium imaging, functional magnetic resonance imaging (fMRI) and positron emission tomography (PET). Of these, the MEG is expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), i.e., from synaptic input to geometically aligned populations of pyramidal neurons \citep{Hamalainen1993}, and can be modeled with similar approaches as those reviewed above. However, because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). VSDI and calcium imaging reflect the reflecting area-weighted neuronal membrane potentials and intracellular calcium dynamics, which and are in principle easily accessed variables in neuronal simulations, while fMRI and PET reflect blood supply and metabolic cost, which are typically not explicitly included in models. 
 \end{itemize}
+
+
 
 
 In this chapter, we reviewed the theory for modeling extracellular potentials. Starting at the level of extracellular ionic movements, we showed how neuronal activity gives rise to electrical fluctuations that can be picked up at various spatial scales ranging from the local of MUA and LFP scale to the more global scale of ECoG and EEG. We further reviewed how recorded signals at these various spatial scales can be interpreted in terms of how various features in the recorded signals reflect various aspects of neuronal activity. In brief, the MUA reflects the spiking activity of nearby neurons, the LFP reflect the distribution of synaptic inputs to nearby neuronal populations, while ECoG and EEG reflect the same as the LFP, but on a larger spatial scale. 
 
-We note that there are several related measurement modalities that were not considered here, including magnetoencephalograpy (MEG), voltage-sensitive dye imaging (VSDI), calcium imaging, functional magnetic resonance imaging (fMRI) and positron emission tomography (PET). Of these, the MEG is expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), i.e., from synaptic input to geometically aligned populations of pyramidal neurons \citep{Hamalainen1993}, and can be modeled with similar approaches as those reviewed above. However, because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). VSDI and calcium imaging reflect the reflecting area-weighted neuronal membrane potentials and intracellular calcium dynamics, which and are in principle easily accessed variables in neuronal simulations, while fMRI and PET reflect blood supply and metabolic cost, which are typically not explicitly included in models. 
 
-\gen{Ta med Skaar 2020} 
- 
 \begin{enumerate}
  \item Summary of chapter
  \item Ongoing large-scale projects (HBP, Allen)
