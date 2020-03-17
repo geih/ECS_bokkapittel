@@ -224,64 +224,44 @@ extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion
 \section{Introduction}
 \label{sec:introduction}
 
-\begin{itemize}
-%
-\item History of use of electrical potentials 
-\begin{itemize}
-\item EEG
-\item Spikes
-\item LFP, ECoG
-\item MEG
-\end{itemize}
-%
-\item Tradition in computational neuroscience
-\begin{itemize} 
-\item Within the field of computational neuroscience, there has been a strong focus on modeling the membrane potential dynamics 
-\item Model what you measure, and measure what you model \citep{Einevoll2019}
-\end{itemize}
-\item Motivation: Use to test large-scale network models
-\begin{itemize}
-\item LFP
-\begin{itemize}
-\item Allen-model
-\item Blue Brain (Reimann2013)
-\item Skaar et al. 2019
-\end{itemize}
-%
-\item Motivation: Test data analysis methods  (benchmarking data)
-\begin{itemize}
-\item Spike-sorting: \cite{Hagen2016, Buccino2019}, CSD: \cite{Pettersen2006, Potworowski2012, Ness2015}, 
-\item Location and Cell type: \citep{DelgadoRuz2014, Buccino2018}, 
-\item LPA, CSD 
-\end{itemize}
-%
-\end{itemize}
+Arguably, most of what we have learned about the mechanisms by which neurons and networks operate in living brains comes from recordings of 
+extracellular potentials. In such recordings, electrical potentials are measured by electrodes that are either placed between cells in brain tissue (spikes, LFPs), at the cortical surface (ECoG, electrocorticography), or at the scalp (EEG, electroencephalograpy) (Figure~\ref{fig:multimodal}). Spikes, the high-frequency part of the extracellular potentials recorded inside gray matter, are reliable signatures of neuronal action potentials, and spike measurements have been instrumental in mapping out, for example, receptive fields accounting for how sensory stimuli are represented in the brain. The analysis of the LFP signal, the low-frequency part of electrical potentials recorded inside gray matter, as well the ECoG, and EEG signals is less straightforward. Interpretation of the signal in terms of the underlying neural activity has been difficult, and most analysis of the data has been purely statistical~\citep{Nunez2006,Buzsaki2012,Einevoll2013,Ilmoniemi2019}.
 
-\begin{itemize}
-\item Standard way to compute extracellular potentials
-\begin{itemize} 
-\item Use multicompartmental modeling to compute transmembrane currents  in all neuronal segments
-\item Use VC theory to compute extracellular potentials, cf. Figure \ref{fig:multimodal}
-\end{itemize}
+The tradition of physics is different. Here candidate hypotheses are typically formulated as specific mathematical models, and predictions computed from the models are compared with experiments. In neuroscience this approach has been used to model activity in individual neurons using, for example, biophysically detailed neuron models based on the cable equation formalism (see, e.g., \citet{Koch1999,Sterratt2011}).  
+Here the models have largely been developed and tested by comparison with membrane potentials recorded by intracellular electrodes in 
+\emph{in vitro} settings (but see \citet{Gold2007}).
+To pursue this mechanistic approach to network models in layered structures such as cortex or hippocampus, 
+one would like to compare model predictions with all available experimental data, that is, not only spike times recorded for a small subset of the neurons, but also population measures such as LFP, ECoG and EEG signals~\citep{Einevoll2019}. This chapter addresses how to model such electrical population signals from neuron and network models.
+
+In addition to allowing for validation on large-scale network models mimicking specific biological 
+networks, e.g., \citet{Reimann2013,Markram2015,Billeh2020}, we believe a key application is to generate  
+model-based benchmarking data for validation of data analysis methods~\citep{Denker2012}.
+One example is the use such benchmarking data to develop and test spike-sorting methods~\cite{Hagen2016, Buccino2019}
+or test methods for localization and classification of cell types~\citep{DelgadoRuz2014, Buccino2018}.
+Another example is testing of methods for analysis of LFP signals, such as CSD analysis~\citep{Pettersen2008,Leski2011,Ness2015} or 
+ICA analysis~\citep{Glabska2014}, or joint analysis of spike and LFP signals such as laminar population analysis (LPA)~\citep{Glabska2016}.
+
+The standard way to compute extracellular potentials from neural activity is a two-step process~\citep{Holt1999,Linden2014,Hagen2018}:
 %
-\item This book chapter describes
-\begin{itemize}
-\item The origin of VC-theory, i.e., how it can be derived from the more detailed electrodiffusive theory 
-GH: Probably we should add some older references to VC-theory?
-\item Example applications
-\end{itemize}
+\begin{enumerate}
+\item Compute the net transmembrane current in all neuronal segments in (networks of) biophysically-detailed neuron models, and
+\item use volume-conductor (VC) theory to compute extracellular potentials from the these computed transmembrane currents.
+\end{enumerate}
+%
+This book chapter describes the origin of VC theory, that is, how it can be derived from a more detailed electrodiffusive theory describing
+dynamics of ions in the extracellular media. It also provides examples where our tool LFPy (\texttt{LFPy.github.io}) \citep{Linden2014,Hagen2018}
+is used to compute spikes, LFP signals and EEG signals generated by neurons and neuronal populations.
 
-\end{itemize}
-\end{itemize}
-
+%%%
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{cortex_multipop_arial_font}
 \end{center}
-\caption{\textbf{LFP, ECoG, EEG and MEG.} The same basic building blocks, that is, currents caused by large numbers of synaptic input are contributing to several different measurable signals.}
+\caption{\textbf{LFP, ECoG, EEG and MEG.} The same basic building blocks, that is, currents caused by large numbers of synaptic input are contributing to several different measurable signals.
+\gen{Agree with Geir's suggestion to remove MEG from the figure.}}
 \label{fig:multimodal}
 \end{figure}
-
+%%%
 
 
 
@@ -376,7 +356,7 @@ This the standard expression used in CSD theory \citep{Mitzdorf1985, Nicholson19
 
 We note there are two conventions for defining the variables in eqns. \ref{eq:JNP}-\ref{eq:CSDstandard}, both of which are in use. The variables can be defined either relative to a tissue reference volume or relative to an extracellular reference volume. The former convention is the common convention used in volume conductor theory. Then concentrations denote the number of extracellular ions per unit tissue volume, sources denote the number of ions/the net charge per unit tissue volume per second, and flux/current densities are defined per unit tissue cross-section area. Then, $\sigma$ interprets as the conductivity experienced by the current density per tissue cross section area. 
 
-As eq.~\ref{eq:CSD} indicates, also diffusive processes can in principle contribute to the Laplacian of $\phi$, and if present, they could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources ($C = 0$). Previous computational studies have predicted that effects of diffusion on extracellular potentials are not necessarily small, but tend to be very slow, meaning that they will only affect the very low-frequency components of $\phi$ \citep{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time scale (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1Hz \citep{Einevoll2013}, which means that most of the tentative diffusive contribution will be filtered out from experimental recordings. It may therefore be a good approximation to neglect the diffusive term, except in the case of pathologically dramatic concentration variations. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq.~\ref{eq:CSDstandard}.
+As eq.~\ref{eq:CSD} indicates, also diffusive processes can in principle contribute to the Laplacian of $\phi$, and if present, they could give rise to a non-zero Laplacian of $\phi$ even in the absence of neuronal sources ($C=0$). Previous computational studies have predicted that effects of diffusion on extracellular potentials are not necessarily small, but tend to be very slow, meaning that they will only affect the very low-frequency components of $\phi$ \citep{Halnes2016, Halnes2017}. This is due to the diffusive current being a direct function of ion concentrations $c_k$, which on a large spatial scale typically vary on a much slower time scale (seconds-minutes) than the fluctuations in $\phi$ that we commonly are interested in (milliseconds-seconds). Furthermore, electrodes used to record $\phi$ typically have a lower cutoff frequency of 0.1-1~Hz \citep{Einevoll2013}, which means that most of the tentative diffusive contribution will be filtered out from experimental recordings. It may therefore be a good approximation to neglect the diffusive term, except in the case of pathologically dramatic concentration variations. For the rest of this chapter, we shall do so, and assume that electrodynamics in neural tissue can be determined by eq.~\ref{eq:CSDstandard}.
 
 
 
@@ -398,10 +378,10 @@ Integration with respect to $r$ gives us:
 %%%
 where $r$ is the distance from the source. %\tvnnote{OK?}\snnote{perfect!}
 
-If we have several point-current sources, $I_{1}, I_2, I_3, ... $, in locations ${\bf r_1}, {\bf r_2}, {\bf r_3} ... $, their contributions add up due to the linearity assumption (see sec.~\ref{sec:VC_assumptions}), and the potential in a point ${\bf r}$ is given by:
+If we have several point-current sources, $I_{1}, I_2, I_3, ... $, in locations ${\bf r}_1, {\bf r}_2, {\bf r}_3 ... $, their contributions add up due to the linearity assumption (see sec.~\ref{sec:VC_assumptions}), and the potential in a point ${\bf r}$ is given by:
 %%%
 \begin{equation}
-\phi({\bf r}) = \frac{I_1}{4\pi  \sigma {\bf |r-r_1|}} + \frac{I_2}{4\pi  \sigma {\bf |r-r_2|} } + \frac{I_3}{4\pi  \sigma {\bf |r-r_3|} } + ... = \sum_k \frac{I_k}{4\pi  \sigma {\bf |r-r_k|} }.
+\phi({\bf r}) = \frac{I_1}{4\pi  \sigma {\bf |r-r}_1|} + \frac{I_2}{4\pi  \sigma {\bf |r-r}_2| } + \frac{I_3}{4\pi  \sigma {\bf |r-r}_3| } + ... = \sum_k \frac{I_k}{4\pi  \sigma {\bf |r-r}_k| }.
 \label{eq:VCtheory}
 \end{equation}
 %%%
@@ -419,13 +399,16 @@ can be precisely described by \citep{Nunez2006},
 when the distance $R$ from the center of the volume to the measurement point is larger than the distance from volume center to the most peripheral source \citep{Jackson1998}. 
 %Here, the monopole contribution $C_{monopole}$, dipole contribution $C_{dipole}$ and quadrupole contribution $C_{quadrupole}$, etc., are \snnote{somehow} defined in \cite{Riera2012}.
 
-%In neural tissue, current conservation ensures that there is no current monopole contribution to the extracellular potential, that is, $C_\text{monopole}=0$.
-\sntxt{Due to current conservation in neural tissue, there is no current monopole contribution to extracellular potentials, }\gex{that is, $C_\text{monopole}=0$.}   
 
-%In neural tissue, there will be no current monopole contribution to the extracellular potential, due to current conservation, \gex{that is, $C_\text{monopole}=0$.}  
 \gen{Synes ikke "unphysical due to current conservation" er optimal formulering. F{\o}ringen er jo at summen av str{\o}mmene er null.}
-\snnote{Bedre naa?}
-Further, the quadrupole, octupole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current-dipole approximation \citep{Nunez2006}:
+\snnote{Liker veldig godt oppklarende setning 2 her! Kan ogs\aa{} skrive om setning 1 s\aa nn her:}
+
+In neural tissue, \sntxt{there will be no current monopole contribution to the extracellular potential, }
+%In neural tissue, current monopoles are unphysical, 
+that is, $C_\text{monopole}=0$. This follows from the requirement inherent in the cable equation that the sum over all transmembrane currents, including the capacitive currents, across the neuronal surface has to be zero at all points in time~\citep{Pettersen2012}.
+Further,
+the quadrupole, octupole and higher-order contributions decay rapidly with distance $R$. Consequently, the multipole expansion can be approximated by the dipole contribution for large distances, a simplification known as the current-dipole approximation \citep{Nunez2006}:
+
 %%%
 \begin{equation}\label{eq:CDA}
 \phi(\mathbf{R}) \approx \frac{C_\text{dipole}}{R^2} = \frac{1}{4 \pi \sigma} \frac{|\mathbf{p}| \cos \theta}{R^2}.
@@ -437,13 +420,11 @@ Here, $\mathbf{p}$ is the current dipole moment and $\theta$ is the angle betwee
 \mathbf{p} = \sum_{k=1}^N I_k \mathbf{r}_k.
 \end{equation}
 %%%
+
 In the case of a two-compartment neuron model (see Section~\ref{sec:ExtracellularPotentials}) with a current sink $-I$ at location $\mathbf{r}_1$ and a current source $I$ at location $\mathbf{r}_2$, the current dipole moment can be formulated as $\mathbf{p} = -I\mathbf{r}_1 + I\mathbf{r}_2 = I(\mathbf{r}_2 - \mathbf{r}_1) = I\mathbf{d}$, where $\mathbf{d}$ is the distance vector between the current sink and the current source, giving the dipole length $d$ and direction of the current dipole. The current-dipole approximation is applicable in the far-field limit, that is when $R$ is much larger than the dipole length. \sntxt{In general, this means when $R > 3d$ or $R > 4d$ \citep{Nunez2006}. Specifically, when computing the extracellular potential from a single apical synaptic input to a pyramidal cell, \cite {Linden2010} found that the measurement point must be about 1-2 mm away from the cell for the approximation to be applicable.}
 \gen{I Linden2010 viser vi noen beregninger for konkrete nevronmodeller som jeg vil tro kan gi et bedre grunnlag for en tommelfingerregel enn Nunez2006.}
-\snnote{Jeg er litt usikker p\aa{} hva som er lurt \aa{} gj\o re her.. I Lind\'en2010 gjelder tommelfingerregelen for en spesiell pyramidalcelle med apikalt input. Jeg synes kanskje vi ogs\aa{} b\o r nevne Nunezs regel, siden denne er mer generell.}
+\snnote{Hva med dette?}
 
-
-
-%{Hva med forslag over? I Nunez snakker de generelt om n\aa r dipolapproksimasjonen kan predikere potensialet fra to monopoler, mens i Linden har vi et spesifikt eksempel der vi ikke bare ser p\aa  dipolapproksimasjonen i seg selv, men ogs\aa  den forenklinga vi gj\o r ved \aa  summere alle str\o mmer til \'e n enkelt dipol med \'e n enklet plassering.}
 
 \subsubsection{Assumptions in volume conductor theory}
 \label{sec:VC_assumptions}
@@ -458,11 +439,11 @@ The point-source approximation, eq.~\ref{eq:VCtheory} (or the line-source versio
 \item {\bf Frequency-independent conductivity:} Capacitive effects in neural tissue are assumed to be negligible compared to resistive effects in volume conduction. This approximation seems to be justified for the relevant frequencies in extracellular recordings \citep{Logothetis2007, Miceli2017, Ranta2017}, see Fig.~\ref{fig:freq_dep}. Note that it is possible to expand the formalism to include a frequency-dependent conductivity \citep{Tracey2011, Miceli2017}. 
 
 \item {\bf Isotropic conductivity:} The electrical conductivity, $\sigma$, is assumed to be the same in all spatial directions. 
-Cortical measurements have indeed found the conductivities to be comparable across different lateral directions in cortical grey matter \citep{Logothetis2007}. However, the conductivity in the depth direction, i.e., parallel to the long apical dendrites, was found to be up to 50 \% larger than in the lateral direction in rat barrel cortex \citep{goto2010}. Anisotropic electrical conductivities have also been found in other brain regions, for example in frog cerebellum \citep{Nicholson1975} and in guinea-pig hippocampus \citep{holsheimer1987}. The approximation that $\sigma$ is homogeneous is still often acceptable, as it normally gives fairly good estimations of the extracellular potential\tvntxt{, at least in cortical tissue \citep{Ness2015}.} However, it is relatively straightforward to expand the formalism to account for anisotropic conductivities \citep{Ness2015}.
+Cortical measurements have indeed found the conductivities to be comparable across different lateral directions in cortical grey matter \citep{Logothetis2007}. However, the conductivity in the depth direction, i.e., parallel to the long apical dendrites, was found to be up to 50\% larger than in the lateral direction in rat barrel cortex \citep{goto2010}. Anisotropic electrical conductivities have also been found in other brain regions, for example in frog cerebellum \citep{Nicholson1975} and in guinea-pig hippocampus \citep{holsheimer1987}. The approximation that $\sigma$ is homogeneous is still often acceptable, as it normally gives fairly good estimations of the extracellular potential, at least in cortical tissue \citep{Ness2015}. However, it is relatively straightforward to expand the formalism to account for anisotropic conductivities \citep{Ness2015}.
 
-\gen{Kan kanskje vaere mer presis her. Det er vel stoerre anisotropi i hippocampus enn i cortex? Se Pettersen2012.}
-\ghnote{GH: Vet ikke med hippocampus. Jeg fant noe om layer-spesific sigma, som jeg la inn under Homogeneous, under. Det nye i teksten over sakset jeg stort sett fra Ness 2015. Torbjorn, kan du se paa dette? Paastanden om at iso-sigma approksimasjonen gir ok estiamater for potensialet mener jeg aa ha sett deg skrive et sted, men husker ikke helt hvor. Er den berettiget, og har vi en referanse?}
-\tvnnote{Jeg er nok en litt cortexistisk person. Det er ikke det at jeg missliker andre hjernedeler, jeg bare tenker sjelden paa de naar jeg skriver. Sann det staar naa, er jo baade hippocampus og cerebellum nevnt som mulige unntak, er det greit? Vi har kun testet i cortex (Ness et al. 2015), og fant da i praksis veldig liten effekt av 50 prosent anisotropi.}
+%\gen{Kan kanskje vaere mer presis her. Det er vel stoerre anisotropi i hippocampus enn i cortex? Se Pettersen2012.}
+%\ghnote{GH: Vet ikke med hippocampus. Jeg fant noe om layer-spesific sigma, som jeg la inn under Homogeneous, under. Det nye i teksten over sakset jeg stort sett fra Ness 2015. Torbjorn, kan du se paa dette? Paastanden om at iso-sigma approksimasjonen gir ok estiamater for potensialet mener jeg aa ha sett deg skrive et sted, men husker ikke helt hvor. Er den berettiget, og har vi en referanse?}
+%\tvnnote{Jeg er nok en litt cortexistisk person. Det er ikke det at jeg missliker andre hjernedeler, jeg bare tenker sjelden paa de naar jeg skriver. Sann det staar naa, er jo baade hippocampus og cerebellum nevnt som mulige unntak, er det greit? Vi har kun testet i cortex (Ness et al. 2015), og fant da i praksis veldig liten effekt av 50 prosent anisotropi.}
 
 \item {\bf Homogeneous  conductivity:} The extracellular medium was assumed to have the same conductivity everywhere. Although neural tissue is highly non-homogeneous on the micrometer scale \citep{Nicholson1998}, microscale inhomogeneities may average out on a larger spatial scale, and a homogeneous conductivity seems to be a reasonable approximation within cortex \citep{Logothetis2007}. In hippocampus, however, the conductivity has been found to be layer-specific \citep{lopez2001}. In situations where the assumption of a homogeneous conductivity is not applicable, eq.~\ref{eq:CSDstandard} can always be solved for arbitrarily complex geometries using numerical methods, like the Finite Element Method (FEM) \citep{Logg2012}. For some example neuroscience applications, see \cite{Moffitt2005, Frey2009, Joucla2012, Haufe2015, Ness2015, Buccino2019b, Obien2019}. For some simple non-homogeneous cases analytical solutions can still be obtained, for example through the Method of Images for {\it in vitro} brain slices \citep{Ness2015}, and the four-sphere head model for EEG signals (Sec.~\ref{sec:EEG}) \citep{Naess2017}.
 
@@ -486,6 +467,10 @@ For details about the data, see \citep{Miceli2017}, and references therein \cite
 Volume conductor theory is the fundament for forward modeling of extracellular potentials at different spatial scales, from extracellular spikes, LFPs and MUAs, to ECoGs and EEGs. In the following sections we shall review previous modeling works, and insights from simulating electrical potentials at these different scales.
 We use the software LFPy \citep{Linden2014, Hagen2018, Hagen2019}, which has volume conductor theory incorporated and can in principle be used to compute extracellular potentials on arbitrarily large spatial scales, surrounding arbitrarily large neuronal populations. 
 
+\subsection{Modeling electrodes}
+
+\gen{I think we should have a short subsection here on the modeling of electrodes, that is (i) ideal point electrodes (as assumed in all present examples), (ii) the disc-electrode approximation, and (iii) FEM modeling.}
+
 
 \section{Single-cell contributions to extracellular potentials} \label{sec:ExtracellularPotentials}
 %\ghnote{Suggest that we start these sections by explaining what $\phi$ tells us at this level. Also, we should refer to the VC-theory and explain which of the assumptions (1-6) that were relaxed in the specific case.}
@@ -494,16 +479,16 @@ We use the software LFPy \citep{Linden2014, Hagen2018, Hagen2019}, which has vol
 
 %\ghnote{Moved current-conservation figure here. I think that we could call it something else. Perhaps the Hay-neuron-example can be integrated with this figure? And perhaps we should name it single-cell contribution to extracellular potential}.
 
-The transmembrane currents of a neuron during \gex{any} neural activity can be used to calculate extracellular potentials, by applying the formalism described in Sec.~\ref{sec:VC_theory}, and in the simplest case eq.~\ref{eq:VCtheory}.
+The transmembrane currents of a neuron during any neural activity can be used to calculate extracellular potentials, by applying the formalism described in Sec.~\ref{sec:VC_theory}, and in the simplest case eq.~\ref{eq:VCtheory}.
 %The extracellular potentials from a single neuron is a reflection of both cellular dynamics and morphology (the spatial structure of the cell). 
 Current conservation requires that the transmembrane currents across the entire cellular membrane at any given time sum to zero \citep{Koch1999, Nunez2006}, and since
-an excitatory synaptic input generates a current sink (negative current), this will necessarily lead to current sources elsewhere on the cell. This implies that point neurons, that is, neurons with no spatial structure, will have no net transmembrane currents, and hence cause no extracellular potentials (Fig.~\ref{fig:EP_morph}A). The simplest neuron models that are capable of producing extracellular potentials are therefore two-compartment models, which will have two equal but opposite currents,  
-\tvntxt{giving rise to perfectly symmetric extracellular potentials (Fig.~\ref{fig:EP_morph}B).}
+an excitatory synaptic input generates a current sink (negative current), this will necessarily lead to current sources elsewhere on the cell. This implies that point neurons, that is, neurons with no spatial structure, will have no net transmembrane currents, and hence cause no extracellular potentials (Fig.~\ref{fig:EP_morph}A). The simplest neuron models that are capable of producing extracellular potentials are therefore two-compartment models, which will have two equal but opposite transmembrane currents,  
+giving rise to perfectly symmetric extracellular potentials (Fig.~\ref{fig:EP_morph}B).
 %\tvntxt{. Close to the cell, relative to the distance between the two currents, the extracellular potential from such a model must be described by two current sources (``two-monopole'' model \citep{Linden2010}, but far away, again relative to the distance between the currents, the potential can be described by the current-dipole approximation (eq.~\ref{eq:CDA}).}
-\sout{and cause perfectly dipolar extracellular potentials (Fig.~\ref{fig:EP_morph}B).}
+%\sout{and cause perfectly dipolar extracellular potentials (Fig.~\ref{fig:EP_morph}B).}
 
-\gen{Her maa vi vaere litt presise med hva vi mener med dipolar potential. Med en balansert sink og source separert med en avstand $d$, vil dipol-formelen kun gjelde for avstander mye st{\o}rre enn $d$. I Linden2010 kalte vi denne modellen for "two-monopole" modellen for aa ungaa misforstaaelser.}
-\tvnnote{OK with this? Could include short discussion of the effect of the distance between the sink/source, but I felt it was a distraction from the current point that is covered better elsewhere anyway.}
+%\gen{Her maa vi vaere litt presise med hva vi mener med dipolar potential. Med en balansert sink og source separert med en avstand $d$, vil dipol-formelen kun gjelde for avstander mye st{\o}rre enn $d$. I Linden2010 kalte vi denne modellen for "two-monopole" modellen for aa ungaa misforstaaelser.}
+%\tvnnote{OK with this? Could include short discussion of the effect of the distance between the sink/source, but I felt it was a distraction from the current point that is covered better elsewhere anyway.}
 
 Multi-compartment neuron models mimicking the complex spatial structure of real neurons will typically give rise to complicated patterns of current sinks and sources (negative and positive currents respectively), leading to complex, but mostly dipolar-like extracellular potentials (Fig.~\ref{fig:EP_morph}C) \citep{Einevoll2013}.
 Note that this framework for calculating extracellular potentials is valid both for subthreshold and suprathreshold neural activity, that is, when a cell receives synaptic input that does not trigger, or does trigger an action potential, respectively (Fig.~\ref{fig:EP_morph}, D versus E).
@@ -515,7 +500,7 @@ Note that this framework for calculating extracellular potentials is valid both 
 \caption{\textbf{Single-cell contributions to the extracellular potential.} 
 {\bf A}: Point neurons have no net currents (top), and therefore cause no extracellular potentials (bottom). 
 {\bf B}: Two-compartment neuron models have two opposite currents
-of identical magnitude (top), and cause perfectly \tvntxt{symmetric dipolar-like}  extracellular potentials (bottom). 
+of identical magnitude (top), and cause perfectly symmetric dipolar-like extracellular potentials (bottom). 
 {\bf C}: Multi-compartment neuron models \citep{Hay2011} give rise to complex source-sink patterns (top) and complex (but mostly dipolar-like) extracellular potentials (bottom). 
 {\bf D, E}: A single somatic synaptic input to a complex multi-compartment cell model, either subthreshold (D) or suprathreshold (E; double synaptic weight of D), illustrating that the same framework can be used to calculate both the LFP contribution from subthreshold synaptic input, and extracellular action potentials. 
 }
@@ -538,6 +523,7 @@ The low frequency part, that is, the local field potential (LFP), is thought to 
 {\bf D}: The LFP, that is, a low-pass filtered version of the raw signal in C.
 {\bf E}: The MUA, that is, a high-pass filtered version of the raw signal in C.
 {\bf F}: The MUA, that is, a high-pass filtered, rectivifed and low-pass filtered version of the raw signal in C.
+\gen{Vi boer si presist hvordan filtreringen er gjort.}
 }
 \label{fig:LFP_MUA}
 \end{figure}
@@ -552,24 +538,38 @@ The same arguments also apply to inhibitory synaptic inputs, with the signs of t
 
 Note that, for example, the LFP signature of apical excitatory synaptic input is inherently similar to that of basal inhibitory input, and indeed, separating between cases like this pose a real challenge in interpreting LFP signals \citep{Linden2010}. 
 
-In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles \tvntxt{from individual interneurons, which can in themselves be sizable \citep{Linden2010},} do not align, leading to negligible \tvntxt{net} contribution to LFP signals, except indirectly through giving synaptic input to pyramidal cells \citep{Mazzoni2015,Telenczuk2016, Hagen2016}.
-\gen{Dette forutsetter vel at input-synapsene er jevnt fordelt over hele nevronet? Som vist i Linden2010 saa kan enkelt-input til stellate cells ogsaa gi dipoler.}
-\tvnnote{Det er egentlig det jeg mener med ``lack orientational specificity''. Enkelt-celler har dipoler, men de summerer ikke konstruktivt for populasjoner. Greit naa?}
+In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles from individual interneurons, which might by themselves be sizable \citep{Linden2010}, do not align, leading to negligible net contributions to LFP 
+signals~\citep{Mazzoni2015}.
+\gex{Note, however, that the interneurons may indirectly cause large LFP contributions through their 
+synaptic inputs onto pyramidal cells \citep{Telenczuk2016, Hagen2016}.}
+%\gen{Dette forutsetter vel at input-synapsene er jevnt fordelt over hele nevronet? Som vist i Linden2010 saa kan enkelt-input til stellate cells ogsaa gi dipoler.}
+%\tvnnote{Det er egentlig det jeg mener med ``lack orientational specificity''. Enkelt-celler har dipoler, men de summerer ikke konstruktivt for populasjoner. Greit naa?}
 
 It has been demonstrated that correlations among the synaptic inputs to pyramidal cells can amplify the LFP signal power by orders of magnitude, with the implication that populations receiving correlated synaptic input can dominate the LFP also 1-2~mm outside of the population \citep{Linden2011, Leski2013}.
 
-%Although the LFP is believed to predominantly reflect \tvntxt{dendritic processing of} synaptic inputs, active conductances may also contribute to its shaping.
-\tvntxt{Active conductances may also contribute to shaping the LFP,}
-and especially slower conductances may play a key role in this, such as dendritic calcium spikes \citep{Suzuki2017} and long-lasting after-hyperpolarization currents \citep{Reimann2013}. Note that somatic
-action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}. For example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
+\gex{Somatic action potentials lasting only a few milliseconds are generally expected to contribute little to cortical LFP signals 
+\citep{Pettersen2008,Pettersen2008a,Einevoll2013, Haider2016}:  Their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) will typically give large signal cancellations of the contributions from individual neurons, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to 
+contribute to shaping also the LFP \citep{Schomburg2012, Luo2018}.} 
 
-Subthreshold active conductances can also shape the LFP by molding the transmembrane currents following synaptic input, and the hyperpolarization-activated cation channel I$_{\rm h}$ may play a key role in this\tvntxt{, both through asymmetrically changing the membrane conductance, and by introducing apparent resonance peaks in the LFP} \citep{Ness2016, Ness2018}.
+\gex{However, other active conductances may contribute in shaping the LFP, for example, the slower dendritic calcium 
+spikes \citep{Suzuki2017} or long-lasting after-hyperpolarization currents~\citep{Reimann2013}. Further, 
+subthreshold active conductances can also shape the LFP by molding the transmembrane currents following synaptic input, and the hyperpolarization-activated cation channel I$_{\rm h}$ may play a key role in this, both through asymmetrically changing the membrane conductance, and by introducing apparent resonance peaks in the LFP \citep{Ness2016, Ness2018}.}
+
+
+
+
+%%Although the LFP is believed to predominantly reflect \tvntxt{dendritic processing of} synaptic inputs, active conductances may also contribute to its shaping.
+%\tvntxt{Active conductances may also contribute to shaping the LFP,}
+%and especially slower conductances may play a key role in this, such as dendritic calcium spikes \citep{Suzuki2017} and long-lasting after-hyperpolarization currents \citep{Reimann2013}. Note that somatic
+%action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}. For example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
+%
+%Subthreshold active conductances can also shape the LFP by molding the transmembrane currents following synaptic input, and the hyperpolarization-activated cation channel I$_{\rm h}$ may play a key role in this\tvntxt{, both through asymmetrically changing the membrane conductance, and by introducing apparent resonance peaks in the LFP} \citep{Ness2016, Ness2018}.
 
 
 %\tvntxt{, both through somatic and dendritic spikes, and through subthreshold molding of the transmembrane currents.}
-\gen{Her kan det hoeres det ut som active conductances staar i motsetning til synaptic conductances. Tror dette boer forklares litt mer detaljert:
-(i) active conductances kan gi en DC LFP selv uten synaptisk input, (ii) active conductances paavirker responsen til synaptisk input baade ved at den "passive" membranresistansen oeker og at det kan komme inn mer fancy resonanseffekter etc.}
-\tvnnote{I rewrote this, but I have not added so much more info on the effect of Ih, since it feels a bit biased to devote that much space to it in a book chapter?}
+%\gen{Her kan det hoeres det ut som active conductances staar i motsetning til synaptic conductances. Tror dette boer forklares litt mer detaljert:
+%(i) active conductances kan gi en DC LFP selv uten synaptisk input, (ii) active conductances paavirker responsen til synaptisk input baade ved at den "passive" membranresistansen oeker og at det kan komme inn mer fancy resonanseffekter etc.}
+%\tvnnote{I rewrote this, but I have not added so much more info on the effect of Ih, since it feels a bit biased to devote that much space to it in a book chapter?}
 %Especially slower conductances may play a key role in this, such as long-lasting after-hyperpolarization currents \citep{Reimann2013}, calcium spikes \citep{Suzuki2017}, or the hyperpolarization-activated cation channel I$_{\rm h}$ \citep{Ness2016, Ness2018}. Action potentials are typically expected to contribute little to cortical LFP signals for several reasons \citep{Einevoll2013, Haider2016}, for example, their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) would require extreme synchrony to sum constructively in the LFP, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to strongly shape the LFP \citep{Schomburg2012, Luo2018}. 
 
 %\subsubsection*{Other approaches}
@@ -581,9 +581,10 @@ Subthreshold active conductances can also shape the LFP by molding the transmemb
 
 
 \subsection{MUA}
-While LFPs are thought to mainly reflect the synaptic input to large populations of pyramidal neurons, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Pettersen2008} (Fig.~\ref{fig:LFP_MUA} E,F). \tvntxt{In other words, the MUA holds complimentary information to the LFP. In particular, this} can be useful for some cell-types, like stellate cells and interneurons, which are expected to have very weak LFP contributions \citep{Linden2011}, but might still be measurable through their spiking activity. 
-Similarly, spatially uniformly distributed synaptic input to pyramidal neurons results in a negligible LFP contribution (Fig.~\ref{fig:LFP_MUA}C, time marked by orange line), while the population might still contribute substantially to the MUA through the extracellular action potentials (Fig.~\ref{fig:LFP_MUA}E-F, time marked by orange line). \gen{Men MUA er jo nyttig ogsaa for pyramidal-nevroner som genererer LFP siden den gir ekstra informasjon, dvs. direkte maal paa spiking output.}
-\tvnnote{Hva med naa?}
+While LFPs are thought to mainly reflect the synaptic input to large populations of pyramidal neurons, the multi-unit activity (MUA) can be used to probe the population spiking activity \citep{Einevoll2007,Pettersen2008} (Fig.~\ref{fig:LFP_MUA} E,F). In other words, the MUA holds complimentary information to the LFP. In particular, this can be useful for some cell-types, like stellate cells and \gex{inhibitory} interneurons, which are expected to have very weak LFP contributions \citep{Linden2011}, but might still be measurable through their spiking activity. 
+Similarly, spatially uniformly distributed synaptic input to pyramidal neurons results in a negligible LFP contribution (Fig.~\ref{fig:LFP_MUA}C, time marked by orange line), while the population might still contribute substantially to the MUA through the extracellular action potentials (Fig.~\ref{fig:LFP_MUA}E-F, time marked by orange line). 
+%\gen{Men MUA er jo nyttig ogsaa for pyramidal-nevroner som genererer LFP siden den gir ekstra informasjon, dvs. direkte maal paa spiking output.}
+%\tvnnote{Hva med naa?}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -604,15 +605,16 @@ Placing electrodes on the brain surface, electrocorticography (ECoG), is a techn
 
 %The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG).
 \gen{Her kan det hoeres ut som vi kategoriserer ECoG som non-invasive, og det er jo ikke riktig.}
-\snnote{\AA! Det var ikke meninga. Ble dette bedre?}
+\snnote{S\aa{} at kommentaren som l\aa{} her tidligere var fjernet, men jeg er egentlig litt enig. Blir det bedre s\aa nn her?}
 
-Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
+%Fortunately, electric potentials generated by neural activity extend beyond neural tissue and can be picked up by electrodes placed on the brain surface or on top of the scalp. The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG). 
+
+
+Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006,Ilmoniemi2019}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
 
 The current dipole approximation is however not unproblematic to use for computing ECoG signals, as the ECoG electrodes may be located too close to the 
 signal sources for the approximation to apply, see \cite{Hagen2018}.
 
-\gen{Vi maa referere til den nye boka "Brain Signals" et passende sted.}
-\snnote{Har ikke f\aa tt skaffet meg denne enn\aa.=/ Geir, har du forslag?}
 
 \begin{figure}[!ht]
 \begin{center}
@@ -665,27 +667,12 @@ $\sigma_{\text{skull}}=\sigma_{\text{brain}} / 20$, $\sigma_{\text{scalp}}=\sigm
 \end{figure}
 
 
-\section{Inverse modeling}
+%\section{Inverse modeling}
+%
+%\gen{Gaute: I will write this}
+%\gen{Have to think more about what it shall contain}
 
-\gen{Gaute: I will write this}
-\gen{Have to think more about what it shall contain}
-\begin{itemize}
-% 
-\item Forward models used to make analysis methods 
-\begin{itemize}
-\item iCSD
-\item EEG?
-\end{itemize}
-%
-\item Use of forward models to test analysis methods
-\begin{itemize}
-\item Spike sorting
-\item LFP - PCA, ICA
-\item LFP - LPA \citep{Einevoll2007, Glabska2016}.
-\item EEG dipoles?
-\end{itemize}
-%
-\end{itemize}
+
 
 \section{Software tools}
 LFPy etc.
@@ -693,21 +680,22 @@ LFPy etc.
 \tvnnote{Maybe we don't need this section? Just say that 'here we've used LFPy'}
 \gen{I suggest we just list other tools that computes brain signals (NetPyne, BMTK, Human Brain Solver, VISAPy, VIMEAPy, MEARec, .....?).}
 
-\section{Summary and Discussion}
+\section{Discussion}
 \label{sec:summary}
-\gen{Jeg skriver dette til slutt.}
-In this chapter, we reviewed the theory for modeling extracellular potentials. Starting at the level of extracellular ionic movements, we showed how neuronal activity gives rise to electrical fluctuations that can be picked up at various spatial scales ranging from the local of MUA and LFP scale to the more global scale of ECoG and EEG. We further reviewed how recorded signals at these various spatial scales can be interpreted in terms of how various features in the recorded signals reflect various aspects of neuronal activity. In brief, the MUA reflects the spiking activity of nearby neurons, the LFP reflect the distribution of synaptic inputs to nearby neuronal populations, while ECoG and EEG reflect the same as the LFP, but on a larger spatial scale. 
 
-We note that there are several related measurement modalities that were not considered here, including magnetoencephalograpy (MEG), voltage-sensitive dye imaging (VSDI), calcium imaging, functional magnetic resonance imaging (fMRI) and positron emission tomography (PET). Of these, the MEG is expected to originate from the same process at LFP, ECoG and EEG signals (Fig.~\ref{fig:multimodal}), i.e., from synaptic input to geometically aligned populations of pyramidal neurons \citep{Hamalainen1993}, and can be modeled with similar approaches as those reviewed above. However, because of the nature of magnetic fields, MEG is most sensitive to populations that are tangential to the head surface, instead of radial (see Fig. \ref{fig:EEG_MEG}). VSDI and calcium imaging reflect the reflecting area-weighted neuronal membrane potentials and intracellular calcium dynamics, which and are in principle easily accessed variables in neuronal simulations, while fMRI and PET reflect blood supply and metabolic cost, which are typically not explicitly included in models. 
- 
-\begin{enumerate}
- \item Summary of chapter
- \item Ongoing large-scale projects (HBP, Allen)
- \subitem Using LFP in constraining models?
- \item Brain-Machine interfaces?
- \item Where to go?
- \subitem fMRI, VSD, Ca img.
-\end{enumerate}
+In the present chapter we have derived and applied well-established biophysical forward-modeling schemes for computing extracellular electrical potentials recorded inside and outside the brain. These electrical potentials include spikes (both single-unit and multiunit activity (MUA)), LFP, ECoG and EEG signals. The obvious application of this scheme is computation of electrical signals from neuron and network activity for comparison with experiments so that candidate models can be tested~\citep{Einevoll2019} or inferred~\citep{Goncalves2019,Skaar2020}.
+Another key application is the computation of benchmarking data for testing of data analysis methods such as 
+spike sorting or CSD analysis~\citep{Denker2012}. 
+
+Inverse modeling of recorded electrical potentials, that is, estimation of the neural sources underlying the signals, is inherently an ill-posed problem. This means that no unique solution for the size and position of the sources exists. However, prior knowledge about the underlying sources and how they generate the recorded signals, can be used to increase the identifiability. For example, several methods for the estimation of so-called current-source density (CSD) from LFP recordings have been developed by building the present forward model into the CSD 
+estimator~\citep{Pettersen2006,Potworowski2012,Cserpan2017}.
+
+The present chapter has focused on the modeling of measurements of extracellular electrical signals. Another important and related brain signal
+is the magnetic fields recorded outside the head in magnetoencephalograpy (MEG). These magnetic signals also stem from the transmembrane currents of neurons and, similar to EEG, the signal can be computed based on the current dipoles of the underlying neurons in 
+cortex~\citep{Hamalainen1993,Ilmoniemi2019}. The new version of our tool LFPy, which was used in generating the examples in the present chapter, thus also includes the ability to compute MEG signals~\citep{Hagen2018}. 
+
+There are also other measurement modalities where detailed modeling could be pursued to allow for a more quantitative analysis of recorded data. Voltage-sensitive dye imaging (VSDI) reflects area-weighted neuronal membrane potentials~\citep{Chemla2012}, while two-photon calcium imaging measures the intracellular calcium dynamics~\citep{Helmchen2012}. Both are accessible through neuronal simulations of the type used to compute electrical and magnetic signals. Functional magnetic resonance imaging (fMRI) instead reflect blood dynamics~\citep{Bartels2012}, 
+which typically are not explicitly included in neural network models.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
