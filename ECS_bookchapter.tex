@@ -470,9 +470,14 @@ Volume conductor theory is the fundament for forward modeling of extracellular p
 We use the software LFPy \citep{Linden2014, Hagen2018, Hagen2019}, which has volume conductor theory incorporated and can in principle be used to compute extracellular potentials on arbitrarily large spatial scales, surrounding arbitrarily large neuronal populations. 
 
 \subsection{Modeling electrodes}
-
 \gen{I think we should have a short subsection here on the modeling of electrodes, that is (i) ideal point electrodes (as assumed in all present examples), (ii) the disc-electrode approximation, and (iii) FEM modeling.}
+\tvntxt{
+The simplest and most commonly used approach to modeling extracellular recording electrodes is to calculate the extracellular potential at a specific point following one of the approached outlined above, and use this as the recorded potential. Implicitly, this 
+assumes that the electrode itself does not affect the extracellular potential (ideal electrode), and that the extracellular potential does not vary substantially over the surface of the electrode (this assumption was used for all simulation examples in this chapter).
+A straight-forward extension is the disc-electrode approximation where the potential is evaluated at a number of points on the (virtual) electrode surface, and the average calculated. This approach takes into account the physical extent of the electrode, but not any effect the electrode itself might have on the electric potential \citep{Ness2015}. A third, and much more comprehensive approach is to use the Finite Element Method to model the electrode \citep{Moulin2008, Ness2015}, or the electrode shank \citep{Moffitt2005, Buccino2019b}. 
 
+Note that for modelling current stimulation (as opposed to recording), more complex electrode models might be needed due to electrode polarization effects \citep{McIntyre2001, Martinsen2008, Joucla2012}.
+}
 
 \section{Single-cell contributions to extracellular potentials} \label{sec:ExtracellularPotentials}
 %\ghnote{Suggest that we start these sections by explaining what $\phi$ tells us at this level. Also, we should refer to the VC-theory and explain which of the assumptions (1-6) that were relaxed in the specific case.}
@@ -521,10 +526,10 @@ The low frequency part, that is, the local field potential (LFP), is thought to 
 \caption{\textbf{Extracellular potentials from different waves of synaptic input}. Different brain signals from separate waves of synaptic input to 10 000 layer 5 pyramidal cells from rat \citep{Hay2011}.
 {\bf A}: A subset of 100 pyramidal cells, with the LFP electrode locations indicated in the center (colored dots).
 {\bf B}: Depth-resolved synaptic inputs arrive in three waves, first targeting the basal dendrites (t=100~ms), then the apical dendrites (t=200~ms), and lastly uniformly across the entire depth (t=300~ms). Note that all synaptic input is pre-defined, that is, there is no network activity.
-{\bf C}: The extracellular potential at different depths (colors correspond to dots in panel A), including both spikes and synaptic input.
+{\bf C}: The extracellular potential at different depths (corresponding to dots in panel A), including both spikes and synaptic input.
 {\bf D}: The LFP, that is, a low-pass filtered version of the raw signal in C. 
 {\bf E}: The MUA, that is, a high-pass filtered version of the raw signal in C.
-{\bf F}: The MUA, that is, a high-pass filtered, rectified and low-pass filtered version of the raw signal in C.
+{\bf F}: Another version of the MUA which is a rectified and low-pass filtered version of the MUA signal in E.
 \tvntxt{All filters where 4th order Butterworth filters in forward-backward mode \citep{NeuroEnsamble2017}. A relatively low cut-off frequency of 50~Hz was chosen for the LFP low-pass filter for illustrative purposes. The MUA was first high-pass filtered above 300 Hz (E and F), then rectified and low-pass filtered below 300 Hz (F).}
 \gen{Vi boer si presist hvordan filtreringen er gjort.}
 \tvnnote{OK?}
