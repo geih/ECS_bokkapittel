@@ -471,12 +471,17 @@ We use the software LFPy \citep{Linden2014, Hagen2018, Hagen2019}, which has vol
 
 \subsection{Modeling electrodes}
 \gen{I think we should have a short subsection here on the modeling of electrodes, that is (i) ideal point electrodes (as assumed in all present examples), (ii) the disc-electrode approximation, and (iii) FEM modeling.}
+\tvnnote{How about this? Too long?}
 \tvntxt{
-The simplest and most commonly used approach to modeling extracellular recording electrodes is to calculate the extracellular potential at a specific point following one of the approached outlined above, and use this as the recorded potential. Implicitly, this 
-assumes that the electrode itself does not affect the extracellular potential (ideal electrode), and that the extracellular potential does not vary substantially over the surface of the electrode (this assumption was used for all simulation examples in this chapter).
-A straight-forward extension is the disc-electrode approximation where the potential is evaluated at a number of points on the (virtual) electrode surface, and the average calculated. This approach takes into account the physical extent of the electrode, but not any effect the electrode itself might have on the electric potential \citep{Ness2015}. A third, and much more comprehensive approach is to use the Finite Element Method to model the electrode \citep{Moulin2008, Ness2015}, or the electrode shank \citep{Moffitt2005, Buccino2019b}. 
+The simplest and most commonly used approach to modeling extracellular recording electrodes is to calculate the extracellular potential at single points following one of the approached outlined above, and use this as the recorded potentials. Implicitly, this 
+assumes ideal point electrodes, that is, the electrodes (and electrode shank) does not affect the extracellular potential, and the extracellular potential does not vary substantially over the surface of the electrode (these assumptions were used for all simulation examples in this chapter).
+A straight-forward extension is the disc-electrode approximation where the potential is evaluated at a number of points on the electrode surface, and the average calculated \citep{Nunez2006, Linden2014}. 
+This approach takes into account the physical extent of the electrode, but not any effect the electrode itself might have on the electric potential. 
+Close to the electrode surface the electric potential will however be affected by the presence of the high-conductivity electrode contact \citep{McIntyre2001, Moulin2008}, and
+a third, and much more comprehensive approach to modeling electrodes is to use the Finite Element Method (FEM) to model the electrode \citep{Moulin2008, Ness2015}, or the electrode shank \citep{Moffitt2005, Buccino2019b}. Using FEM for validation, \cite{Ness2015} found that the ideal point-electrode and disc-electrode approximations where reasonable when the distance between the current sources and the recording electrode was bigger than $\sim$4 times and $\sim$2 times the electrode radius, respectively, indicating that the effects of the electrodes themselves is negligible in most cases \citep{Nelson2010}.
+The presence of large multi-contact electrode probes can, however, substantially affect the extracellular potential in its vicinity, by effectively introducing a large non-conducting volume, and this can amplify or dampen recorded potentials from nearby cells by almost a factor of two, depending on if the cell is in front of or behind the electrode shank \citep{Buccino2019b}.
 
-Note that for modelling current stimulation (as opposed to recording), more complex electrode models might be needed due to electrode polarization effects \citep{McIntyre2001, Martinsen2008, Joucla2012}.
+Note that for modelling current stimulation electrodes (as opposed to just recording electrodes), more complex electrode models might be needed due to electrode polarization effects \citep{McIntyre2001, Martinsen2008, Joucla2012}.
 }
 
 \section{Single-cell contributions to extracellular potentials} \label{sec:ExtracellularPotentials}
