@@ -555,7 +555,7 @@ All filters where 4th order Butterworth filters in forward-backward mode \citep{
 
 \subsection{Local field potentials}
 %\tvnnote{Find place to put sentence or two on importance of correlation.}
-The LFP is the low-frequency part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by \gex{synaptic inputs asymmetrically placed onto populations} of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
+The LFP is the low-frequency part ($\lesssim$ 500~Hz) of the extracellular potentials, and it is among the oldest and most used brain signals in neuroscience \citep{Einevoll2013}. The LFP is expected to be dominated by synaptic inputs asymmetrically placed onto populations of geometrically aligned neurons \citep{Nunez2006, Linden2011, Einevoll2013b}.
 In cortex and hippocampus, neurons can broadly speaking be divided into two main classes: the inhibitory interneurons, and the excitatory pyramidal neurons. Pyramidal neurons typically have a clear axis of orientation, that is, the apical dendrites of close-by pyramidal neurons tend to be oriented in the same direction (Fig.~\ref{fig:LFP_MUA}A). This geometrical alignment is important because the LFP contributions from the individual pyramidal cells also align and therefore sum constructively.  For example, basal excitatory synaptic input (Fig.~\ref{fig:LFP_MUA}B, time marked by red line) generates a current sink and corresponding negative LFP deflection in the basal region, and simultaneously a current source and corresponding positive LFP deflection in the apical region (Fig.~\ref{fig:LFP_MUA}D, time marked by red line), while apical excitatory synaptic input leads to the reversed pattern (Fig.~\ref{fig:LFP_MUA}B,D, time marked by blue line). 
 Importantly, this means that excitatory input that simultaneously targets both the apical and the basal dendrite will give opposite source/sink patterns which will lead to substantial cancellation and a weak LFP contribution (Fig.~\ref{fig:LFP_MUA}B, D, time marked by orange line).
 The same arguments also apply to inhibitory synaptic inputs, with the signs of the currents and LFPs reversed. 
@@ -564,20 +564,19 @@ Note that, for example, the LFP signature of apical excitatory synaptic input is
 
 In contrast to pyramidal neurons, interneurons often lack any clear orientational specificity, meaning that the current dipoles from individual interneurons, which might by themselves be sizable \citep{Linden2010}, do not align, leading to negligible net contributions to LFP 
 signals~\citep{Mazzoni2015}.
-\gex{Note, however, that the interneurons may indirectly cause large LFP contributions through their 
-synaptic inputs onto pyramidal cells \citep{Telenczuk2016, Hagen2016}.}
+Note, however, that the interneurons may indirectly cause large LFP contributions through their 
+synaptic inputs onto pyramidal cells \citep{Telenczuk2016, Hagen2016}.
 %\gen{Dette forutsetter vel at input-synapsene er jevnt fordelt over hele nevronet? Som vist i Linden2010 saa kan enkelt-input til stellate cells ogsaa gi dipoler.}
 %\tvnnote{Det er egentlig det jeg mener med ``lack orientational specificity''. Enkelt-celler har dipoler, men de summerer ikke konstruktivt for populasjoner. Greit naa?}
 
 It has been demonstrated that correlations among the synaptic inputs to pyramidal cells can amplify the LFP signal power by orders of magnitude, with the implication that populations receiving correlated synaptic input can dominate the LFP also 1-2~mm outside of the population \citep{Linden2011, Leski2013}.
 
-\gex{Somatic action potentials lasting only a few milliseconds are generally expected to contribute little to cortical LFP signals 
-\citep{Pettersen2008,Pettersen2008a,Einevoll2013, Haider2016}:  Their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) will typically give large signal cancellations of the contributions from individual neurons, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note, however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to \sntxt{also} 
-contribute to shaping \sntxt{\sout{also} of} the LFP \citep{Schomburg2012, Luo2018}.} 
-\snnote{ville brukt et annet ord enn "however" i starten av neste setning. Hva med "moreover"/"keep in mind that"/"additionally"/bare legge inn et also?}
-\gex{However, other active conductances may contribute in shaping the LFP, for example, the slower dendritic calcium 
+Somatic action potentials lasting only a few milliseconds are generally expected to contribute little to cortical LFP signals 
+\citep{Pettersen2008,Pettersen2008a,Einevoll2013, Haider2016}:  Their very short duration with both positive and negative phases (Fig.~\ref{fig:EP_morph}E) will typically give large signal cancellations of the contributions from individual neurons, and their high frequency content is to a large degree removed from LFPs during low-pass filtering. Note, however, that in the hippocampus the highly synchronized spikes found during sharp wave ripples are expected to also contribute to shaping of the LFP \citep{Schomburg2012, Luo2018}.
+
+Other active conductances may contribute in shaping the LFP, for example, the slower dendritic calcium 
 spikes \citep{Suzuki2017} or long-lasting after-hyperpolarization currents~\citep{Reimann2013}. Further, 
-subthreshold active conductances can also shape the LFP by molding the transmembrane currents following synaptic input, and the hyperpolarization-activated cation channel I$_{\rm h}$ may play a key role in this, both through asymmetrically changing the membrane conductance, and by introducing apparent resonance peaks in the LFP \citep{Ness2016, Ness2018}.}
+subthreshold active conductances can also shape the LFP by molding the transmembrane currents following synaptic input, and the hyperpolarization-activated cation channel I$_{\rm h}$ may play a key role in this, both through asymmetrically changing the membrane conductance, and by introducing apparent resonance peaks in the LFP \citep{Ness2016, Ness2018}.
 
 
 
@@ -631,7 +630,7 @@ Placing electrodes on the brain surface, as in electrocorticography (ECoG), is a
 %Fortunately, electric potentials generated by neural activity extend beyond neural tissue and can be picked up by electrodes placed on the brain surface or on top of the scalp. The first technique is known as electrocorticography (ECoG), while the second refers to the non-invasive method of electroencephalography (EEG). 
 
 
-Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006,Ilmoniemi2019}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).
+Since EEG electrodes are located relatively far away from the neuronal sources, the current dipole approximation, eq.~\eqref{eq:CDA}, combined with some head model, can be applied for computing EEG signals \citep{Nunez2006,Ilmoniemi2019}. By collapsing the transmembrane currents of a neuron simulation into one single current dipole moment, see eq.~\eqref{eq:dipole}, we can calculate EEG from arbitrary neural activity (Fig.~\ref{fig:multimodal}).\tvnnote{Should this be a reference to Fig. 5? No other reference to fig 5 apparently.}
 
 The current dipole approximation is however not unproblematic to use for computing ECoG signals, as the ECoG electrodes may be located too close to the 
 signal sources for the approximation to apply, see \cite{Hagen2018}.
@@ -646,6 +645,7 @@ signal sources for the approximation to apply, see \cite{Hagen2018}.
 {\bf A}: The four-sphere head model with two orientations of the neural population, either radial, mimicking a population in a gyrus (top) or tangential, mimicking a population in a sulcus (bottom).
 {\bf B}: A snapshot of the EEG signal at the head surface for apical input (time marked with blue dotted line in Fig. \ref{fig:LFP_MUA}), for a radial population (top) or tangential population (bottom).
 }
+\tvnnote{Should this figure be here? It is not referred to. Caption is not up to date}
 \label{fig:EEG_MEG}
 \end{figure}
 
@@ -732,7 +732,7 @@ and Innovation under Specific Grant Agreement No. 785907 (Human Brain Project SG
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{References}
+%\section*{References}
 \label{sec:bibliography}
 \bibliography{ECS_bookchapter}
 
