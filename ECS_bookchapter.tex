@@ -114,25 +114,34 @@
 \floatstyle{plaintop}
 \restylefloat{table}
 
-\journal{nobody}
+%\journal{nobody}
 
 
 % redefinition of \author{•} because of bug (reset of \@corref missing), taken from:
 % http://tex.stackexchange.com/questions/116515/elsarticle-frontmatter-corresponding-author
 %
+% \makeatletter
+% \def\@author#1{\g@addto@macro\elsauthors{\normalsize%
+%     \def\baselinestretch{1}%
+%     \upshape\authorsep#1\unskip\textsuperscript{%
+%       \ifx\@fnmark\@empty\else\unskip\sep\@fnmark\let\sep=,\fi
+%       \ifx\@corref\@empty\else\unskip\sep\@corref\let\sep=,\fi
+%       }%
+%     \def\authorsep{\unskip,\space}%
+%     \global\let\@fnmark\@empty
+%     \global\let\@corref\@empty  %% Added
+%     \global\let\sep\@empty}%
+%     \@eadauthor={#1}
+% }
+% \makeatother
+
+
 \makeatletter
-\def\@author#1{\g@addto@macro\elsauthors{\normalsize%
-    \def\baselinestretch{1}%
-    \upshape\authorsep#1\unskip\textsuperscript{%
-      \ifx\@fnmark\@empty\else\unskip\sep\@fnmark\let\sep=,\fi
-      \ifx\@corref\@empty\else\unskip\sep\@corref\let\sep=,\fi
-      }%
-    \def\authorsep{\unskip,\space}%
-    \global\let\@fnmark\@empty
-    \global\let\@corref\@empty  %% Added
-    \global\let\sep\@empty}%
-    \@eadauthor={#1}
-}
+\def\ps@pprintTitle{%
+ \let\@oddhead\@empty
+ \let\@evenhead\@empty
+ \def\@oddfoot{}%
+ \let\@evenfoot\@oddfoot}
 \makeatother
 
 % - mine pakker -
@@ -144,8 +153,6 @@
 \graphicspath{{Figures/}} %Setting the graphicspath
 \usepackage{caption}
 \usepackage{subcaption}
-
-% - mine kommandoer - 
 
 
 \begin{document}
