@@ -365,7 +365,8 @@ As eq.~\ref{eq:CSD} indicates, also diffusive processes can in principle contrib
 %\snnote{I've made some letters boldface and added a few unit vectors to ensure that ${\bf \nabla}$ always is a vector. Torbjorn: Do you agree?}
 %\tvnnote{Looks good to me}
 \label{sec:VC_theory}
-In simulations of morphologically complex neurons, one typically computes a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. By assuming that the tissue medium can be approximated as a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD equation (eq.~\ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). Since extracellular potentials are generally much smaller than the membrane potential of $\sim$-70~mV, it is common to assume that the neurodynamics is not affected by them, and to compute the neurodynamics independently. \ghnote{Tok vekk Gautes forslag, som dro inn volumer og konsentrasjoner. Setningen begynte med "Since the extracellular potentials", saa dette handlet kun om dem, egentlig. }
+In simulations of morphologically complex neurons, one typically computes a set of transmembrane current sources for each neuronal segment \citep{Koch1999}. By assuming that the tissue medium can be approximated as a volume conductor \citep{Holt1999, Linden2014}, one can then use the standard CSD equation (eq.~\ref{eq:CSDstandard}) to perform a forward modeling of the extracellular potential at each point in space surrounding the neuron(s). Since extracellular potentials are generally much smaller than the membrane potential of $\sim$-70~mV, it is common to assume that the neurodynamics is
+not affected by extracellular potentials, and to simulate the neurodynamics as a first independent step, before computing the extracellular potentials in the next step. \ghnote{Tok vekk Gautes forslag, som dro inn volumer og konsentrasjoner. Setningen begynte med "Since the extracellular potentials", saa dette handlet kun om dem, egentlig. Gaute, kan du godkjenne siste setning?}
 % \ghnote{Skrev om paa dette.} \tvnnote{Litt usikker paa "extracellular dynamics", som kan gi inntrykk av rare dynamiske prosesser i det ekstracellulaere mediet?}
 
 If we consider the simple case of a single point-current source $I_1$ at the origin in an isotropic medium, the current density ${\bf i} = -\sigma {\bf \nabla} \phi$ through a spherical shell with area $4\pi r^2$ must, due to the spherical symmetry, equal $I_1/4\pi r^2~{\bf \hat{r}}$. %${\bf \nabla} \phi = \partial \phi/ \partial r~{\bf \hat{r}}$, and 
@@ -707,12 +708,23 @@ spike sorting or CSD analysis~\citep{Denker2012}.
 Inverse modeling of recorded electric potentials, that is, estimation of the neural sources underlying the signals, is inherently an ill-posed problem. This means that no unique solution for the size and position of the sources exists. However, prior knowledge about the underlying sources and how they generate the recorded signals, can be used to increase the identifiability. For example, several methods for the estimation of so-called current-source density (CSD) from LFP recordings have been developed by building the present forward model into the CSD 
 estimator~\citep{Pettersen2006,Potworowski2012,Cserpan2017}.
 
-The present chapter has focused on the modeling of measurements of extracellular electric signals. Another important and related brain signal
-is the magnetic fields recorded outside the head in magnetoencephalograpy (MEG). These magnetic signals also stem from the transmembrane currents of neurons and, similar to EEG, the signal can be computed based on the current dipoles of the underlying neurons in 
-cortex~\citep{Hamalainen1993,Ilmoniemi2019}. The new version of our tool LFPy, which was used in generating the examples in the present chapter, thus also includes the ability to compute MEG signals~\citep{Hagen2018}. 
+The present chapter has focused on the modeling of measurements of extracellular electric signals. There are several other measurement modalities where detailed forward modeling could be pursued to allow for a more quantitative analysis of recorded data, such as magnetoencephalograpy (MEG), where magnetic fields are recorded outside the head, Voltage-sensitive dye imaging (VSDI), which reflects area-weighted neuronal membrane potentials ~\citep{Chemla2012}, two-photon calcium imaging, which measures the intracellular calcium dynamics ~\citep{Helmchen2012} and functional magnetic resonance imaging (fMRI), which reflects blood dynamics ~\citep{Bartels2012},. While blood dynamics is typically not explicitly included in neural network models, MEG, VSDI and calcium imaging are accessible through neuronal simulations of the type used to compute electric signals. Similar to EEG, the MEG stems from the transmembrane currents of neurons and can be computed based on the current dipoles of the underlying neurons ~\citep{Hamalainen1993,Ilmoniemi2019}.The new version of our tool LFPy, which was used in generating the examples in the present chapter, thus also includes the ability to compute MEG signals ~\citep{Hagen2018}.
+ 
+%The present chapter has focused on the modeling of measurements of extracellular electric signals. 
+%Another important and related brain signal
+%is the magnetic fields recorded outside the head in magnetoencephalograpy (MEG). 
+%These magnetic signals also stem from the transmembrane currents of neurons and, 
+%similar to EEG, the signal can be computed based on the current dipoles of the underlying neurons in 
+%cortex~\citep{Hamalainen1993,Ilmoniemi2019}. The new version of our tool LFPy, which was used in generating 
+%the examples in the present chapter, thus also includes the ability to compute MEG signals~\citep{Hagen2018}. 
 
-There are also other measurement modalities where detailed modeling could be pursued to allow for a more quantitative analysis of recorded data. Voltage-sensitive dye imaging (VSDI) reflects area-weighted neuronal membrane potentials~\citep{Chemla2012}, while two-photon calcium imaging measures the intracellular calcium dynamics~\citep{Helmchen2012}. Both are accessible through neuronal simulations of the type used to compute electric and magnetic signals. Functional magnetic resonance imaging (fMRI) instead reflect blood dynamics~\citep{Bartels2012}, 
-which typically are not explicitly included in neural network models.
+%There are also other measurement modalities where detailed modeling could be pursued to allow for a more 
+%quantitative analysis of recorded data. Voltage-sensitive dye imaging (VSDI) reflects area-weighted neuronal 
+%membrane potentials~\citep{Chemla2012}, while two-photon calcium imaging measures the intracellular 
+%calcium dynamics~\citep{Helmchen2012}. Both are accessible through neuronal simulations of the type used 
+%to compute electric and magnetic signals. Functional magnetic resonance imaging (fMRI) instead reflect blood
+%dynamics~\citep{Bartels2012}, 
+%which typically are not explicitly included in neural network models.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
