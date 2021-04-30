@@ -231,11 +231,9 @@ extracellular potentials \sep LFP \sep EEG \sep ECoG \sep electrodiffusion \sep 
 
 Arguably, most of what we have learned about the mechanisms by which neurons and networks operate in living brains comes from recordings of 
 extracellular potentials. In such recordings, electric potentials are measured by electrodes that are either placed between cells in brain tissue (spikes, LFPs), at the cortical surface (ECoG, electrocorticography), or at the scalp (EEG, electroencephalograpy) (Figure~\ref{fig:multimodal}). Spikes are reliable signatures of neuronal action potentials, and spike measurements have been instrumental in mapping out, for example, receptive fields accounting for how sensory stimuli are represented in the brain. The analysis of the LFP signal, the low-frequency part of electric potentials recorded inside gray matter, as well as the ECoG, and EEG signals is less straightforward.
-\tvntxt{While it is clear that these signals reflect (and therefore contain valuable information about) the underlying neural activity \citep{Einevoll2013,Cohen2017,Pesaran2018}, interpretation of these signals in terms of the underlying neural activity has been difficult. So far, most analyses of LFP, ECoG and EEG data have therefore been purely statistical~\citep{Nunez2006,Buzsaki2012,Einevoll2013,Ilmoniemi2019}.}
+While it is clear that these signals reflect (and therefore contain valuable information about) the underlying neural activity \citep{Einevoll2013,Cohen2017,Pesaran2018}, interpretation of these signals in terms of the underlying neural activity has been difficult. So far, most analyses of LFP, ECoG and EEG data have therefore been purely statistical~\citep{Nunez2006,Buzsaki2012,Einevoll2013,Ilmoniemi2019}. %Interpretation of these signals in terms of the underlying neural activity has been difficult, and most analyses of the data have been purely statistical~\citep{Nunez2006,Buzsaki2012,Einevoll2013,Ilmoniemi2019}.
 
- %Interpretation of these signals in terms of the underlying neural activity has been difficult, and most analyses of the data have been purely statistical~\citep{Nunez2006,Buzsaki2012,Einevoll2013,Ilmoniemi2019}.
-
-\tvntxt{There are however good reasons to believe that much could be gained by moving towards a more mechanistic understanding of LFP, ECoG and EEG signals, similar to what has been the tradition in physics}. Here candidate hypotheses are typically formulated as specific mathematical models, and predictions computed from the models are compared with experiments. In neuroscience this approach has been used to model activity in individual neurons using, for example, biophysically detailed neuron models based on the cable equation formalism (see, e.g., \citet{Koch1999,Sterratt2011}). These models have largely been developed and tested by comparison with membrane potentials recorded by intracellular electrodes in 
+There are however good reasons to believe that much could be gained by moving towards a more mechanistic understanding of LFP, ECoG and EEG signals, similar to what has been the tradition in physics. Here candidate hypotheses are typically formulated as specific mathematical models, and predictions computed from the models are compared with experiments. In neuroscience this approach has been used to model activity in individual neurons using, for example, biophysically detailed neuron models based on the cable equation formalism (see, e.g., \citet{Koch1999,Sterratt2011}). These models have largely been developed and tested by comparison with membrane potentials recorded by intracellular electrodes in 
 \emph{in vitro} settings (but see \citet{Gold2007}).
 To pursue this mechanistic approach to network models in layered structures such as cortex or hippocampus, 
 one would like to compare model predictions with all available experimental data, that is, not only spike times recorded for a small subset of the neurons, but also population measures such as LFP, ECoG and EEG signals~\citep{Einevoll2019}. This chapter addresses how to model such electric population signals from neuron and network models.
@@ -282,8 +280,8 @@ In this book chapter we describe the origin of VC theory, that is, how it can be
 \section{%Theory: 
 From electrodiffusion to volume conductor theory}
 \label{sec:theory}
-\tvntxt{In this section we describe the origin of extracellular potentials from fundamental electrodiffusive processes. The mathematical derivations we go through can be challenging for people without schooling in mathematics or physics, and readers which are not interested in these mathematical details can consider jumping ahead to section \ref{sec:VC_theory}. We have however attempted to supply some intuitive understanding of what
-the different equations represent.}
+In this section we describe the origin of extracellular potentials from fundamental electrodiffusive processes. The mathematical derivations we go through can be challenging for people without schooling in mathematics or physics, and readers which are not interested in these mathematical details can consider jumping ahead to section \ref{sec:VC_theory}. We have however attempted to supply some intuitive understanding of what
+the different equations represent.
 
 Extracellular potentials are generated by electric currents in the extracellular space. The currents are in turn mediated by movement of ions, and can in principle include several components:
 %
@@ -301,36 +299,35 @@ However, if large ion-concentration gradients are present, diffusive currents co
 
 \subsection{Ion concentration dynamics}
 \label{sec:eldiff}
- \tvnnote{Jeg flytted dette avsnittet hit fra bunnen av forrige seksjon. OK?}
 In this section the starting point is the general assumption of ion movement under the combined influence of electric fields and concentration gradients. Building on this, we first describe computational schemes for modelling electrodiffusive processes, and next show how the electrodiffusive theory reduces to the fundamental equations for VC theory when we assume negligible effects from diffusion.
 
-The movement of ions in the brain are described in terms of fluxes \citep{Freeman1975}. In electrodiffusive processes, the flux density of an ion species $k$ is given by \citep{Koch1999}:
+The movement of ions in the brain are described in terms of fluxes \citep{Freeman1975}. In electrodiffusive processes, the flux density of an ion species $k$ is given by (see e.g., \cite{Grodzinsky2011}):
 %%%
 \begin{equation}
 {\bf j_k} = - D_{k} {\bf \nabla} c_{k} - \frac{D_k z_k c_k}{\psi} {\bf \nabla} \phi.
 \label{eq:JNP}
 \end{equation}
 %%%
-\tvntxt{The mathematical operator $\nabla$ computes the spatial derivative (gradient) of scalars.
+The mathematical operator $\nabla$ computes the spatial derivative (gradient) of scalars.
 The first term on the right is Fick's law for the diffusive flux density $j_{k}^\text{diff}$, 
-and it implies that the diffusive flux is proportional to the spatial change of the concentration, $c_k$.
+and it implies that the diffusive flux is proportional to the gradient of the concentration, $c_k$.
 The second term is the drift flux density $j_{k}^\text{drift}$,
-and it implies that the drift flux is proportional to the spatial change of the voltage, $\phi$.}
-This equation expands Fick's law in the case where the diffusing particles also move due to electrostatic forces with a mobility $D_k/\psi$ (cf. the Einstein-relation, \cite{Mori2008}). Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation, 
+and it implies that the drift flux is proportional to the gradient of the voltage, $\phi$.
+This equation expands Fick's law in the case where the diffusing particles also move due to electrostatic forces with a mobility $D_k/\psi$ (cf. the Einstein-relation, \cite{Grodzinsky2011}). Here $D_{k}$ is the diffusion coefficient of ion species $k$, $\phi$ is the electric potential, $z_{k}$ is the valency of ion species $k$, and $\psi=RT/F$ is defined by the gas constant ($R$), Faraday's constant ($F$)  and the temperature ($T$). The ion concentration dynamics of a given species is then given by the Nernst-Planck continuity equation, 
 \begin{equation}
 \frac{\partial c_k}{\partial t} = - {\bf \nabla} \cdot {\bf j_k} + f_k = {\bf \nabla} \cdot \left[ D_k {\bf \nabla} c_k + \frac{D_k z_k c_k}{\psi} {\bf \nabla} \phi \right] + f_k,
 \label{eq:NP}
 \end{equation}
 where $f_k$ represents any source term in the system, such as e.g., an ionic transmembrane current source \citep{Solbra2018}. 
-\tvntxt{Note that $\nabla \cdot$ computes the divergence of vectors (such as flux densities), which represents the volume density of the outward flux from an infinitesimal volume around a given point.
-Essentially, this equations just tells us that if there is a net movement of ions into or out of a volume (from any source within the volume ($f_k$), and/or moving in from the sides (${\bf \nabla} \cdot {\bf j_k}$)), then the local concentration ($c_k$) must change (left hand side of equation).}
+Note that $\nabla \cdot$ computes the divergence of vectors (such as flux densities), which represents the volume density of the outward flux from an infinitesimal volume around a given point.
+Essentially, this equation just tells us that if there is a net movement of ions into or out of a volume (from any source within the volume ($f_k$), and/or moving in from the sides (${\bf \nabla} \cdot {\bf j_k}$)), then the local concentration ($c_k$) must change (left hand side of equation).
 
 In order to solve a set (i.e., one for each ion species present) of equations like eq.~\ref{eq:NP}, one needs an expression for the electric potential $\phi$. There are two main approaches to this. The physically most detailed approach is to use the Poisson-Nernst-Planck (PNP) formalism \citep{Leonetti1998, Leonetti2004, Lu2007, Lopreore2008, Nanninga2008, Pods2013, Gardner2015, Cartailler2018}. Within this formalism, $\phi$ is determined from Poisson's equation from electrostatics, 
 \begin{equation}
 \nabla^2 \phi = -\rho/\epsilon.
 \label{eq:poisson}
 \end{equation}
-\tvntxt{Here $\nabla^2$ is called the Laplacian. The Laplacian of a function is the sum of second partial derivatives with respect to each independent variable. Poisson’s equation is used to find the electric potential arising from a given charge distribution.}
+Here $\nabla^2$ is called the Laplacian. The Laplacian of a function is the sum of second partial derivatives with respect to each independent variable. Poisson’s equation is used to find the electric potential arising from a given charge distribution.
 Further, $\epsilon$ is the permittivity of the system, and $\rho$ is the charge density associated with the ionic concentrations, as given by
 \begin{equation}
 \rho = F \sum_k z_k c_k.
@@ -347,7 +344,7 @@ If we multiply eq.~\ref{eq:JNP} by $F\cdot z_k$ and sum over all ion species, we
 {\bf i} = - \sum_k{F z_k D_{k}{\bf \nabla} c_{k}} - \sigma {\bf \nabla}{\phi},
 \label{eq:INP}
 \end{equation}
-where the first term is the diffusive current density $i^\text{diff}$ and the second term is the drift current density $i^\text{drift}$. We have here identified the conductivity $\sigma$ of the medium as \citep{Koch1999}:
+where the first term is the diffusive current density $i^\text{diff}$ and the second term is the drift current density $i^\text{drift}$. We have here identified the conductivity $\sigma$ of the medium as \citep{Grodzinsky2011}:
 \begin{equation}
 \sigma = F\sum_{k} \frac{\tilde{D}_{k} z_{k}^2}{\psi}c_{k}.
 \label{eq:sigma}
@@ -358,8 +355,8 @@ Current conservation in the extracellular space implies that:
 \label{eq:CSD}
 \end{equation}
 where $C$ denotes the current source density (CSD). 
-\tvntxt{This equation implies that because of current conservation, the net amount of current entering or leaving through the sides of a certain volume of the extracellular space (${\bf \nabla} \cdot {\bf i}$), must be exactly balanced by
-the net amount of current entering or leaving through current sources and sinks within the volume (-$C$). Here $C$ will reflect e.g., local neuronal or glial transmembrane currents.}
+This equation implies that because of current conservation, the net amount of current entering or leaving through the sides of a certain volume of the extracellular space (${\bf \nabla} \cdot {\bf i}$), must be exactly balanced by
+the net amount of current entering or leaving through current sources and sinks within the volume (-$C$). Here $C$ will reflect e.g., local neuronal or glial transmembrane currents.
 We note that this is essentially equivalent to eq.~\ref{eq:NP} at the level of single ion species, with the exception that eq.~\ref{eq:NP} contains a term $\partial c_k/ \partial t$ for accumulation of ion species $k$, while eq.~\ref{eq:CSD} does \emph{not} contain a corresponding term ($\partial \rho/ \partial t$) for charge accumulation. Hence, in eq.~\ref{eq:CSD} it is implicitly assumed that the extracellular bulk solution is electroneutral \citep{Solbra2018}. We note that in general, the $CSD$ term includes both ionic transmembrane currents and transmembrane capacitive currents, and that the latter means that the local charge accumulation building up the transmembrane potential still occurs in the membrane Debye-layer.
 
 Note that if we assume all concentrations to be constant in space, the diffusive term vanishes, and eq.~\ref{eq:CSD} reduces to
@@ -367,9 +364,9 @@ Note that if we assume all concentrations to be constant in space, the diffusive
 {\bf \nabla} \cdot (\sigma {\bf \nabla} \phi) = - C.
 \label{eq:CSDstandard}
 \end{equation}
-\tvntxt{Importantly, this equation links the measurable extracellular potentials directly to the neuronal transmembrane currents, and it can therefore be used to calculate extracellular
-potentials from a given set of neural current sources.}
-This \tvntxt{is also} the standard expression used in CSD theory \citep{Mitzdorf1985, Nicholson1975, Pettersen2006}, where spatially distributed recordings of $\phi$ are used to make theoretical predictions of underlying current sources. When using eq.~\ref{eq:CSDstandard}, it is implicitly assumed that the Laplacian of $\phi$ exclusively reflects transmembrane current sources, and that it is not contributed to by diffusive processes. 
+Importantly, this equation links the measurable extracellular potentials directly to the neuronal transmembrane currents, and it can therefore be used to calculate extracellular
+potentials from a given set of neural current sources.
+This is also the standard expression used in CSD theory \citep{Mitzdorf1985, Nicholson1975, Pettersen2006}, where spatially distributed recordings of $\phi$ are used to make theoretical predictions of underlying current sources. When using eq.~\ref{eq:CSDstandard}, it is implicitly assumed that the Laplacian of $\phi$ exclusively reflects transmembrane current sources, and that it is not contributed to by diffusive processes. 
 
 Note that there are two commonly used conventions for defining the variables in eqns.~\ref{eq:JNP}-\ref{eq:CSDstandard}. The variables can be defined either relative to a tissue reference volume or relative to an extracellular reference volume. The former convention is the common convention used in volume conductor theory. For this convention, concentrations denote the number of extracellular ions per unit tissue volume, sources denote the number of ions or the net charge per unit tissue volume per second, and flux or current densities are defined per unit tissue cross-section area. Finally, $\sigma$ interprets as the tissue-averaged extracellular conductivity, i.e., it is not the conductivity of the extracellular solution as such, but accounts for the fact that extracellular currents at the coarse-grained scale (i) have tortuous trajectories around neural and glial obstacles, and (ii) are mostly confined to move only through the extracellular fraction (typically about 0.2) of the total tissue volume \citep{Nicholson1998, Nunez2006}.
 
